@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>销售平台管理</title>
+
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/plugins/sweetalert/sweetalert.css}"
+	rel="stylesheet" />
+<link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+
+<link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet" />
+<link th:href="@{/css/plugins/footable/footable.core.css}"
+	rel="stylesheet" />
+
+</head>
+
+<body>
+
+	<div id="wrapper">
+		<nav class="navbar-default navbar-static-side" role="navigation"
+			th:include="/c/nav :: navigation"></nav>
+		<div id="page-wrapper" class="gray-bg">
+			<div class="border-bottom" th:include="/c/header :: headerTop"></div>
+			<div class="row wrapper border-bottom white-bg page-heading"
+				th:fragment="headerNav">
+				<div class="col-lg-10">
+					<h2>销售平台管理</h2>
+					<ol class="breadcrumb">
+						<li><a href="#">首页</a></li>
+						<li><a>系统设定</a></li>
+						<li class="active"><strong>销售平台管理</strong></li>
+					</ol>
+				</div>
+				<div class="col-lg-2"></div>
+			</div>
+
+			<div class="wrapper wrapper-content animated fadeInRight">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>搜索&amp;操作</h5>
+								<div class="ibox-tools">
+									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+									</a>
+								</div>
+							</div>
+							<div class="ibox-content" style="display: block;">
+								<button type="button" class="btn btn-primary"
+									data-toggle="modal" data-target="#myModal">添加销售平台</button>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-12">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>销售平台列表</h5>
+								<div class="ibox-tools">
+									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+									</a>
+								</div>
+							</div>
+							<div class="ibox-content">
+								<table
+									class="table table-striped table-bordered table-hover dataTables-example">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>平台ID</th>
+											<th>平台名称</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>p01</td>
+											<td>雅虎</td>
+											<td>
+												<button class="btn btn-info btn-xs dropdown-toggle"
+													type="button" data-toggle="modal" data-target="#myModal"
+													onclick="edit__sheves('1');">
+													<i class="fa fa-edit"></i>编辑
+												</button>
+												<button class="btn btn-danger btn-xs dropdown-toggle"
+													type="button" onClick="check(1)">
+													<i class="fa fa-trash"></i>删除
+												</button>
+											</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>p02</td>
+											<td>趣天</td>
+											<td>
+												<button class="btn btn-info btn-xs dropdown-toggle"
+													type="button" data-toggle="modal" data-target="#myModal"
+													onclick="edit__sheves('1');">
+													<i class="fa fa-edit"></i>编辑
+												</button>
+												<button class="btn btn-danger btn-xs dropdown-toggle"
+													type="button" onClick="check(1)">
+													<i class="fa fa-trash"></i>删除
+												</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="footer" th:include="/c/footer :: copyright"></div>
+		</div>
+	</div>
+
+	<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog"
+		aria-hidden="true" style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content animated bounceInRight">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">添加销售平台</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label class="col-lg-3 control-label">平台ID</label>
+							<div class="col-lg-9">
+								<input type="email" placeholder="请输入平台ID" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">平台名称</label>
+							<div class="col-lg-9">
+								<input type="email" placeholder="请输入平台名称" class="form-control">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary">确认添加</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Mainly scripts -->
+	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+	
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
+	<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+	<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+	<!-- Peity -->
+	<script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
+
+	<!-- Custom and plugin javascript -->
+	<script th:src="@{/js/inspinia.js}"></script>
+	<script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+	<!-- iCheck -->
+	<script th:src="@{/js/plugins/iCheck/icheck.min.js}"></script>
+
+	<!-- Peity -->
+	<script th:src="@{/js/demo/peity-demo.js}"></script>
+
+	<!-- FooTable -->
+	<script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
+
+	<!-- common -->
+	<script th:src="@{/js/common.js}"></script>
+
+	<script th:inline="javascript">
+		
+	</script>
+
+</body>
+
+</html>

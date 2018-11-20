@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>商品分类管理</title>
+
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/plugins/sweetalert/sweetalert.css}"
+	rel="stylesheet" />
+<link th:href="@{/css/plugins/dataTree/style.css}" rel="stylesheet" />
+<link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+
+<link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet" />
+<link th:href="@{/css/plugins/footable/footable.core.css}"
+	rel="stylesheet" />
+
+</head>
+
+<body>
+
+	<div id="wrapper">
+		<nav class="navbar-default navbar-static-side" role="navigation"
+			th:include="/w/nav :: navigation"></nav>
+		<div id="page-wrapper" class="gray-bg">
+			<div class="border-bottom" th:include="/w/header :: headerTop"></div>
+			<div class="row wrapper border-bottom white-bg page-heading"
+				th:fragment="headerNav">
+				<div class="col-lg-10">
+					<h2>商品分类管理</h2>
+					<ol class="breadcrumb">
+						<li><a href="#">首页</a></li>
+						<li><a>商品管理</a></li>
+						<li class="active"><strong>商品分类管理</strong></li>
+					</ol>
+				</div>
+				<div class="col-lg-2"></div>
+			</div>
+
+			<div class="wrapper wrapper-content animated fadeInRight">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="ibox-content">
+						<div id="jstree1">
+                        <ul>
+                            <li class="jstree-open">商品分类根目录
+                                <ul>
+                                    <li class="jstree-open">家用电器
+                                        <ul>
+                                            <li id='0-1' data-jstree='{"type":"css"}' class="jstree-open">大家电
+                                            <ul>
+                                            <li data-jstree='{"type":"css"}'>电视</li>
+                                            </ul>
+                                            </li>
+                                            <li data-jstree='{"type":"css"}'>生活电器</li>
+                                        </ul>
+                                    </li>
+                                    <li class="jstree-open">手机数码通讯
+                                        <ul>
+                                            <li data-jstree='{"type":"html"}'>智能设备</li>
+                                            <li data-jstree='{"type":"html"}'>手机配件</li>
+                                        </ul>
+                                    </li>
+                                    <li class="jstree-open">电脑办公
+                                        <ul>
+                                            <li data-jstree='{"type":"svg"}'>笔记本</li>
+                                            <li data-jstree='{"type":"svg"}'>台式机</li>
+                                            <li data-jstree='{"type":"svg"}'>电脑配件</li>
+                                        </ul>
+                                    </li>
+                                    <li class="jstree-open">家居
+                                        <ul>
+                                            <li data-jstree='{"type":"img"}'>厨具</li>
+                                            <li data-jstree='{"type":"img"}'>家具</li>
+                                        </ul>
+                                    </li>
+                                    <li class="jstree-open">汽车
+                                        <ul>
+                                            <li data-jstree='{"type":"js"}'>车载电器</li>
+                                            <li data-jstree='{"type":"js"}'>轮胎</li>
+                                            <li data-jstree='{"type":"js"}'>汽车配件</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="footer" th:include="/w/footer :: copyright"></div>
+		</div>
+	</div>
+
+	<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog"
+		aria-hidden="true" style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content animated bounceInRight">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">添加员工</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label class="col-lg-3 control-label">员工ID</label>
+							<div class="col-lg-9">
+								<input type="email" placeholder="请输入员工ID" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">员工名称</label>
+							<div class="col-lg-9">
+								<input type="email" placeholder="请输入员工名称" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">员工密码</label>
+							<div class="col-lg-9">
+								<input type="password" placeholder="请输入员工密码"
+									class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">确认密码</label>
+							<div class="col-lg-9">
+								<input type="password" placeholder="请输入确认密码"
+									class="form-control">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary">确认添加</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Mainly scripts -->
+	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+	
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
+	<script th:src="@{/js/plugins/dataTree/dataTree.min.js}"></script>
+	<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+	<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+	<!-- Peity -->
+	<script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
+
+	<!-- Custom and plugin javascript -->
+	<script th:src="@{/js/inspinia.js}"></script>
+	<script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+	<!-- iCheck -->
+	<script th:src="@{/js/plugins/iCheck/icheck.min.js}"></script>
+
+	<!-- Peity -->
+	<script th:src="@{/js/demo/peity-demo.js}"></script>
+
+	<!-- FooTable -->
+	<script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
+
+	<!-- common -->
+	<script th:src="@{/js/common.js}"></script>
+
+	<script th:inline="javascript">
+		$(document).ready(function() {
+
+			$('#jstree1').jstree({
+				'core' : {
+					'check_callback' : true
+				},
+				'plugins' : [ 'types', 'dnd',"contextmenu" ],
+				'types' : {
+					'default' : {
+						'icon' : 'fa fa-folder'
+					},
+					'html' : {
+						'icon' : 'fa fa-file-code-o'
+					},
+					'svg' : {
+						'icon' : 'fa fa-file-picture-o'
+					},
+					'css' : {
+						'icon' : 'fa fa-file-code-o'
+					},
+					'img' : {
+						'icon' : 'fa fa-file-image-o'
+					},
+					'js' : {
+						'icon' : 'fa fa-file-text-o'
+					}
+
+				}
+			});
+			$('#jstree1').on("changed.jstree", function (e, data) {
+				  console.log(data.instance.get_selected(true)[0].text);
+				  console.log(data.selected);
+				});
+		});
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>纳品明细</title>
+
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/plugins/sweetalert/sweetalert.css}"
+	rel="stylesheet" />
+
+<!-- Data Tables -->
+<link th:href="@{/css/plugins/dataTables/datatables.min.css}"
+	rel="stylesheet">
+
+<link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+
+<link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet" />
+<link th:href="@{/css/plugins/footable/footable.core.css}"
+	rel="stylesheet" />
+
+</head>
+
+<body>
+
+	<div id="wrapper">
+		<nav class="navbar-default navbar-static-side" role="navigation"
+			th:include="/c/nav :: navigation"></nav>
+		<div id="page-wrapper" class="gray-bg">
+			<div class="border-bottom" th:include="/c/header :: headerTop"></div>
+			<div class="row wrapper border-bottom white-bg page-heading"
+				th:fragment="headerNav">
+				<div class="col-lg-10">
+					<h2>纳品明细</h2>
+					<ol class="breadcrumb">
+						<li><a href="#">首页</a></li>
+						<li><a>库存管理</a></li>
+						<li class="active"><strong>纳品明细</strong></li>
+					</ol>
+				</div>
+				<div class="col-lg-2"></div>
+			</div>
+
+			<div class="wrapper wrapper-content animated fadeInRight">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>搜索&amp;操作</h5>
+								<div class="ibox-tools">
+									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+									</a>
+								</div>
+							</div>
+							<div class="ibox-content" style="display: block;">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group z_mb0">
+											<button type="button" class="btn btn-primary"
+												onclick="history.go(-1);">返回一览</button>
+											<button type="button" class="btn btn-success">追加商品</button>
+											<button type="button" class="btn btn-success">打印SKU</button>
+											<button type="button" class="btn btn-success">打印货单</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-12">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>纳品明细</h5>
+								<div class="ibox-tools">
+									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+									</a>
+								</div>
+							</div>
+							<div class="ibox-content">
+								<div class="table-responsive">
+									<table
+										class="table table-striped table-bordered table-hover dataTables-example">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>纳品ID</th>
+												<th>SKU</th>
+												<th>分类</th>
+												<th>名称</th>
+												<th>纳品数量</th>
+												<th>库存</th>
+												<th>货运单号</th>
+												<th>入库数量</th>
+												<th>入库差异</th>
+												<th>状态</th>
+												<th>操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>NP201811060001</td>
+												<td>MC8012MX300</td>
+												<td>フラッシュメモリ</td>
+												<td>Crucial SSD MX300 525GB</td>
+												<td>120</td>
+												<td>可以存放</td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td>申请中</td>
+												<td>
+													<button class="btn btn-info btn-xs dropdown-toggle"
+														type="button" data-toggle="modal" data-target="#myModal"
+														onclick="edit__sheves('1');">
+														<i class="fa fa-edit"></i>编辑
+													</button>
+													<button class="btn btn-danger btn-xs dropdown-toggle"
+														type="button" onClick="check(1)">
+														<i class="fa fa-trash"></i>删除
+													</button>
+												</td>
+											</tr>
+											<tr>
+												<td>2</td>
+												<td>NP201811060001</td>
+												<td>MC8012MX500</td>
+												<td>フラッシュメモリ</td>
+												<td>Crucial SSD MX500 500G</td>
+												<td>120</td>
+												<td>可以存放</td>
+												<td></td>
+												<td></td>
+												<td></td>
+
+												<td>申请中</td>
+												<td>
+													<button class="btn btn-info btn-xs dropdown-toggle"
+														type="button" data-toggle="modal" data-target="#myModal"
+														onclick="edit__sheves('1');">
+														<i class="fa fa-edit"></i>编辑
+													</button>
+													<button class="btn btn-danger btn-xs dropdown-toggle"
+														type="button" onClick="check(1)">
+														<i class="fa fa-trash"></i>删除
+													</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="footer" th:include="/c/footer :: copyright"></div>
+		</div>
+	</div>
+
+	<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog"
+		aria-hidden="true" style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content animated bounceInRight">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">添加商品</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label class="col-lg-3 control-label">商品分类</label>
+							<div class="col-lg-9">
+								<select class="form-control" name="account">
+									<option>选择分类</option>
+									<option>フラッシュメモリ</option>
+									<option>PC周边</option>
+									<option>服装</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">商品SKU</label>
+							<div class="col-lg-9">
+								<input type="email" placeholder="请输入商品SKU" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">商品条码</label>
+							<div class="col-lg-9">
+								<input type="email" placeholder="请输入商品条码" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">商品名称</label>
+							<div class="col-lg-9">
+								<input type="password" placeholder="请输入商品名称"
+									class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">商品形状</label>
+							<div class="col-lg-9">
+								<label class="radio-inline"> <input type="radio"
+									value="option1" name="sex" checked>固体
+								</label> <label class="radio-inline"> <input type="radio"
+									value="option2" name="sex">液体
+								</label> <label class="radio-inline"> <input type="radio"
+									value="option3" name="sex">气体
+								</label>
+
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">长(cm)</label>
+							<div class="col-lg-9">
+								<input type="password" placeholder="请输入长" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">宽(cm)</label>
+							<div class="col-lg-9">
+								<input type="password" placeholder="请输入宽" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">高(cm)</label>
+							<div class="col-lg-9">
+								<input type="password" placeholder="请输入高" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">重量(KG)</label>
+							<div class="col-lg-9">
+								<input type="password" placeholder="请输入重量" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">颜色</label>
+							<div class="col-lg-9">
+								<input type="password" placeholder="请输入颜色" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">备注</label>
+							<div class="col-lg-9">
+								<input type="password" placeholder="" class="form-control">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary">确认添加</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Mainly scripts -->
+	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
+	<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+	<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+	<!-- Data Tables -->
+	<script th:src="@{/js/plugins/dataTables/datatables.min.js}"></script>
+
+	<!-- Peity -->
+	<script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
+
+	<!-- Custom and plugin javascript -->
+	<script th:src="@{/js/inspinia.js}"></script>
+	<script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+	<!-- iCheck -->
+	<script th:src="@{/js/plugins/iCheck/icheck.min.js}"></script>
+
+	<!-- Peity -->
+	<script th:src="@{/js/demo/peity-demo.js}"></script>
+
+	<!-- FooTable -->
+	<script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
+
+	<!-- common -->
+	<script th:src="@{/js/common.js}"></script>
+
+	<script th:inline="javascript">
+		$(document)
+				.ready(
+						function() {
+							$('.dataTables-example')
+									.DataTable(
+											{
+												pageLength : 25,
+												responsive : true,
+												dom : '<"html5buttons"B>lTfgitp',
+												buttons : [
+														{
+															extend : 'copy'
+														},
+														{
+															extend : 'csv'
+														},
+														{
+															extend : 'excel',
+															title : 'ExampleFile'
+														},
+														{
+															extend : 'pdf',
+															title : 'ExampleFile'
+														},
+
+														{
+															extend : 'print',
+															customize : function(
+																	win) {
+																$(
+																		win.document.body)
+																		.addClass(
+																				'white-bg');
+																$(
+																		win.document.body)
+																		.css(
+																				'font-size',
+																				'10px');
+
+																$(
+																		win.document.body)
+																		.find(
+																				'table')
+																		.addClass(
+																				'compact')
+																		.css(
+																				'font-size',
+																				'inherit');
+															}
+														} ]
+
+											});
+
+						});
+	</script>
+
+</body>
+
+</html>

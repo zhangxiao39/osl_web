@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>结算设定</title>
+
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/plugins/sweetalert/sweetalert.css}"
+	rel="stylesheet" />
+<link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+
+<link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet" />
+<link th:href="@{/css/plugins/footable/footable.core.css}"
+	rel="stylesheet" />
+
+</head>
+
+<body>
+
+	<div id="wrapper">
+		<nav class="navbar-default navbar-static-side" role="navigation"
+			th:include="/w/nav :: navigation"></nav>
+		<div id="page-wrapper" class="gray-bg">
+			<div class="border-bottom" th:include="/w/header :: headerTop"></div>
+			<div class="row wrapper border-bottom white-bg page-heading"
+				th:fragment="headerNav">
+				<div class="col-lg-10">
+					<h2>结算设定</h2>
+					<ol class="breadcrumb">
+						<li><a href="#">首页</a></li>
+						<li><a>结算管理</a></li>
+						<li class="active"><strong>结算设定</strong></li>
+					</ol>
+				</div>
+				<div class="col-lg-2"></div>
+			</div>
+
+			<div class="wrapper wrapper-content animated fadeInRight">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>搜索&amp;操作</h5>
+								<div class="ibox-tools">
+									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+									</a>
+								</div>
+							</div>
+							<div class="ibox-content" style="display: block;">
+								<button type="button" class="btn btn-primary"
+									data-toggle="modal" data-target="#myModal">添加结算设定</button>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-12">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>结算设定列表</h5>
+								<div class="ibox-tools">
+									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+									</a>
+								</div>
+							</div>
+							<div class="ibox-content">
+								<table
+									class="table table-striped table-bordered table-hover dataTables-example">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>商家</th>
+											<th>等级</th>
+											<th>类型</th>
+											<th>最小体积(cm3)</th>
+											<th>最大体积(cm3)</th>
+											<th>最小重量(kg)</th>
+											<th>最大重量(kg)</th>
+											<th>费用</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>JNH</td>
+											<td>1</td>
+											<td>入库</td>
+											<td>1</td>
+											<td>100</td>
+											<td>0.01</td>
+											<td>5</td>
+											<td>2</td>
+											<td>
+												<button class="btn btn-info btn-xs dropdown-toggle"
+													type="button" data-toggle="modal" data-target="#myModal"
+													onclick="edit__sheves('1');">
+													<i class="fa fa-edit"></i>编辑
+												</button>
+												<button class="btn btn-danger btn-xs dropdown-toggle"
+													type="button" onClick="check(1)">
+													<i class="fa fa-trash"></i>删除
+												</button>
+											</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>JNH</td>
+											<td>1</td>
+											<td>出库</td>
+											<td>1</td>
+											<td>100</td>
+											<td>0.01</td>
+											<td>5</td>
+											<td>5</td>
+											<td>
+												<button class="btn btn-info btn-xs dropdown-toggle"
+													type="button" data-toggle="modal" data-target="#myModal"
+													onclick="edit__sheves('1');">
+													<i class="fa fa-edit"></i>编辑
+												</button>
+												<button class="btn btn-danger btn-xs dropdown-toggle"
+													type="button" onClick="check(1)">
+													<i class="fa fa-trash"></i>删除
+												</button>
+											</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>JNH</td>
+											<td>1</td>
+											<td>保管</td>
+											<td>1</td>
+											<td>100</td>
+											<td>0.01</td>
+											<td>5</td>
+											<td>1</td>
+											<td>
+												<button class="btn btn-info btn-xs dropdown-toggle"
+													type="button" data-toggle="modal" data-target="#myModal"
+													onclick="edit__sheves('1');">
+													<i class="fa fa-edit"></i>编辑
+												</button>
+												<button class="btn btn-danger btn-xs dropdown-toggle"
+													type="button" onClick="check(1)">
+													<i class="fa fa-trash"></i>删除
+												</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="footer" th:include="/w/footer :: copyright"></div>
+		</div>
+	</div>
+
+	<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog"
+		aria-hidden="true" style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content animated bounceInRight">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">添加结算设定</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label class="col-lg-3 control-label">商家</label>
+							<div class="col-lg-9">
+								<select name="status" id="status" class="form-control">
+									<option value="0" selected="">全部商家</option>
+									<option value="2">JNH</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">等级</label>
+							<div class="col-lg-9">
+								<input type="email" placeholder="请输入等级" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">类型</label>
+							<div class="col-lg-9">
+								<select name="status" id="status" class="form-control">
+									<option value="0" selected="">全部类型</option>
+									<option value="1">入库</option>
+									<option value="2">出库</option>
+									<option value="3">保管</option>
+									<option value="4">废弃</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">最小体积</label>
+							<div class="col-lg-9">
+								<input type="password" placeholder="请输入最小体积"
+									class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">最大体积</label>
+							<div class="col-lg-9">
+								<input type="password" placeholder="请输入最大体积"
+									class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">最小重量</label>
+							<div class="col-lg-9">
+								<input type="password" placeholder="请输入最小重量"
+									class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">最大重量</label>
+							<div class="col-lg-9">
+								<input type="password" placeholder="请输入最大重量"
+									class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">费用</label>
+							<div class="col-lg-9">
+								<input type="password" placeholder="请输入费用" class="form-control">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary">确认添加</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Mainly scripts -->
+	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+	
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
+	<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+	<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+	<!-- Peity -->
+	<script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
+
+	<!-- Custom and plugin javascript -->
+	<script th:src="@{/js/inspinia.js}"></script>
+	<script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+	<!-- iCheck -->
+	<script th:src="@{/js/plugins/iCheck/icheck.min.js}"></script>
+
+	<!-- Peity -->
+	<script th:src="@{/js/demo/peity-demo.js}"></script>
+
+	<!-- FooTable -->
+	<script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
+
+	<!-- common -->
+	<script th:src="@{/js/common.js}"></script>
+
+	<script th:inline="javascript">
+		
+	</script>
+
+</body>
+
+</html>
