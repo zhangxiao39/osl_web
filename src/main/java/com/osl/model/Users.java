@@ -1,17 +1,24 @@
 package com.osl.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import org.springframework.util.DigestUtils;
 
-public class Users {
+import com.osl.common.web.BaseModel;
+
+public class Users extends BaseModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8755754954270645766L;
+	
 	private long id;
     private String user_id;
     private String password;
     private String username;
     private String right;
     private long business_id;
-    private Date addTime;
+    private Timestamp addTime;
     private int status;
     private String url;
     private String bname;
@@ -64,11 +71,11 @@ public class Users {
         this.business_id = business_id;
     }
 
-    public Date getAddtime() {
+    public Timestamp getAddtime() {
         return addTime;
     }
 
-    public void setAddtime(Date addTime) {
+    public void setAddtime(Timestamp addTime) {
         this.addTime = addTime;
     }
 
