@@ -6,12 +6,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.osl.exception.ApplException;
 
 @Component
 public abstract class BaseController<T extends BaseModel>  {
 
     public static final String LOGIN_SESS_ID = "LOGIN_SESS_ID_____";
+    
+    public String ViewUrl = "";
     
 	@Autowired
 	protected HttpServletRequest request;
@@ -82,5 +90,23 @@ public abstract class BaseController<T extends BaseModel>  {
         }
     }
     
+    /**
+            *  处理运行时异常的方法
+     * @param exception 运行时异常
+     * @return ModelAndView实例对象
+     */
+	@ExceptionHandler({ApplException.class})
+	@ResponseStatus(HttpStatus.OK)
+	public ModelAndView processException(ApplException exception) {
+      ModelAndView modelAndView = new ModelAndView();
+      modelAndView.addObject("message", exception.getMessage());
+      modelAndView.addObject("url", this.ViewUrl);
+      BaseModel t = new BaseModel();
+      t.setErrorMsg(exception.getMessage());
+      modelAndView.addObject("usermodel", t);
+      modelAndView.setViewName(this.ViewUrl);
+      return modelAndView;
+	}
+	    
     protected abstract String getPageId();
 }

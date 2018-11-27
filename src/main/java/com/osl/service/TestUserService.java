@@ -9,5 +9,5 @@ public interface TestUserService {
 
 	public List<TestUserEntity> findUserAll();
 	
-	public List<TestUserModel> findUserList();
+	public List<TestUserModel> findUserList() throws Exception;
 }

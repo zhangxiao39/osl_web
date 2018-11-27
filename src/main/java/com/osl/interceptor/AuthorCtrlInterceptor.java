@@ -28,7 +28,6 @@ public class AuthorCtrlInterceptor implements HandlerInterceptor {
 //        } else {
 //            if (!"/osl/testUser".equals(request.getRequestURI())) {
 //            	response.sendRedirect("/osl/testUser");
-//            	return false;
 //            }
 //        }
         return true;

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.osl.common.web.BaseController;
+import com.osl.exception.ApplException;
 import com.osl.mapper.entity.TestUserEntity;
 import com.osl.model.TestUserModel;
 import com.osl.service.TestUserService;
@@ -23,13 +24,24 @@ public class TestUserController extends BaseController<TestUserModel> {
 	@ResponseBody
 	public List<TestUserEntity> testUserFindAll() {
 		return service.findUserAll();
+		
 	}
 	
 	@RequestMapping("/osl/testUserList")
-	public String testUserFindList(Model model) {
+	public String testUserFindList(Model model, TestUserModel userModel) throws Exception {
+//		try {
+//			
+//			List<TestUserModel> userDataList = service.findUserList();
+//			model.addAttribute("testUserList", userDataList);
+//			
+//		} catch (ApplException e) {
+//			userModel.setErrorMsg(e.getMessage());
+//		}
+		this.ViewUrl = "/test/testUser.html";
 		List<TestUserModel> userDataList = service.findUserList();
 		model.addAttribute("testUserList", userDataList);
-		return "test/testUser.html";
+		model.addAttribute("usermodel", userModel);
+		return this.ViewUrl;
 	}
 	
 	@Override
