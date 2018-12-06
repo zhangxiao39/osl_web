@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.osl.model.Users;
-import com.osl.service.UsersService;
+import com.osl.common.web.BaseController;
+import com.osl.model.UserModel;
+import com.osl.service.UserService;
 
 @Controller
-public class LoginController {
+public class LoginController extends BaseController<UserModel>{
 	@Autowired
-	private UsersService service;
+	private UserService service;
 
 	@GetMapping("/business/login")
 	public String dologin(Model model, String url) {
@@ -39,16 +40,17 @@ public class LoginController {
 			return "/c/login";
 		} else {
 			password = DigestUtils.md5DigestAsHex(password.getBytes());
-			Users user1 = service.findByUserName_business(user_id, password, burl);
+			UserModel user1 = service.findByUserName_business(user_id, password, burl);
 			if (user1 == null) {
 				model.addAttribute("erorrMsg", "用户名或者密码不正确");
 				model.addAttribute("burl", burl);
 				return "/c/login";
 			} else {
 				session.setMaxInactiveInterval(30 * 60);
-				session.setAttribute("u_login", user1.getUsername());
-				session.setAttribute("u_burl", burl);
-				session.setAttribute("u_bname", user1.getBname());
+				this.setSessAttr("u_login", user1.getUsername());
+				this.setSessAttr("u_burl", burl);
+				this.setSessAttr("u_bname", user1.getBname());
+				this.setSessAttr("u_bid", user1.getBusinessId());
 				return "redirect:/business/index";
 			}
 		}
@@ -64,9 +66,6 @@ public class LoginController {
 		if (session.getAttribute("u_login") == null) {
 			return "redirect:/business/login";
 		} else {
-			model.addAttribute("uname", session.getAttribute("u_login"));
-			model.addAttribute("bname", session.getAttribute("u_bname"));
-			model.addAttribute("burl", session.getAttribute("u_burl"));
 			return "/c/index";
 		}
 	}
@@ -74,9 +73,13 @@ public class LoginController {
 	@GetMapping("/business/loginout")
 	public String loginout(HttpSession session, String url) {
 		String burl = url;
-		session.setAttribute("u_login", null);
-		session.setAttribute("u_burl", null);
-		session.setAttribute("u_bname", null);
+		this.clearSess();
 		return "redirect:/business/login?url=" + burl;
+	}
+
+	@Override
+	protected String getPageId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -1,9 +1,8 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
+import com.osl.common.web.BaseEntity;
 
-public class ShelvesEntity implements Serializable {
+public class ShelvesEntity extends BaseEntity {
 
 	/**
 	 * 
@@ -11,9 +10,9 @@ public class ShelvesEntity implements Serializable {
 	private static final long serialVersionUID = 2610604201828689346L;
 
 	private long id;
-	private String shelves_id;
+	private String shelvesId;
 	private String name;
-	private long depot_id;
+	private long depotId;
 	private String position;
 	private int layer;
 	private int row;
@@ -21,9 +20,7 @@ public class ShelvesEntity implements Serializable {
 	private double acreage;
 	private String areacode;
 	private double bearing;
-	private long goods_category_id;
-	private int isdele;
-	private Timestamp addtime;
+	private long goodsCategoryId;
 
 	public long getId() {
 		return id;
@@ -33,12 +30,12 @@ public class ShelvesEntity implements Serializable {
 		this.id = id;
 	}
 
-	public String getShelves_id() {
-		return shelves_id;
+	public String getShelvesId() {
+		return shelvesId;
 	}
 
-	public void setShelves_id(String shelves_id) {
-		this.shelves_id = shelves_id;
+	public void setShelvesId(String shelvesId) {
+		this.shelvesId = shelvesId;
 	}
 
 	public String getName() {
@@ -49,12 +46,12 @@ public class ShelvesEntity implements Serializable {
 		this.name = name;
 	}
 
-	public long getDepot_id() {
-		return depot_id;
+	public long getDepotId() {
+		return depotId;
 	}
 
-	public void setDepot_id(long depot_id) {
-		this.depot_id = depot_id;
+	public void setDepotId(long depotId) {
+		this.depotId = depotId;
 	}
 
 	public String getPosition() {
@@ -113,28 +110,12 @@ public class ShelvesEntity implements Serializable {
 		this.bearing = bearing;
 	}
 
-	public long getGoods_category_id() {
-		return goods_category_id;
+	public long getGoodsCategoryId() {
+		return goodsCategoryId;
 	}
 
-	public void setGoods_category_id(long goods_category_id) {
-		this.goods_category_id = goods_category_id;
-	}
-
-	public int getIsdele() {
-		return isdele;
-	}
-
-	public void setIsdele(int isdele) {
-		this.isdele = isdele;
-	}
-
-	public Timestamp getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
+	public void setGoodsCategoryId(long goodsCategoryId) {
+		this.goodsCategoryId = goodsCategoryId;
 	}
 
 }

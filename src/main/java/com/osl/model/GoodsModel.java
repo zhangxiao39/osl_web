@@ -14,17 +14,19 @@ public class GoodsModel extends BaseModel {
 	private static final long serialVersionUID = -6377691010821265641L;
 
 	private long id;
+	private int categoryId;
+	private String categoryName;
 	private String sku;
+	private String barcode;
 	private String name;
+	private int shape;
 	private double volume;
 	private double length;
 	private double width;
 	private double height;
 	private double weight;
-	private BigDecimal price;
-	private int business_id;
+	private int businessId;
 	private String color;
-	private Date validity_time;
 	private int isdele;
 	private String remark;
 	private Timestamp addtime;
@@ -45,12 +47,28 @@ public class GoodsModel extends BaseModel {
 		this.sku = sku;
 	}
 
+	public String getBarcode() {
+		return barcode;
+	}
+
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getShape() {
+		return shape;
+	}
+
+	public void setShape(int shape) {
+		this.shape = shape;
 	}
 
 	public double getVolume() {
@@ -93,20 +111,28 @@ public class GoodsModel extends BaseModel {
 		this.weight = weight;
 	}
 
-	public BigDecimal getPrice() {
-		return price;
+	public int getCategoryId() {
+		return categoryId;
 	}
 
-	public void setPrice(BigDecimal price) {
-		this.price = price;
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
 
-	public int getBusiness_id() {
-		return business_id;
+	public String getCategoryName() {
+		return categoryName;
 	}
 
-	public void setBusiness_id(int business_id) {
-		this.business_id = business_id;
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	public int getBusinessId() {
+		return businessId;
+	}
+
+	public void setBusinessId(int businessId) {
+		this.businessId = businessId;
 	}
 
 	public String getColor() {
@@ -115,14 +141,6 @@ public class GoodsModel extends BaseModel {
 
 	public void setColor(String color) {
 		this.color = color;
-	}
-
-	public Date getValidity_time() {
-		return validity_time;
-	}
-
-	public void setValidity_time(Date validity_time) {
-		this.validity_time = validity_time;
 	}
 
 	public int getIsdele() {

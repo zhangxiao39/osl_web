@@ -1,10 +1,10 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 
-public class OutputEntity implements Serializable{
+import com.osl.common.web.BaseEntity;
+
+public class OutputEntity extends BaseEntity {
 
 	/**
 	 * 
@@ -12,16 +12,14 @@ public class OutputEntity implements Serializable{
 	private static final long serialVersionUID = 7738523941206255545L;
 	
 	private long id;
-	private String output_id;
-	private Date output_time;
-	private int sku_nums;
-	private int goods_nums;
+	private String outputId;
+	private Date outputTime;
+	private int skuNums;
+	private int goodsNums;
 	private int status;
-	private long business_id;
-	private long warehoise_id;
-	private int isdele;
+	private long businessId;
+	private long warehoiseId;
 	private String oper;
-	private Timestamp addtime;
 
 	public long getId() {
 		return id;
@@ -31,36 +29,36 @@ public class OutputEntity implements Serializable{
 		this.id = id;
 	}
 
-	public String getOutput_id() {
-		return output_id;
+	public String getOutputId() {
+		return outputId;
 	}
 
-	public void setOutput_id(String output_id) {
-		this.output_id = output_id;
+	public void setOutputId(String outputId) {
+		this.outputId = outputId;
 	}
 
-	public Date getOutput_time() {
-		return output_time;
+	public Date getOutputTime() {
+		return outputTime;
 	}
 
-	public void setOutput_time(Date output_time) {
-		this.output_time = output_time;
+	public void setOutputTime(Date outputTime) {
+		this.outputTime = outputTime;
 	}
 
-	public int getSku_nums() {
-		return sku_nums;
+	public int getSkuNums() {
+		return skuNums;
 	}
 
-	public void setSku_nums(int sku_nums) {
-		this.sku_nums = sku_nums;
+	public void setSkuNums(int skuNums) {
+		this.skuNums = skuNums;
 	}
 
-	public int getGoods_nums() {
-		return goods_nums;
+	public int getGoodsNums() {
+		return goodsNums;
 	}
 
-	public void setGoods_nums(int goods_nums) {
-		this.goods_nums = goods_nums;
+	public void setGoodsNums(int goodsNums) {
+		this.goodsNums = goodsNums;
 	}
 
 	public int getStatus() {
@@ -71,28 +69,20 @@ public class OutputEntity implements Serializable{
 		this.status = status;
 	}
 
-	public long getBusiness_id() {
-		return business_id;
+	public long getBusinessId() {
+		return businessId;
 	}
 
-	public void setBusiness_id(long business_id) {
-		this.business_id = business_id;
+	public void setBusinessId(long businessId) {
+		this.businessId = businessId;
 	}
 
-	public long getWarehoise_id() {
-		return warehoise_id;
+	public long getWarehoiseId() {
+		return warehoiseId;
 	}
 
-	public void setWarehoise_id(long warehoise_id) {
-		this.warehoise_id = warehoise_id;
-	}
-
-	public int getIsdele() {
-		return isdele;
-	}
-
-	public void setIsdele(int isdele) {
-		this.isdele = isdele;
+	public void setWarehoiseId(long warehoiseId) {
+		this.warehoiseId = warehoiseId;
 	}
 
 	public String getOper() {
@@ -101,14 +91,6 @@ public class OutputEntity implements Serializable{
 
 	public void setOper(String oper) {
 		this.oper = oper;
-	}
-
-	public Timestamp getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
 	}
 
 }

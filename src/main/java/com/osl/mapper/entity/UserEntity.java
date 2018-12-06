@@ -1,11 +1,10 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-
 import org.springframework.util.DigestUtils;
 
-public class UserEntity implements Serializable{
+import com.osl.common.web.BaseEntity;
+
+public class UserEntity extends BaseEntity {
 
 	/**
 	 * 
@@ -13,12 +12,11 @@ public class UserEntity implements Serializable{
 	private static final long serialVersionUID = 446756133368831879L;
 	
 	private long id;
-    private String user_id;
+    private String userId;
     private String password;
     private String username;
     private String right;
-    private long business_id;
-    private Timestamp addTime;
+    private long businessId;
     private int status;
     private String url;
     private String bname;
@@ -31,15 +29,15 @@ public class UserEntity implements Serializable{
         this.id = id;
     }
 
-	public String getuser_id() {
-        return user_id;
-    }
+    public String getUserId() {
+		return userId;
+	}
 
-    public void setuser_id(String user_id) {
-        this.user_id = user_id;
-    }
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
-    public String getPassword() {
+	public String getPassword() {
         return password;
     }
 
@@ -62,24 +60,16 @@ public class UserEntity implements Serializable{
     public void setRight(String right) {
         this.right = right;
     }
-    
-    public long getbusiness_id() {
-        return business_id;
-    }
 
-    public void setbusiness_id(long business_id) {
-        this.business_id = business_id;
-    }
+    public long getBusinessId() {
+		return businessId;
+	}
 
-    public Timestamp getAddtime() {
-        return addTime;
-    }
+	public void setBusinessId(long businessId) {
+		this.businessId = businessId;
+	}
 
-    public void setAddtime(Timestamp addTime) {
-        this.addTime = addTime;
-    }
-
-    public int getStatus() {
+	public int getStatus() {
         return status;
     }
 

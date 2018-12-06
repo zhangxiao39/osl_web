@@ -1,9 +1,10 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
-public class LogEntity implements Serializable{
+import com.osl.common.web.BaseEntity;
+
+public class LogEntity extends BaseEntity {
 
 	/**
 	 * 
@@ -11,9 +12,9 @@ public class LogEntity implements Serializable{
 	private static final long serialVersionUID = 8954634063951074797L;
 	
 	private long id;
-	private long user_id;
-	private Date oper_time;
-	private String oper_ip;
+	private long userId;
+	private Date operTime;
+	private String operIp;
 	private String type;
 	private String remark;
 
@@ -25,28 +26,28 @@ public class LogEntity implements Serializable{
 		this.id = id;
 	}
 
-	public long getUser_id() {
-		return user_id;
+	public long getUserId() {
+		return userId;
 	}
 
-	public void setUser_id(long user_id) {
-		this.user_id = user_id;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
-	public Date getOper_time() {
-		return oper_time;
+	public Date getOperTime() {
+		return operTime;
 	}
 
-	public void setOper_time(Date oper_time) {
-		this.oper_time = oper_time;
+	public void setOperTime(Date operTime) {
+		this.operTime = operTime;
 	}
 
-	public String getOper_ip() {
-		return oper_ip;
+	public String getOperIp() {
+		return operIp;
 	}
 
-	public void setOper_ip(String oper_ip) {
-		this.oper_ip = oper_ip;
+	public void setOperIp(String operIp) {
+		this.operIp = operIp;
 	}
 
 	public String getType() {

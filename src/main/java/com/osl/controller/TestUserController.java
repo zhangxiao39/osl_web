@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.osl.common.web.BaseController;
 import com.osl.exception.ApplException;
 import com.osl.mapper.entity.TestUserEntity;
+import com.osl.mapper.entity.UserEntity;
 import com.osl.model.TestUserModel;
 import com.osl.service.TestUserService;
 
@@ -24,6 +25,13 @@ public class TestUserController extends BaseController<TestUserModel> {
 	@ResponseBody
 	public List<TestUserEntity> testUserFindAll() {
 		return service.findUserAll();
+		
+	}
+	
+	@RequestMapping("/osl/userList")
+	@ResponseBody
+	public List<UserEntity> userFindAll() {
+		return service.findUserListAll();
 		
 	}
 	

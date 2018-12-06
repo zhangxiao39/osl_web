@@ -1,9 +1,8 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
+import com.osl.common.web.BaseEntity;
 
-public class SellplatformEntity implements Serializable {
+public class SellplatformEntity extends BaseEntity {
 
 	/**
 	 * 
@@ -12,9 +11,7 @@ public class SellplatformEntity implements Serializable {
 
 	private long id;
 	private String name;
-	private long business_id;
-	private int isdele;
-	private Timestamp addtime;
+	private long businessId;
 
 	public long getId() {
 		return id;
@@ -32,27 +29,12 @@ public class SellplatformEntity implements Serializable {
 		this.name = name;
 	}
 
-	public long getBusiness_id() {
-		return business_id;
+	public long getBusinessId() {
+		return businessId;
 	}
 
-	public void setBusiness_id(long business_id) {
-		this.business_id = business_id;
+	public void setBusinessId(long businessId) {
+		this.businessId = businessId;
 	}
 
-	public int getIsdele() {
-		return isdele;
-	}
-
-	public void setIsdele(int isdele) {
-		this.isdele = isdele;
-	}
-
-	public Timestamp getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
-	}
 }

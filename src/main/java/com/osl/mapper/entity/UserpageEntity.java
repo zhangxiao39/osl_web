@@ -1,9 +1,8 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
+import com.osl.common.web.BaseEntity;
 
-public class UserpageEntity implements Serializable{
+public class UserpageEntity extends BaseEntity {
 
 	/**
 	 * 
@@ -11,10 +10,9 @@ public class UserpageEntity implements Serializable{
 	private static final long serialVersionUID = -6919326105892722442L;
 	
 	private long id;
-	private long page_id;
-	private long user_id;
+	private long pageId;
+	private long userId;
 	private int right;
-	private Timestamp addtime;
 
 	public long getId() {
 		return id;
@@ -24,20 +22,20 @@ public class UserpageEntity implements Serializable{
 		this.id = id;
 	}
 
-	public long getPage_id() {
-		return page_id;
+	public long getPageId() {
+		return pageId;
 	}
 
-	public void setPage_id(long page_id) {
-		this.page_id = page_id;
+	public void setPageId(long pageId) {
+		this.pageId = pageId;
 	}
 
-	public long getUser_id() {
-		return user_id;
+	public long getUserId() {
+		return userId;
 	}
 
-	public void setUser_id(long user_id) {
-		this.user_id = user_id;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	public int getRight() {
@@ -46,14 +44,6 @@ public class UserpageEntity implements Serializable{
 
 	public void setRight(int right) {
 		this.right = right;
-	}
-
-	public Timestamp getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
 	}
 
 }

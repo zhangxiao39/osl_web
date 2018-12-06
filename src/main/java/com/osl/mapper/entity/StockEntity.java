@@ -1,9 +1,10 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
-public class StockEntity implements Serializable {
+import com.osl.common.web.BaseEntity;
+
+public class StockEntity extends BaseEntity {
 
 	/**
 	 * 
@@ -11,16 +12,16 @@ public class StockEntity implements Serializable {
 	private static final long serialVersionUID = -729969280894158993L;
 
 	private long id;
-	private String manage_id;
+	private String manageId;
 	private String sku;
-	private long depot_id;
-	private long shelves_id;
+	private long depotId;
+	private long shelvesId;
 	private int nums;
-	private int goods_type;
+	private int goodsType;
 	private Date intime;
 	private double volume;
-	private Date produce_time;
-	private Date validity_time;
+	private Date produceTime;
+	private Date validityTime;
 
 	public long getId() {
 		return id;
@@ -30,12 +31,12 @@ public class StockEntity implements Serializable {
 		this.id = id;
 	}
 
-	public String getManage_id() {
-		return manage_id;
+	public String getManageId() {
+		return manageId;
 	}
 
-	public void setManage_id(String manage_id) {
-		this.manage_id = manage_id;
+	public void setManageId(String manageId) {
+		this.manageId = manageId;
 	}
 
 	public String getSku() {
@@ -46,20 +47,20 @@ public class StockEntity implements Serializable {
 		this.sku = sku;
 	}
 
-	public long getDepot_id() {
-		return depot_id;
+	public long getDepotId() {
+		return depotId;
 	}
 
-	public void setDepot_id(long depot_id) {
-		this.depot_id = depot_id;
+	public void setDepotId(long depotId) {
+		this.depotId = depotId;
 	}
 
-	public long getShelves_id() {
-		return shelves_id;
+	public long getShelvesId() {
+		return shelvesId;
 	}
 
-	public void setShelves_id(long shelves_id) {
-		this.shelves_id = shelves_id;
+	public void setShelvesId(long shelvesId) {
+		this.shelvesId = shelvesId;
 	}
 
 	public int getNums() {
@@ -70,12 +71,12 @@ public class StockEntity implements Serializable {
 		this.nums = nums;
 	}
 
-	public int getGoods_type() {
-		return goods_type;
+	public int getGoodsType() {
+		return goodsType;
 	}
 
-	public void setGoods_type(int goods_type) {
-		this.goods_type = goods_type;
+	public void setGoodsType(int goodsType) {
+		this.goodsType = goodsType;
 	}
 
 	public Date getIntime() {
@@ -94,20 +95,20 @@ public class StockEntity implements Serializable {
 		this.volume = volume;
 	}
 
-	public Date getProduce_time() {
-		return produce_time;
+	public Date getProduceTime() {
+		return produceTime;
 	}
 
-	public void setProduce_time(Date produce_time) {
-		this.produce_time = produce_time;
+	public void setProduceTime(Date produceTime) {
+		this.produceTime = produceTime;
 	}
 
-	public Date getValidity_time() {
-		return validity_time;
+	public Date getValidityTime() {
+		return validityTime;
 	}
 
-	public void setValidity_time(Date validity_time) {
-		this.validity_time = validity_time;
+	public void setValidityTime(Date validityTime) {
+		this.validityTime = validityTime;
 	}
 
 }

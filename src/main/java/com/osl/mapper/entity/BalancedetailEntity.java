@@ -1,10 +1,10 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 
-public class BalancedetailEntity implements Serializable{
+import com.osl.common.web.BaseEntity;
+
+public class BalancedetailEntity extends BaseEntity {
 
 	/**
 	 * 
@@ -12,15 +12,14 @@ public class BalancedetailEntity implements Serializable{
 	private static final long serialVersionUID = 4027773832668439956L;
 	
 	private long id;
-	private String detail_id;
+	private String detailId;
 	private String sku;
 	private int nums;
 	private double volume;
 	private double weight;
 	private BigDecimal price;
 	private int type;
-	private String balance_id;
-	private Timestamp addtime;
+	private String balanceId;
 
 	public long getId() {
 		return id;
@@ -30,12 +29,12 @@ public class BalancedetailEntity implements Serializable{
 		this.id = id;
 	}
 
-	public String getDetail_id() {
-		return detail_id;
+	public String getDetailId() {
+		return detailId;
 	}
 
-	public void setDetail_id(String detail_id) {
-		this.detail_id = detail_id;
+	public void setDetailId(String detailId) {
+		this.detailId = detailId;
 	}
 
 	public String getSku() {
@@ -86,20 +85,12 @@ public class BalancedetailEntity implements Serializable{
 		this.type = type;
 	}
 
-	public String getBalance_id() {
-		return balance_id;
+	public String getBalanceId() {
+		return balanceId;
 	}
 
-	public void setBalance_id(String balance_id) {
-		this.balance_id = balance_id;
-	}
-
-	public Timestamp getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
+	public void setBalanceId(String balanceId) {
+		this.balanceId = balanceId;
 	}
 
 }

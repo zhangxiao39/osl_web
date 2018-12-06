@@ -1,10 +1,10 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 
-public class InputdetailEntity implements Serializable {
+import com.osl.common.web.BaseEntity;
+
+public class InputdetailEntity extends BaseEntity {
 
 	/**
 	 * 
@@ -12,20 +12,18 @@ public class InputdetailEntity implements Serializable {
 	private static final long serialVersionUID = -2573774686422360672L;
 	
 	private long id;
-	private String detail_id;
+	private String detailId;
 	private String sku;
 	private int nums;
-	private long depot_id;
-	private long shelves_id;
-	private int inner_nums;
-	private int inner_goods_nums;
+	private long depotId;
+	private long shelvesId;
+	private int innerNums;
+	private int innerGoodsNums;
 	private int type;
-	private long ship_id;
-	private int goods_type;
-	private String input_id;
-	private Date validity_time;
-	private int isdele;
-	private Timestamp addtime;
+	private long shipId;
+	private int goodsType;
+	private String inputId;
+	private Date validityTime;
 
 	public long getId() {
 		return id;
@@ -35,12 +33,12 @@ public class InputdetailEntity implements Serializable {
 		this.id = id;
 	}
 
-	public String getDetail_id() {
-		return detail_id;
+	public String getDetailId() {
+		return detailId;
 	}
 
-	public void setDetail_id(String detail_id) {
-		this.detail_id = detail_id;
+	public void setDetailId(String detailId) {
+		this.detailId = detailId;
 	}
 
 	public String getSku() {
@@ -59,36 +57,36 @@ public class InputdetailEntity implements Serializable {
 		this.nums = nums;
 	}
 
-	public long getDepot_id() {
-		return depot_id;
+	public long getDepotId() {
+		return depotId;
 	}
 
-	public void setDepot_id(long depot_id) {
-		this.depot_id = depot_id;
+	public void setDepotId(long depotId) {
+		this.depotId = depotId;
 	}
 
-	public long getShelves_id() {
-		return shelves_id;
+	public long getShelvesId() {
+		return shelvesId;
 	}
 
-	public void setShelves_id(long shelves_id) {
-		this.shelves_id = shelves_id;
+	public void setShelvesId(long shelvesId) {
+		this.shelvesId = shelvesId;
 	}
 
-	public int getInner_nums() {
-		return inner_nums;
+	public int getInnerNums() {
+		return innerNums;
 	}
 
-	public void setInner_nums(int inner_nums) {
-		this.inner_nums = inner_nums;
+	public void setInnerNums(int innerNums) {
+		this.innerNums = innerNums;
 	}
 
-	public int getInner_goods_nums() {
-		return inner_goods_nums;
+	public int getInnerGoodsNums() {
+		return innerGoodsNums;
 	}
 
-	public void setInner_goods_nums(int inner_goods_nums) {
-		this.inner_goods_nums = inner_goods_nums;
+	public void setInnerGoodsNums(int innerGoodsNums) {
+		this.innerGoodsNums = innerGoodsNums;
 	}
 
 	public int getType() {
@@ -99,52 +97,36 @@ public class InputdetailEntity implements Serializable {
 		this.type = type;
 	}
 
-	public long getShip_id() {
-		return ship_id;
+	public long getShipId() {
+		return shipId;
 	}
 
-	public void setShip_id(long ship_id) {
-		this.ship_id = ship_id;
+	public void setShipId(long shipId) {
+		this.shipId = shipId;
 	}
 
-	public int getGoods_type() {
-		return goods_type;
+	public int getGoodsType() {
+		return goodsType;
 	}
 
-	public void setGoods_type(int goods_type) {
-		this.goods_type = goods_type;
+	public void setGoodsType(int goodsType) {
+		this.goodsType = goodsType;
 	}
 
-	public String getInput_id() {
-		return input_id;
+	public String getInputId() {
+		return inputId;
 	}
 
-	public void setInput_id(String input_id) {
-		this.input_id = input_id;
+	public void setInputId(String inputId) {
+		this.inputId = inputId;
 	}
 
-	public Date getValidity_time() {
-		return validity_time;
+	public Date getValidityTime() {
+		return validityTime;
 	}
 
-	public void setValidity_time(Date validity_time) {
-		this.validity_time = validity_time;
-	}
-
-	public int getIsdele() {
-		return isdele;
-	}
-
-	public void setIsdele(int isdele) {
-		this.isdele = isdele;
-	}
-
-	public Timestamp getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
+	public void setValidityTime(Date validityTime) {
+		this.validityTime = validityTime;
 	}
 
 }

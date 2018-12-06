@@ -1,10 +1,10 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 
-public class BalancebaseEntity implements Serializable {
+import com.osl.common.web.BaseEntity;
+
+public class BalancebaseEntity extends BaseEntity {
 
 	/**
 	 * 
@@ -13,15 +13,14 @@ public class BalancebaseEntity implements Serializable {
 
 	private long id;
 	private int grade;
-	private long business_id;
-	private long warehouse_id;
-	private double min_volume;
-	private double max_volume;
-	private double min_weight;
-	private double max_weight;
+	private long businessId;
+	private long warehouseId;
+	private double minVolume;
+	private double maxVolume;
+	private double minWeight;
+	private double maxWeight;
 	private int type;
 	private BigDecimal price;
-	private Timestamp addtime;
 
 	public long getId() {
 		return id;
@@ -39,52 +38,52 @@ public class BalancebaseEntity implements Serializable {
 		this.grade = grade;
 	}
 
-	public long getBusiness_id() {
-		return business_id;
+	public long getBusinessId() {
+		return businessId;
 	}
 
-	public void setBusiness_id(long business_id) {
-		this.business_id = business_id;
+	public void setBusinessId(long businessId) {
+		this.businessId = businessId;
 	}
 
-	public long getWarehouse_id() {
-		return warehouse_id;
+	public long getWarehouseId() {
+		return warehouseId;
 	}
 
-	public void setWarehouse_id(long warehouse_id) {
-		this.warehouse_id = warehouse_id;
+	public void setWarehouseId(long warehouseId) {
+		this.warehouseId = warehouseId;
 	}
 
-	public double getMin_volume() {
-		return min_volume;
+	public double getMinVolume() {
+		return minVolume;
 	}
 
-	public void setMin_volume(double min_volume) {
-		this.min_volume = min_volume;
+	public void setMinVolume(double minVolume) {
+		this.minVolume = minVolume;
 	}
 
-	public double getMax_volume() {
-		return max_volume;
+	public double getMaxVolume() {
+		return maxVolume;
 	}
 
-	public void setMax_volume(double max_volume) {
-		this.max_volume = max_volume;
+	public void setMaxVolume(double maxVolume) {
+		this.maxVolume = maxVolume;
 	}
 
-	public double getMin_weight() {
-		return min_weight;
+	public double getMinWeight() {
+		return minWeight;
 	}
 
-	public void setMin_weight(double min_weight) {
-		this.min_weight = min_weight;
+	public void setMinWeight(double minWeight) {
+		this.minWeight = minWeight;
 	}
 
-	public double getMax_weight() {
-		return max_weight;
+	public double getMaxWeight() {
+		return maxWeight;
 	}
 
-	public void setMax_weight(double max_weight) {
-		this.max_weight = max_weight;
+	public void setMaxWeight(double maxWeight) {
+		this.maxWeight = maxWeight;
 	}
 
 	public int getType() {
@@ -101,14 +100,6 @@ public class BalancebaseEntity implements Serializable {
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
-	}
-
-	public Timestamp getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
 	}
 
 }

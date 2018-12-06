@@ -1,11 +1,11 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 
-public class PayEntity implements Serializable{
+import com.osl.common.web.BaseEntity;
+
+public class PayEntity extends BaseEntity {
 
 	/**
 	 * 
@@ -13,14 +13,13 @@ public class PayEntity implements Serializable{
 	private static final long serialVersionUID = -8455940346069851724L;
 	
 	private long id;
-	private String pay_id;
+	private String payId;
 	private Date date;
 	private BigDecimal totle;
 	private int status;
-	private String request_id;
-	private long business_id;
-	private long warehouse_id;
-	private Timestamp addtime;
+	private String requestId;
+	private long businessId;
+	private long warehouseId;
 
 	public long getId() {
 		return id;
@@ -30,12 +29,12 @@ public class PayEntity implements Serializable{
 		this.id = id;
 	}
 
-	public String getPay_id() {
-		return pay_id;
+	public String getPayId() {
+		return payId;
 	}
 
-	public void setPay_id(String pay_id) {
-		this.pay_id = pay_id;
+	public void setPayId(String payId) {
+		this.payId = payId;
 	}
 
 	public Date getDate() {
@@ -62,36 +61,28 @@ public class PayEntity implements Serializable{
 		this.status = status;
 	}
 
-	public String getRequest_id() {
-		return request_id;
+	public String getRequestId() {
+		return requestId;
 	}
 
-	public void setRequest_id(String request_id) {
-		this.request_id = request_id;
+	public void setRequestId(String requestId) {
+		this.requestId = requestId;
 	}
 
-	public long getBusiness_id() {
-		return business_id;
+	public long getBusinessId() {
+		return businessId;
 	}
 
-	public void setBusiness_id(long business_id) {
-		this.business_id = business_id;
+	public void setBusinessId(long businessId) {
+		this.businessId = businessId;
 	}
 
-	public long getWarehouse_id() {
-		return warehouse_id;
+	public long getWarehouseId() {
+		return warehouseId;
 	}
 
-	public void setWarehouse_id(long warehouse_id) {
-		this.warehouse_id = warehouse_id;
-	}
-
-	public Timestamp getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
+	public void setWarehouseId(long warehouseId) {
+		this.warehouseId = warehouseId;
 	}
 
 }

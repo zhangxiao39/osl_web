@@ -5,11 +5,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.osl.common.UtilConv;
 import com.osl.exception.ApplException;
 import com.osl.mapper.TestUserMapper;
+import com.osl.mapper.UserMapper;
 import com.osl.mapper.entity.TestUserEntity;
+import com.osl.mapper.entity.UserEntity;
 import com.osl.model.TestUserModel;
 import com.osl.service.TestUserService;
 
@@ -18,6 +21,9 @@ public class TestUserServiceImpl implements TestUserService {
 	
 	@Autowired
 	private TestUserMapper testUserMapper;
+	
+	@Autowired
+	private UserMapper userMapper;
 
 	@Override
 	public List<TestUserEntity> findUserAll() {
@@ -25,6 +31,7 @@ public class TestUserServiceImpl implements TestUserService {
 		return testUserMapper.findAll();
 	}
 
+	@Transactional
 	@Override
 	public List<TestUserModel> findUserList() throws Exception {
 		List<TestUserModel> testUserList = null;
@@ -45,6 +52,12 @@ public class TestUserServiceImpl implements TestUserService {
 //			}
 //		}
 //		return testUserList;
+	}
+
+	@Override
+	public List<UserEntity> findUserListAll() {
+		// TODO Auto-generated method stub
+		return userMapper.findAll();
 	}
 
 }

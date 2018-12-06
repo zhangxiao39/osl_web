@@ -1,9 +1,8 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
+import com.osl.common.web.BaseEntity;
 
-public class CombinationEntity implements Serializable {
+public class CombinationEntity extends BaseEntity {
 
 	/**
 	 * 
@@ -11,13 +10,11 @@ public class CombinationEntity implements Serializable {
 	private static final long serialVersionUID = -7035246633898565039L;
 
 	private long id;
-	private String combinaton_id;
+	private String combinationId;
 	private String name;
 	private String sku;
 	private int nums;
-	private long business_id;
-	private int isdele;
-	private Timestamp addtime;
+	private long businessId;
 
 	public long getId() {
 		return id;
@@ -27,12 +24,13 @@ public class CombinationEntity implements Serializable {
 		this.id = id;
 	}
 
-	public String getCombinaton_id() {
-		return combinaton_id;
+
+	public String getCombinationId() {
+		return combinationId;
 	}
 
-	public void setCombinaton_id(String combinaton_id) {
-		this.combinaton_id = combinaton_id;
+	public void setCombinationId(String combinationId) {
+		this.combinationId = combinationId;
 	}
 
 	public String getName() {
@@ -59,28 +57,12 @@ public class CombinationEntity implements Serializable {
 		this.nums = nums;
 	}
 
-	public long getBusiness_id() {
-		return business_id;
+	public long getBusinessId() {
+		return businessId;
 	}
 
-	public void setBusiness_id(long business_id) {
-		this.business_id = business_id;
-	}
-
-	public int getIsdele() {
-		return isdele;
-	}
-
-	public void setIsdele(int isdele) {
-		this.isdele = isdele;
-	}
-
-	public Timestamp getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
+	public void setBusinessId(long businessId) {
+		this.businessId = businessId;
 	}
 
 }

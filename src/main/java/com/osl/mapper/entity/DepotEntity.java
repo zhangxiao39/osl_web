@@ -1,9 +1,8 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
+import com.osl.common.web.BaseEntity;
 
-public class DepotEntity implements Serializable {
+public class DepotEntity extends BaseEntity {
 
 	/**
 	 * 
@@ -11,13 +10,11 @@ public class DepotEntity implements Serializable {
 	private static final long serialVersionUID = 6584555484868362545L;
 
 	private long id;
-	private String depot_id;
+	private String depotId;
 	private String name;
 	private String address;
 	private String postcode;
-	private long business_id;
-	private int isdele;
-	private Timestamp addtime;
+	private long businessId;
 
 	public long getId() {
 		return id;
@@ -27,12 +24,12 @@ public class DepotEntity implements Serializable {
 		this.id = id;
 	}
 
-	public String getDepot_id() {
-		return depot_id;
+	public String getDepotId() {
+		return depotId;
 	}
 
-	public void setDepot_id(String depot_id) {
-		this.depot_id = depot_id;
+	public void setDepotId(String depotId) {
+		this.depotId = depotId;
 	}
 
 	public String getName() {
@@ -59,27 +56,12 @@ public class DepotEntity implements Serializable {
 		this.postcode = postcode;
 	}
 
-	public long getBusiness_id() {
-		return business_id;
+	public long getBusinessId() {
+		return businessId;
 	}
 
-	public void setBusiness_id(long business_id) {
-		this.business_id = business_id;
+	public void setBusinessId(long businessId) {
+		this.businessId = businessId;
 	}
 
-	public int getIsdele() {
-		return isdele;
-	}
-
-	public void setIsdele(int isdele) {
-		this.isdele = isdele;
-	}
-
-	public Timestamp getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
-	}
 }

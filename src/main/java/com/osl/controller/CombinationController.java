@@ -1,0 +1,72 @@
+package com.osl.controller;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.osl.common.web.BaseController;
+import com.osl.mapper.entity.CombinationEntity;
+import com.osl.model.CombinationModel;
+import com.osl.service.CombinationService;
+
+@Controller
+public class CombinationController extends BaseController<CombinationModel> {
+
+	@Autowired
+	private CombinationService service;
+
+	@RequestMapping(value = "/b/goods/combinationlist")
+	public String b_g_combinationlistManage(Model model, HttpSession session) {
+		if (session.getAttribute("u_login") == null) {
+			return "redirect:/business/login";
+		} else {
+			this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
+			List<CombinationModel> _combinationList = service.find_combinationBusiness_All(myBusiness_id);
+			model.addAttribute("item", _combinationList);
+			model.addAttribute("nav_active2", 3);
+			return "/c/goods/combinationlist";
+		}
+	}
+
+	@RequestMapping(value = "/osl/combination", method = RequestMethod.POST)
+	@ResponseBody
+	public String addCombination(Model model, HttpSession session,@RequestBody String _json) throws JsonParseException, JsonMappingException, IOException {
+		if (session.getAttribute("u_login") == null) {
+			return "redirect:/admin/login";
+		} else {
+			ObjectMapper mapper = new ObjectMapper();
+			JavaType javaType = mapper.getTypeFactory().constructParametricType(List.class, CombinationEntity.class);
+			List<CombinationEntity> _combinationEntitys = mapper.readValue(_json, javaType);
+			if (_combinationEntitys.size() > 0) {
+				for (int i = 0; i < _combinationEntitys.size(); i++) {
+					CombinationEntity _combinationEntity = _combinationEntitys.get(i);
+					int ok = service.insertCombination(_combinationEntity);
+				}
+				return "ok";
+			} else {
+				return "fail";
+			}
+		}
+	}
+
+	@Override
+	protected String getPageId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

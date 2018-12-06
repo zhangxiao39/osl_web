@@ -1,9 +1,8 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
+import com.osl.common.web.BaseEntity;
 
-public class BusinessEntity implements Serializable {
+public class BusinessEntity extends BaseEntity {
 	/**
 	 * 
 	 */
@@ -14,13 +13,12 @@ public class BusinessEntity implements Serializable {
 	private String address;
 	private String postcode;
 	private String url;
-	private int parent_id;
+	private int parentId;
 	private String tele;
 	private String tax;
 	private String email;
 	private String contacts;
 	private int type;
-	private Timestamp addtime;
 	private String right;
 
 	public long getId() {
@@ -63,12 +61,12 @@ public class BusinessEntity implements Serializable {
 		this.url = url;
 	}
 
-	public int getParent_id() {
-		return parent_id;
+	public int getParentId() {
+		return parentId;
 	}
 
-	public void setParent_id(int parent_id) {
-		this.parent_id = parent_id;
+	public void setParentId(int parentId) {
+		this.parentId = parentId;
 	}
 
 	public String getTele() {
@@ -109,14 +107,6 @@ public class BusinessEntity implements Serializable {
 
 	public void setType(int type) {
 		this.type = type;
-	}
-
-	public Timestamp getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
 	}
 
 	public String getRight() {

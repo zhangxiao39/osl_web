@@ -12,13 +12,14 @@ public class CombinationModel extends BaseModel {
 	private static final long serialVersionUID = -632367102705708464L;
 
 	private long id;
-	private String combinaton_id;
+	private String combinationId;
 	private String name;
 	private String sku;
 	private int nums;
-	private long business_id;
+	private long businessId;
 	private int isdele;
 	private Timestamp addtime;
+	private String goodsname;
 
 	public long getId() {
 		return id;
@@ -28,12 +29,31 @@ public class CombinationModel extends BaseModel {
 		this.id = id;
 	}
 
-	public String getCombinaton_id() {
-		return combinaton_id;
+
+	public String getGoodsname() {
+		return goodsname;
 	}
 
-	public void setCombinaton_id(String combinaton_id) {
-		this.combinaton_id = combinaton_id;
+	public void setGoodsname(String goodsname) {
+		this.goodsname = goodsname;
+	}
+
+
+
+	public String getCombinationId() {
+		return combinationId;
+	}
+
+	public void setCombinationId(String combinationId) {
+		this.combinationId = combinationId;
+	}
+
+	public long getBusinessId() {
+		return businessId;
+	}
+
+	public void setBusinessId(long businessId) {
+		this.businessId = businessId;
 	}
 
 	public String getName() {
@@ -58,14 +78,6 @@ public class CombinationModel extends BaseModel {
 
 	public void setNums(int nums) {
 		this.nums = nums;
-	}
-
-	public long getBusiness_id() {
-		return business_id;
-	}
-
-	public void setBusiness_id(long business_id) {
-		this.business_id = business_id;
 	}
 
 	public int getIsdele() {

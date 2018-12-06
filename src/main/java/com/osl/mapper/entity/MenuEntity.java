@@ -1,9 +1,8 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
+import com.osl.common.web.BaseEntity;
 
-public class MenuEntity implements Serializable{
+public class MenuEntity extends BaseEntity {
 
 	/**
 	 * 
@@ -12,10 +11,9 @@ public class MenuEntity implements Serializable{
 	
 	private long id;
 	private String name;
-	private long parent_id;
+	private long parentId;
 	private int level;
 	private String position;
-	private Timestamp addtime;
 
 	public long getId() {
 		return id;
@@ -33,12 +31,12 @@ public class MenuEntity implements Serializable{
 		this.name = name;
 	}
 
-	public long getParent_id() {
-		return parent_id;
+	public long getParentId() {
+		return parentId;
 	}
 
-	public void setParent_id(long parent_id) {
-		this.parent_id = parent_id;
+	public void setParentId(long parentId) {
+		this.parentId = parentId;
 	}
 
 	public int getLevel() {
@@ -55,14 +53,6 @@ public class MenuEntity implements Serializable{
 
 	public void setPosition(String position) {
 		this.position = position;
-	}
-
-	public Timestamp getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
 	}
 
 }

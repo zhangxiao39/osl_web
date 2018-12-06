@@ -1,11 +1,11 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 
-public class BalancerequestEntity implements Serializable{
+import com.osl.common.web.BaseEntity;
+
+public class BalancerequestEntity extends BaseEntity {
 
 	/**
 	 * 
@@ -13,14 +13,13 @@ public class BalancerequestEntity implements Serializable{
 	private static final long serialVersionUID = -196575242289533304L;
 	
 	private long id;
-	private String request_id;
-	private String balance_id;
-	private Date request_time;
+	private String requestId;
+	private String balanceId;
+	private Date requestTime;
 	private BigDecimal total;
 	private int status;
-	private long business_id;
-	private long warehouse_id;
-	private Timestamp addtime;
+	private long businessId;
+	private long warehouseId;
 
 	public long getId() {
 		return id;
@@ -30,28 +29,28 @@ public class BalancerequestEntity implements Serializable{
 		this.id = id;
 	}
 
-	public String getRequest_id() {
-		return request_id;
+	public String getRequestId() {
+		return requestId;
 	}
 
-	public void setRequest_id(String request_id) {
-		this.request_id = request_id;
+	public void setRequestId(String requestId) {
+		this.requestId = requestId;
 	}
 
-	public String getBalance_id() {
-		return balance_id;
+	public String getBalanceId() {
+		return balanceId;
 	}
 
-	public void setBalance_id(String balance_id) {
-		this.balance_id = balance_id;
+	public void setBalanceId(String balanceId) {
+		this.balanceId = balanceId;
 	}
 
-	public Date getRequest_time() {
-		return request_time;
+	public Date getRequestTime() {
+		return requestTime;
 	}
 
-	public void setRequest_time(Date request_time) {
-		this.request_time = request_time;
+	public void setRequestTime(Date requestTime) {
+		this.requestTime = requestTime;
 	}
 
 	public BigDecimal getTotal() {
@@ -70,28 +69,20 @@ public class BalancerequestEntity implements Serializable{
 		this.status = status;
 	}
 
-	public long getBusiness_id() {
-		return business_id;
+	public long getBusinessId() {
+		return businessId;
 	}
 
-	public void setBusiness_id(long business_id) {
-		this.business_id = business_id;
+	public void setBusinessId(long businessId) {
+		this.businessId = businessId;
 	}
 
-	public long getWarehouse_id() {
-		return warehouse_id;
+	public long getWarehouseId() {
+		return warehouseId;
 	}
 
-	public void setWarehouse_id(long warehouse_id) {
-		this.warehouse_id = warehouse_id;
-	}
-
-	public Timestamp getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
+	public void setWarehouseId(long warehouseId) {
+		this.warehouseId = warehouseId;
 	}
 
 }

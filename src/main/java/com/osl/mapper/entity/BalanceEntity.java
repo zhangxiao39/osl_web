@@ -1,10 +1,11 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
-public class BalanceEntity implements Serializable{
+import com.osl.common.web.BaseEntity;
+
+public class BalanceEntity extends BaseEntity {
 
 	/**
 	 * 
@@ -12,14 +13,14 @@ public class BalanceEntity implements Serializable{
 	private static final long serialVersionUID = -4448412349604280810L;
 	
 	private long id;
-	private String balance_id;
+	private String balanceId;
 	private Date date;
 	private BigDecimal total;
-	private BigDecimal output_price;
-	private BigDecimal input_price;
-	private BigDecimal keep_price;
-	private long business_id;
-	private long warehouse_id;
+	private BigDecimal outputPrice;
+	private BigDecimal inputPrice;
+	private BigDecimal keepPrice;
+	private long businessId;
+	private long warehouseId;
 
 	public long getId() {
 		return id;
@@ -29,12 +30,12 @@ public class BalanceEntity implements Serializable{
 		this.id = id;
 	}
 
-	public String getBalance_id() {
-		return balance_id;
+	public String getBalanceId() {
+		return balanceId;
 	}
 
-	public void setBalance_id(String balance_id) {
-		this.balance_id = balance_id;
+	public void setBalanceId(String balanceId) {
+		this.balanceId = balanceId;
 	}
 
 	public Date getDate() {
@@ -53,44 +54,44 @@ public class BalanceEntity implements Serializable{
 		this.total = total;
 	}
 
-	public BigDecimal getOutput_price() {
-		return output_price;
+	public BigDecimal getOutputPrice() {
+		return outputPrice;
 	}
 
-	public void setOutput_price(BigDecimal output_price) {
-		this.output_price = output_price;
+	public void setOutputPrice(BigDecimal outputPrice) {
+		this.outputPrice = outputPrice;
 	}
 
-	public BigDecimal getInput_price() {
-		return input_price;
+	public BigDecimal getInputPrice() {
+		return inputPrice;
 	}
 
-	public void setInput_price(BigDecimal input_price) {
-		this.input_price = input_price;
+	public void setInputPrice(BigDecimal inputPrice) {
+		this.inputPrice = inputPrice;
 	}
 
-	public BigDecimal getKeep_price() {
-		return keep_price;
+	public BigDecimal getKeepPrice() {
+		return keepPrice;
 	}
 
-	public void setKeep_price(BigDecimal keep_price) {
-		this.keep_price = keep_price;
+	public void setKeepPrice(BigDecimal keepPrice) {
+		this.keepPrice = keepPrice;
 	}
 
-	public long getBusiness_id() {
-		return business_id;
+	public long getBusinessId() {
+		return businessId;
 	}
 
-	public void setBusiness_id(long business_id) {
-		this.business_id = business_id;
+	public void setBusinessId(long businessId) {
+		this.businessId = businessId;
 	}
 
-	public long getWarehouse_id() {
-		return warehouse_id;
+	public long getWarehouseId() {
+		return warehouseId;
 	}
 
-	public void setWarehouse_id(long warehouse_id) {
-		this.warehouse_id = warehouse_id;
+	public void setWarehouseId(long warehouseId) {
+		this.warehouseId = warehouseId;
 	}
 
 }

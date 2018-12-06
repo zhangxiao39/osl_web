@@ -1,32 +1,29 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Timestamp;
 
-public class GoodsEntity implements Serializable {
+import com.osl.common.web.BaseEntity;
+
+public class GoodsEntity extends BaseEntity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8180151520387193211L;
-	
+
 	private long id;
+	private int categoryId;
 	private String sku;
+	private String barcode;
 	private String name;
+	private int shape;
 	private double volume;
 	private double length;
 	private double width;
 	private double height;
 	private double weight;
-	private BigDecimal price;
-	private int business_id;
+	private int businessId;
 	private String color;
-	private Date validity_time;
-	private int isdele;
 	private String remark;
-	private Timestamp addtime;
 
 	public long getId() {
 		return id;
@@ -34,6 +31,24 @@ public class GoodsEntity implements Serializable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+
+
+	public int getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public int getBusinessId() {
+		return businessId;
+	}
+
+	public void setBusinessId(int businessId) {
+		this.businessId = businessId;
 	}
 
 	public String getSku() {
@@ -44,12 +59,28 @@ public class GoodsEntity implements Serializable {
 		this.sku = sku;
 	}
 
+	public String getBarcode() {
+		return barcode;
+	}
+
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getShape() {
+		return shape;
+	}
+
+	public void setShape(int shape) {
+		this.shape = shape;
 	}
 
 	public double getVolume() {
@@ -92,21 +123,6 @@ public class GoodsEntity implements Serializable {
 		this.weight = weight;
 	}
 
-	public BigDecimal getPrice() {
-		return price;
-	}
-
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
-
-	public int getBusiness_id() {
-		return business_id;
-	}
-
-	public void setBusiness_id(int business_id) {
-		this.business_id = business_id;
-	}
 
 	public String getColor() {
 		return color;
@@ -116,36 +132,12 @@ public class GoodsEntity implements Serializable {
 		this.color = color;
 	}
 
-	public Date getValidity_time() {
-		return validity_time;
-	}
-
-	public void setValidity_time(Date validity_time) {
-		this.validity_time = validity_time;
-	}
-
-	public int getIsdele() {
-		return isdele;
-	}
-
-	public void setIsdele(int isdele) {
-		this.isdele = isdele;
-	}
-
 	public String getRemark() {
 		return remark;
 	}
 
 	public void setRemark(String remark) {
 		this.remark = remark;
-	}
-
-	public Timestamp getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
 	}
 
 }

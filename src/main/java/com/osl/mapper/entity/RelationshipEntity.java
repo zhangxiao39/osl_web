@@ -1,9 +1,8 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
+import com.osl.common.web.BaseEntity;
 
-public class RelationshipEntity implements Serializable {
+public class RelationshipEntity extends BaseEntity {
 
 	/**
 	 * 
@@ -11,10 +10,9 @@ public class RelationshipEntity implements Serializable {
 	private static final long serialVersionUID = 9065180641037261334L;
 
 	private long id;
-	private int business_id;
-	private int warehouse_id;
+	private int businessId;
+	private int warehouseId;
 	private int ship;
-	private Timestamp addtime;
 
 	public long getId() {
 		return id;
@@ -24,20 +22,20 @@ public class RelationshipEntity implements Serializable {
 		this.id = id;
 	}
 
-	public int getBusiness_id() {
-		return business_id;
+	public int getBusinessId() {
+		return businessId;
 	}
 
-	public void setBusiness_id(int business_id) {
-		this.business_id = business_id;
+	public void setBusinessId(int businessId) {
+		this.businessId = businessId;
 	}
 
-	public int getWarehouse_id() {
-		return warehouse_id;
+	public int getWarehouseId() {
+		return warehouseId;
 	}
 
-	public void setWarehouse_id(int warehouse_id) {
-		this.warehouse_id = warehouse_id;
+	public void setWarehouseId(int warehouseId) {
+		this.warehouseId = warehouseId;
 	}
 
 	public int getShip() {
@@ -48,11 +46,4 @@ public class RelationshipEntity implements Serializable {
 		this.ship = ship;
 	}
 
-	public Timestamp getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
-	}
 }

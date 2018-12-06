@@ -1,9 +1,8 @@
 package com.osl.mapper.entity;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
+import com.osl.common.web.BaseEntity;
 
-public class ReturndetailEntity implements Serializable {
+public class ReturndetailEntity extends BaseEntity {
 
 	/**
 	 * 
@@ -11,21 +10,19 @@ public class ReturndetailEntity implements Serializable {
 	private static final long serialVersionUID = -8149428640955128379L;
 
 	private long id;
-	private String detail_id;
+	private String detailId;
 	private String sku;
 	private int nums;
-	private int inner_nums;
-	private int inner_goods_nums;
+	private int innerNums;
+	private int innerGoodsNums;
 	private int type;
-	private String ship_id;
-	private int goods_type;
-	private String return_id;
-	private String order_id;
+	private String shipId;
+	private int goodsType;
+	private String returnId;
+	private String orderId;
 	private String customer;
-	private String send_id;
-	private int stutas;
-	private int isdele;
-	private Timestamp addtime;
+	private String sendId;
+	private int status;
 
 	public long getId() {
 		return id;
@@ -35,12 +32,12 @@ public class ReturndetailEntity implements Serializable {
 		this.id = id;
 	}
 
-	public String getDetail_id() {
-		return detail_id;
+	public String getDetailId() {
+		return detailId;
 	}
 
-	public void setDetail_id(String detail_id) {
-		this.detail_id = detail_id;
+	public void setDetailId(String detailId) {
+		this.detailId = detailId;
 	}
 
 	public String getSku() {
@@ -59,20 +56,20 @@ public class ReturndetailEntity implements Serializable {
 		this.nums = nums;
 	}
 
-	public int getInner_nums() {
-		return inner_nums;
+	public int getInnerNums() {
+		return innerNums;
 	}
 
-	public void setInner_nums(int inner_nums) {
-		this.inner_nums = inner_nums;
+	public void setInnerNums(int innerNums) {
+		this.innerNums = innerNums;
 	}
 
-	public int getInner_goods_nums() {
-		return inner_goods_nums;
+	public int getInnerGoodsNums() {
+		return innerGoodsNums;
 	}
 
-	public void setInner_goods_nums(int inner_goods_nums) {
-		this.inner_goods_nums = inner_goods_nums;
+	public void setInnerGoodsNums(int innerGoodsNums) {
+		this.innerGoodsNums = innerGoodsNums;
 	}
 
 	public int getType() {
@@ -83,36 +80,36 @@ public class ReturndetailEntity implements Serializable {
 		this.type = type;
 	}
 
-	public String getShip_id() {
-		return ship_id;
+	public String getShipId() {
+		return shipId;
 	}
 
-	public void setShip_id(String ship_id) {
-		this.ship_id = ship_id;
+	public void setShipId(String shipId) {
+		this.shipId = shipId;
 	}
 
-	public int getGoods_type() {
-		return goods_type;
+	public int getGoodsType() {
+		return goodsType;
 	}
 
-	public void setGoods_type(int goods_type) {
-		this.goods_type = goods_type;
+	public void setGoodsType(int goodsType) {
+		this.goodsType = goodsType;
 	}
 
-	public String getReturn_id() {
-		return return_id;
+	public String getReturnId() {
+		return returnId;
 	}
 
-	public void setReturn_id(String return_id) {
-		this.return_id = return_id;
+	public void setReturnId(String returnId) {
+		this.returnId = returnId;
 	}
 
-	public String getOrder_id() {
-		return order_id;
+	public String getOrderId() {
+		return orderId;
 	}
 
-	public void setOrder_id(String order_id) {
-		this.order_id = order_id;
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 
 	public String getCustomer() {
@@ -123,36 +120,20 @@ public class ReturndetailEntity implements Serializable {
 		this.customer = customer;
 	}
 
-	public String getSend_id() {
-		return send_id;
+	public String getSendId() {
+		return sendId;
 	}
 
-	public void setSend_id(String send_id) {
-		this.send_id = send_id;
+	public void setSendId(String sendId) {
+		this.sendId = sendId;
 	}
 
-	public int getStutas() {
-		return stutas;
+	public int getStatus() {
+		return status;
 	}
 
-	public void setStutas(int stutas) {
-		this.stutas = stutas;
-	}
-
-	public int getIsdele() {
-		return isdele;
-	}
-
-	public void setIsdele(int isdele) {
-		this.isdele = isdele;
-	}
-
-	public Timestamp getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 }
