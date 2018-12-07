@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +22,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.osl.common.web.BaseController;
 import com.osl.mapper.entity.CombinationEntity;
+import com.osl.mapper.entity.GoodsEntity;
 import com.osl.model.CombinationModel;
 import com.osl.service.CombinationService;
 
@@ -45,7 +47,8 @@ public class CombinationController extends BaseController<CombinationModel> {
 
 	@RequestMapping(value = "/osl/combination", method = RequestMethod.POST)
 	@ResponseBody
-	public String addCombination(Model model, HttpSession session,@RequestBody String _json) throws JsonParseException, JsonMappingException, IOException {
+	public String addCombination(Model model, HttpSession session, @RequestBody String _json)
+			throws JsonParseException, JsonMappingException, IOException {
 		if (session.getAttribute("u_login") == null) {
 			return "redirect:/admin/login";
 		} else {
@@ -53,14 +56,56 @@ public class CombinationController extends BaseController<CombinationModel> {
 			JavaType javaType = mapper.getTypeFactory().constructParametricType(List.class, CombinationEntity.class);
 			List<CombinationEntity> _combinationEntitys = mapper.readValue(_json, javaType);
 			if (_combinationEntitys.size() > 0) {
-				for (int i = 0; i < _combinationEntitys.size(); i++) {
-					CombinationEntity _combinationEntity = _combinationEntitys.get(i);
-					int ok = service.insertCombination(_combinationEntity);
+				if (service.insertCombinations(_combinationEntitys) > 0) {
+					return "ok";
+				} else {
+					return "fail";
 				}
-				return "ok";
 			} else {
 				return "fail";
 			}
+		}
+	}
+	
+	@RequestMapping(value = "/osl/combination", method = RequestMethod.PUT)
+	@ResponseBody
+	public String updateCombination(Model model, HttpSession session, @RequestBody String _json)
+			throws JsonParseException, JsonMappingException, IOException {
+		if (session.getAttribute("u_login") == null) {
+			return "redirect:/admin/login";
+		} else {
+			ObjectMapper mapper = new ObjectMapper();
+			JavaType javaType = mapper.getTypeFactory().constructParametricType(List.class, CombinationEntity.class);
+			List<CombinationEntity> _combinationEntitys = mapper.readValue(_json, javaType);
+			if (_combinationEntitys.size() > 0) {
+				if (service.updateCombinations(_combinationEntitys) > 0) {
+					return "ok";
+				} else {
+					return "fail";
+				}
+			} else {
+				return "fail";
+			}
+		}
+	}
+
+	@RequestMapping(value = "/osl/combinationshow/{combinationId}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<CombinationModel> showInfoByCombnationId(@PathVariable(required = true) String combinationId) {
+		this.myBusiness_id = Integer.valueOf(this.getSessAttr("u_bid").toString());
+		List<CombinationModel> _info = service.find_combinationByCode(combinationId, this.myBusiness_id);
+		return _info;
+	}
+	
+	@RequestMapping(value = "/osl/combination/{combinationId}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public String deleteProduct(@PathVariable(required = true) String combinationId) {
+		this.myBusiness_id = Integer.valueOf(this.getSessAttr("u_bid").toString());
+		int ok = service.deleteByCode(combinationId, this.myBusiness_id);
+		if (ok > 0) {
+			return "ok";
+		} else {
+			return "fail";
 		}
 	}
 

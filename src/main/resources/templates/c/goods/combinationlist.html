@@ -6,7 +6,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>组合品列表</title>
+<title>组合品列表 | 海外仓</title>
 
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 <link th:href="@{/css/plugins/sweetalert/sweetalert.css}"
@@ -132,7 +132,7 @@
 														type="button" data-toggle="modal" data-target="#myModal"  th:onclick="showInfo([[${c.combinationId}]])">
 														<i class="fa fa-edit"></i>编辑
 													</button>
-													<button class="btn btn-danger btn-xs dropdown-toggle" type="button" th:onclick="|javascript:deleteUser(${c.id})|">
+													<button class="btn btn-danger btn-xs dropdown-toggle" type="button" th:onclick="deleteInfo([[${c.combinationId}]])">
 														<i class="fa fa-trash"></i>删除
 													</button>
 												</td>

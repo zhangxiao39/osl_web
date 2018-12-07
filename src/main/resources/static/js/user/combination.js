@@ -81,16 +81,17 @@ $(function() {
 		$("#mode").val("POST");
 		validform().resetForm();
 		$(".form-control").removeClass("error");
+		i = 0;
 	});
 });
 function showInfo(id) {
 	$.ajax({
-		url : "/osl/combination/" + id,
+		url : "/osl/combinationshow/" + id,
 		type : "get",
 		success : function(data) {
-			$("#combinationId").val(data.categoryId);
-			$("#name").val(data.sku);
-			$("#id").val(id);
+			$("#combinationId").val(data[0].combinationId);
+			$("#name").val(data[0].name);
+			formatGoodsTable(data);
 			$("#mode").val("PUT");
 		},
 		error : function(e) {
@@ -98,7 +99,7 @@ function showInfo(id) {
 		}
 	});
 }
-function deleteUser(id) {
+function deleteInfo(id) {
 	swal({
 		title : "您确定要删除这条信息吗",
 		text : "删除后将无法恢复，请谨慎操作！",
@@ -112,13 +113,13 @@ function deleteUser(id) {
 	}, function(isConfirm) {
 		if (isConfirm) {
 			$.ajax({
-				url : "/osl/goods/" + id,
+				url : "/osl/combination/" + id,
 				type : "delete",
 				success : function(data) {
 					if (data == "ok") {
 						swal({
 							title : "删除成功！",
-							text : "成功删除了一条商品信息。",
+							text : "成功删除了一条组合品信息。",
 							type : "success"
 						}, function() {
 							window.location.reload();
@@ -208,4 +209,22 @@ function initData() {
 		};
 		postData.push(_tmpData);
 	});
+}
+function formatGoodsTable(data) {
+	if (data != "" && data != undefined) {
+		for (index in data) {
+			var rowTem = '<tr>'
+					+ '<td>'
+					+ data[index].sku
+					+ '</td>'
+					+ '<td>'
+					+ data[index].goodsname
+					+ '</td>'
+					+ '<td><input type="Text" name="nums" value="'+data[index].nums+'" class="z_inputl_50" /></td>'
+					+ '<td><button class="btn btn-danger btn-xs dropdown-toggle" type="button" onClick="delRow(this)"><i class="fa fa-trash"></i>删除</button></td>'
+					+ '</tr>';
+			$("#qryTable tbody:last").append(rowTem);
+			i++;
+		}
+	}
 }

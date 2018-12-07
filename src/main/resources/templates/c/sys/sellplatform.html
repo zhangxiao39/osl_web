@@ -6,13 +6,17 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>销售平台管理</title>
+<title>销售平台管理 | 海外仓</title>
 
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 <link th:href="@{/css/plugins/sweetalert/sweetalert.css}"
 	rel="stylesheet" />
 <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
 <link th:href="@{/css/style.css}" rel="stylesheet" />
+
+<!-- Data Tables -->
+<link th:href="@{/css/plugins/dataTables/datatables.min.css}"
+	rel="stylesheet">
 
 <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet" />
 <link th:href="@{/css/plugins/footable/footable.core.css}"
@@ -78,36 +82,20 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>1</td>
-											<td>p01</td>
-											<td>雅虎</td>
+										<tr th:each="s,sIndex:${item}">
+											<td th:text="${sIndex.count}">1</td>
+											<td th:text="${s.platformId}">p01</td>
+											<td th:text="${s.name}">雅虎</td>
 											<td>
 												<button class="btn btn-info btn-xs dropdown-toggle"
-													type="button" data-toggle="modal" data-target="#myModal"
-													onclick="edit__sheves('1');">
-													<i class="fa fa-edit"></i>编辑
-												</button>
-												<button class="btn btn-danger btn-xs dropdown-toggle"
-													type="button" onClick="check(1)">
-													<i class="fa fa-trash"></i>删除
-												</button>
-											</td>
-										</tr>
-										<tr>
-											<td>2</td>
-											<td>p02</td>
-											<td>趣天</td>
-											<td>
-												<button class="btn btn-info btn-xs dropdown-toggle"
-													type="button" data-toggle="modal" data-target="#myModal"
-													onclick="edit__sheves('1');">
-													<i class="fa fa-edit"></i>编辑
-												</button>
-												<button class="btn btn-danger btn-xs dropdown-toggle"
-													type="button" onClick="check(1)">
-													<i class="fa fa-trash"></i>删除
-												</button>
+														type="button" data-toggle="modal" data-target="#myModal"
+														th:onclick="|javascript:showInfo(${s.id})|">
+														<i class="fa fa-edit"></i>编辑
+													</button>
+													<button class="btn btn-danger btn-xs dropdown-toggle"
+														type="button" th:onclick="|javascript:deleteInfo(${s.id})|">
+														<i class="fa fa-trash"></i>删除
+													</button>
 											</td>
 										</tr>
 									</tbody>
@@ -129,27 +117,32 @@
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
 					</button>
-					<h4 class="modal-title">添加销售平台</h4>
+					<h4 class="modal-title">销售平台信息</h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal">
+					<form class="form-horizontal" id="myform">
 						<div class="form-group">
 							<label class="col-lg-3 control-label">平台ID</label>
 							<div class="col-lg-9">
-								<input type="email" placeholder="请输入平台ID" class="form-control">
+								<input type="text" placeholder="请输入平台ID" class="form-control"
+									name="platformId" id="platformId">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">平台名称</label>
 							<div class="col-lg-9">
-								<input type="email" placeholder="请输入平台名称" class="form-control">
+								<input type="text" placeholder="请输入平台名称" class="form-control"
+									name="name" id="name"> <input type="hidden"
+									name="businessId" th:value="${session.u_bid}"> <input
+									type="hidden" name="id" value="0" id="id"> <input
+									type="hidden" name="mode" value="POST" id="mode">
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary">确认添加</button>
+					<button type="button" class="btn btn-primary" id="btn_submit">确认保存</button>
 				</div>
 			</div>
 		</div>
@@ -157,11 +150,16 @@
 
 	<!-- Mainly scripts -->
 	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
-	
+
 	<script th:src="@{/js/bootstrap.min.js}"></script>
 	<script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
 	<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
 	<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+	
+	<script th:src="@{/js/jquery.validate.min.js}"></script>
+
+	<!-- Data Tables -->
+	<script th:src="@{/js/plugins/dataTables/datatables.min.js}"></script>
 
 	<!-- Peity -->
 	<script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
@@ -181,6 +179,7 @@
 
 	<!-- common -->
 	<script th:src="@{/js/common.js}"></script>
+	<script th:src="@{/js/user/sellplatform.js}"></script>
 
 	<script th:inline="javascript">
 		

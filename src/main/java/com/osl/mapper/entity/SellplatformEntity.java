@@ -10,6 +10,7 @@ public class SellplatformEntity extends BaseEntity {
 	private static final long serialVersionUID = -1171583413496210880L;
 
 	private long id;
+	private String platformId;
 	private String name;
 	private long businessId;
 
@@ -19,6 +20,16 @@ public class SellplatformEntity extends BaseEntity {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	
+
+	public String getPlatformId() {
+		return platformId;
+	}
+
+	public void setPlatformId(String platformId) {
+		this.platformId = platformId;
 	}
 
 	public String getName() {

@@ -64,17 +64,5 @@ public class SystemController {
 			return "/w/sys/rightManage";
 		}
 	}
-	
-	@RequestMapping(value = "/b/sys/shopManage")
-	public String b_shopManage(Model model, HttpSession session) {
-		if (session.getAttribute("u_login") == null) {
-			return "redirect:/admin/login";
-		} else {
-			model.addAttribute("uname", session.getAttribute("u_login"));
-			model.addAttribute("bname", session.getAttribute("u_bname"));
-			model.addAttribute("burl", session.getAttribute("u_burl"));
-			model.addAttribute("nav_active6", 5);
-			return "/c/sys/shopManage";
-		}
-	}
+
 }

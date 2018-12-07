@@ -15,4 +15,19 @@
 		where t_combination.delete_flg=0 and t_goods.sku=t_combination.sku and
 		t_combination.business_id=#{bid}
 	</select>
+	<select id="find_combinationByCode"
+		resultType="com.osl.model.CombinationModel">
+		select
+		t_combination.*,t_goods.name as goodsname from
+		t_goods,t_combination
+		where t_combination.delete_flg=0 and
+		t_goods.sku=t_combination.sku and
+		t_combination.business_id=#{bid} and
+		t_combination.combination_id=#{combinationId}
+	</select>
+	<update id="deleteByCode">
+		update t_combination set
+		delete_flg=1 where
+		business_id=#{bid} and combination_id=#{combinationId}
+	</update>
 </mapper>

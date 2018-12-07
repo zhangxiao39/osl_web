@@ -9,9 +9,19 @@ import com.osl.model.CombinationModel;
 
 @Mapper
 public interface CombinationMapper {
-	
-	public int insertCombination(CombinationEntity _combination);
-	
+
+	public int insertCombinations(List<CombinationEntity> _combinations);
+
 	public List<CombinationModel> find_combinationBusiness_All(int bid);
+
+	public int insertCombination(CombinationEntity _combination);
+
+	public List<CombinationModel> find_combinationByCode(String combinationId, int bid);
+
+	public int deleteByCode(String combinationId, int bid);
+
+	public int updateCombinations(List<CombinationEntity> _combinations);
+
+	public int updateCombination(CombinationEntity _combination, int bid);
 
 }

@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import com.osl.common.web.BaseModel;
 
-public class SellplatfomModel extends BaseModel {
+public class SellplatformModel extends BaseModel {
 
 	/**
 	 * 
@@ -12,6 +12,7 @@ public class SellplatfomModel extends BaseModel {
 	private static final long serialVersionUID = -3346402568011650966L;
 
 	private long id;
+	private String platformId;
 	private String name;
 	private long business_id;
 	private int isdele;
@@ -23,6 +24,15 @@ public class SellplatfomModel extends BaseModel {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+
+	public String getPlatformId() {
+		return platformId;
+	}
+
+	public void setPlatformId(String platformId) {
+		this.platformId = platformId;
 	}
 
 	public String getName() {

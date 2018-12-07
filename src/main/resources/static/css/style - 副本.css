@@ -4711,7 +4711,7 @@ body.mini-navbar.fixed-sidebar .logo-element {
 }
 .logo-name {
   color: #e6e6e6;
-  font-size: 120px;
+  font-size: 180px;
   font-weight: 800;
   letter-spacing: -10px;
   margin-bottom: 0;
@@ -8559,60 +8559,4 @@ body.md-skin {
   #page-wrapper {
     margin: 0;
   }
-}
-
-/*------------------------------*/
-.z-t {
-	margin-top: 23px;
-}
-
-.z_mb0 {
-	margin-bottom: 0px;
-}
-
-.z_ml5 {
-	margin-left: 5px;
-}
-
-.z_pbv {
-	padding-bottom: 10px;
-}
-
-.z_inputl_50 {
-	width: 50px;
-}
-
-.z_inputl_100 {
-	width: 100px;
-}
-
-.modal-body {
-	clear: both;
-}
-
-.modal-body>.sk-spinner {
-	display: none;
-}
-
-.modal-body.sk-loading {
-	position: relative;
-}
-
-.modal-body.sk-loading:after {
-	content: '';
-	background-color: rgba(255, 255, 255, 0.7);
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-}
-
-.modal-body.sk-loading>.sk-spinner {
-	display: block;
-	position: absolute;
-	top: 40%;
-	left: 0;
-	right: 0;
-	z-index: 2000;
 }

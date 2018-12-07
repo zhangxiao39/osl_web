@@ -56,33 +56,19 @@ var CONSTANT = {
 function validform() {
 	return $("#myform").validate({
 		rules : {
-			categoryId : {
+			platformId : {
 				required : true,
-				range : [ 1, 10000000 ]
-			},
-			sku : {
-				required : true
 			},
 			name : {
-				required : true
-			},
-			volume : {
 				required : true
 			}
 		},
 		messages : {
-			categoryId : {
-				required : "请选择商品分类",
-				range : "请选择商品分类"
-			},
-			sku : {
-				required : "请输入商品SKU",
+			platformId : {
+				required : "请输入平台ID",
 			},
 			name : {
 				required : "请输入商品名称"
-			},
-			volume : {
-				required : "请再次输入商品体积",
 			}
 		}
 	});
@@ -130,14 +116,14 @@ $(function() {
 	$('#btn_submit').click(function() {
 		if (validform().form()) {
 			$.ajax({
-				url : "/osl/goods",
+				url : "/osl/sellplatform",
 				type : $("#mode").val(),
 				data : $("#myform").serialize(),
 				success : function(data) {
 					if (data == "ok") {
 						swal({
 							title : "保存成功！",
-							text : "成功保存了一条商品信息。",
+							text : "成功保存了一条销售平台信息。",
 							type : "success"
 						}, function() {
 							window.location.reload();
@@ -157,18 +143,8 @@ $(function() {
 		}
 	});
 	$("#myModal").on("hidden.bs.modal", function() {
-		$("#categoryId").val("0");
-		$("#sku").val("");
-		$("#barcode").val("");
+		$("#platformId").val("");
 		$("#name").val("");
-		setShapeChecked(1);
-		$("#length").val("");
-		$("#width").val("");
-		$("#height").val("");
-		$("#volume").val("");
-		$("#weight").val("");
-		$("#color").val("");
-		$("#remark").val("");
 		$("#id").val("0");
 		$("#mode").val("POST");
 		validform().resetForm();
@@ -177,21 +153,11 @@ $(function() {
 });
 function showInfo(id) {
 	$.ajax({
-		url : "/osl/goods/" + id,
+		url : "/osl/sellplatform/" + id,
 		type : "get",
 		success : function(data) {
-			$("#categoryId").val(data.categoryId);
-			$("#sku").val(data.sku);
-			$("#barcode").val(data.barcode);
+			$("#platformId").val(data.platformId);
 			$("#name").val(data.name);
-			setShapeChecked(data.shape);
-			$("#length").val(data.length);
-			$("#width").val(data.width);
-			$("#height").val(data.height);
-			$("#volume").val(data.volume);
-			$("#weight").val(data.weight);
-			$("#color").val(data.color);
-			$("#remark").val(data.remark);
 			$("#id").val(id);
 			$("#mode").val("PUT");
 		},
@@ -214,13 +180,13 @@ function deleteInfo(id) {
 	}, function(isConfirm) {
 		if (isConfirm) {
 			$.ajax({
-				url : "/osl/goods/" + id,
+				url : "/osl/sellplatform/" + id,
 				type : "delete",
 				success : function(data) {
 					if (data == "ok") {
 						swal({
 							title : "删除成功！",
-							text : "成功删除了一条商品信息。",
+							text : "成功删除了一条销售平台信息。",
 							type : "success"
 						}, function() {
 							window.location.reload();
@@ -245,10 +211,4 @@ function deleteInfo(id) {
 			})
 		}
 	})
-}
-function setShapeChecked(v) {
-	$('input[name="shape"]').each(function(index) {
-		$('input[name="shape"]').eq(index).removeAttr('checked');
-	});
-	$("input[name='shape'][value='" + v + "']").attr('checked', 'checked');
 }
