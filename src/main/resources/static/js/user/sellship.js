@@ -56,33 +56,27 @@ var CONSTANT = {
 function validform() {
 	return $("#myform").validate({
 		rules : {
-			categoryId : {
+			platformId : {
 				required : true,
 				range : [ 1, 10000000 ]
 			},
 			sku : {
 				required : true
 			},
-			name : {
-				required : true
-			},
-			volume : {
+			sellId : {
 				required : true
 			}
 		},
 		messages : {
-			categoryId : {
-				required : "请选择商品分类",
-				range : "请选择商品分类"
+			platformId : {
+				required : "请选择销售平台",
+				range : "请选择销售平台"
 			},
 			sku : {
 				required : "请输入商品SKU",
 			},
-			name : {
-				required : "请输入商品名称"
-			},
-			volume : {
-				required : "请再次输入商品体积",
+			sellId : {
+				required : "请输入贩卖ID"
 			}
 		}
 	});
@@ -129,15 +123,23 @@ $(function() {
 			});
 	$('#btn_submit').click(function() {
 		if (validform().form()) {
+			if ($("#sku").val() == "") {
+				swal({
+					title : "提示信息",
+					text : "请输入商品SKU！",
+					type : "warning"
+				});
+				return false;
+			}
 			$.ajax({
-				url : "/osl/goods",
+				url : "/osl/sellship",
 				type : $("#mode").val(),
 				data : $("#myform").serialize(),
 				success : function(data) {
 					if (data == "ok") {
 						swal({
 							title : "保存成功！",
-							text : "成功保存了一条商品信息。",
+							text : "成功保存了一条贩卖信息。",
 							type : "success"
 						}, function() {
 							window.location.reload();
@@ -157,44 +159,33 @@ $(function() {
 		}
 	});
 	$("#myModal").on("hidden.bs.modal", function() {
-		$("#categoryId").val("0");
+		setShapeChecked(0);
+		$("input[type='radio'][name='type'][value='0']").click();
+		validform().resetForm();
+		$("#platformId").val("0");
 		$("#sku").val("");
-		$("#barcode").val("");
+		$("#qry_sku").val("");
+		$("#sellId").val("");
 		$("#name").val("");
-		setShapeChecked(1);
-		$("input[type='radio'][name='shape'][value='1']").click();
-		$("#length").val("");
-		$("#width").val("");
-		$("#height").val("");
-		$("#volume").val("");
-		$("#weight").val("");
-		$("#color").val("");
-		$("#remark").val("");
+		$("#gName").val("");
 		$("#id").val("0");
 		$("#mode").val("POST");
-		validform().resetForm();
 		$(".form-control").removeClass("error");
 	});
 });
 function showInfo(id) {
 	$.ajax({
-		url : "/osl/goods/" + id,
+		url : "/osl/sellship/" + id,
 		type : "get",
 		success : function(data) {
-			$("#categoryId").val(data.categoryId);
+			setShapeChecked(data.type);
+			$("input[type='radio'][name='type'][value='" + data.type + "']")
+					.click();
+			$("#platformId").val(data.platformId);
 			$("#sku").val(data.sku);
-			$("#barcode").val(data.barcode);
-			$("#name").val(data.name);
-			setShapeChecked(data.shape);
-			$("input[type='radio'][name='shape'][value='" + data.shape + "']")
-			.click();
-			$("#length").val(data.length);
-			$("#width").val(data.width);
-			$("#height").val(data.height);
-			$("#volume").val(data.volume);
-			$("#weight").val(data.weight);
-			$("#color").val(data.color);
-			$("#remark").val(data.remark);
+			$("#qry_sku").val(data.sku);
+			$("#sellId").val(data.sellId);
+			qryProductBySku();
 			$("#id").val(id);
 			$("#mode").val("PUT");
 		},
@@ -217,13 +208,13 @@ function deleteInfo(id) {
 	}, function(isConfirm) {
 		if (isConfirm) {
 			$.ajax({
-				url : "/osl/goods/" + id,
+				url : "/osl/sellship/" + id,
 				type : "delete",
 				success : function(data) {
 					if (data == "ok") {
 						swal({
 							title : "删除成功！",
-							text : "成功删除了一条商品信息。",
+							text : "成功删除了一条贩卖信息。",
 							type : "success"
 						}, function() {
 							window.location.reload();
@@ -250,8 +241,47 @@ function deleteInfo(id) {
 	})
 }
 function setShapeChecked(v) {
-	$('input[name="shape"]').each(function(index) {
-		$('input[name="shape"]').eq(index).removeAttr('checked');
+	$('input[type="radio"][name="type"]').each(function(index) {
+		$('input[type="radio"][name="type"]').eq(index).removeAttr('checked');
 	});
-	$("input[name='shape'][value='" + v + "']").attr('checked', 'checked');
+	$("input[type='radio'][name='type'][value='" + v + "']").attr('checked',
+			'checked');
+}
+function qryProductBySku() {
+	var _sku = $("#qry_sku").val();
+	if (_sku != "") {
+		var _url = "/osl/goods/sku/";
+		var type = $('input:radio[name="type"]:checked').val();
+		if (type == "1") {
+			_url = "/osl/combinationshow/";
+		}
+		$.ajax({
+			url : _url + _sku,
+			type : "get",
+			success : function(data) {
+				if (data != "" && data != undefined) {
+					if (type == "0") {
+						$("#sku").val(data.sku);
+						$("#gName").val(data.name);
+					} else {
+						$("#sku").val(data[0].combinationId);
+						$("#gName").val(data[0].name);
+					}
+				} else {
+					swal({
+						title : "提示信息",
+						text : "没有检索到该商品信息！",
+						type : "warning"
+					});
+					$("#gName").val("");
+					$("#sku").val("");
+				}
+			},
+			error : function(e) {
+				alert("错误！！");
+			}
+		});
+	}
+}
+function do_qry() {
 }

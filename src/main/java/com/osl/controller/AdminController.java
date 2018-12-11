@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.osl.model.UserModel;
 import com.osl.model.Users;
+import com.osl.service.UserService;
 import com.osl.service.UsersService;
 
 @Controller
@@ -21,7 +23,7 @@ import com.osl.service.UsersService;
 public class AdminController {
 
 	@Autowired
-	private UsersService service;
+	private UserService service;
 
 	@GetMapping("/admin/login")
 	public String dologin(Model model, String url) {
@@ -44,7 +46,7 @@ public class AdminController {
 			return "/w/login";
 		} else {
 			password = DigestUtils.md5DigestAsHex(password.getBytes());
-			Users user1 = service.findByUserName_admin(user_id, password, burl);
+			UserModel user1 = service.findByUserName_admin(user_id, password, burl);
 			if (user1 == null) {
 				model.addAttribute("erorrMsg", "用户名或者密码不正确");
 				model.addAttribute("burl", burl);
@@ -54,7 +56,7 @@ public class AdminController {
 				session.setAttribute("u_login", user1.getUsername());
 				session.setAttribute("u_burl", burl);
 				session.setAttribute("u_bname", user1.getBname());
-				session.setAttribute("u_bid", user1.getbusiness_id());
+				session.setAttribute("u_bid", user1.getBusinessId());
 				return "redirect:/admin/index";
 			}
 		}

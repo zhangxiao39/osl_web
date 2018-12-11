@@ -13,7 +13,7 @@ public class GoodsCategoryModel extends BaseModel {
 
 	private long id;
 	private String name;
-	private long parent_id;
+	private long parentId;
 	private int level;
 	private String position;
 	private Timestamp addtime;
@@ -35,12 +35,13 @@ public class GoodsCategoryModel extends BaseModel {
 		this.name = name;
 	}
 
-	public long getParent_id() {
-		return parent_id;
+
+	public long getParentId() {
+		return parentId;
 	}
 
-	public void setParent_id(long parent_id) {
-		this.parent_id = parent_id;
+	public void setParentId(long parentId) {
+		this.parentId = parentId;
 	}
 
 	public int getLevel() {

@@ -26,6 +26,7 @@ public class GoodsModel extends BaseModel {
 	private double height;
 	private double weight;
 	private int businessId;
+	private String bName;
 	private String color;
 	private int isdele;
 	private String remark;
@@ -133,6 +134,16 @@ public class GoodsModel extends BaseModel {
 
 	public void setBusinessId(int businessId) {
 		this.businessId = businessId;
+	}
+	
+	
+
+	public String getbName() {
+		return bName;
+	}
+
+	public void setbName(String bName) {
+		this.bName = bName;
 	}
 
 	public String getColor() {

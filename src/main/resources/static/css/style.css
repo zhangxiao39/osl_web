@@ -8585,7 +8585,9 @@ body.md-skin {
 .z_inputl_100 {
 	width: 100px;
 }
-
+.z-hidden{
+	display:none;
+}
 .modal-body {
 	clear: both;
 }

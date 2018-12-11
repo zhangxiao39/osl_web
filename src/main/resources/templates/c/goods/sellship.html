@@ -110,7 +110,7 @@
 											<label class="control-label" for="status">销售平台</label> <select
 												name="status" id="status" class="form-control">
 												<option value="0" selected="">全部平台</option>
-												<option value="1" >yahoo</option>
+												<option value="1">yahoo</option>
 												<option value="2">qoo10</option>
 											</select>
 										</div>
@@ -124,7 +124,7 @@
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group z-t">
-											<button type="button" class="btn btn-primary">检索</button>
+											<button type="button" class="btn btn-primary" onclick="do_qry();">检索</button>
 											<button type="button" class="btn btn-primary"
 												data-toggle="modal" data-target="#myModal">添加贩卖</button>
 										</div>
@@ -153,72 +153,26 @@
 												<th>贩卖ID</th>
 												<th>类型</th>
 												<th>SKU</th>
-												<th>分类</th>
 												<th>名称</th>
-												<th>数量</th>
 												<th>操作</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>1</td>
-												<td>yahoo</td>
-												<td>FM001</td>
-												<td>单品</td>
-												<td>MC8012MX300</td>
-												<td>フラッシュメモリ</td>
+											<tr th:each="ss,ssIndex:${sellshipData}">
+												<td th:text="${ssIndex.count}">1</td>
+												<td th:text="${ss.platformName}">yahoo</td>
+												<td th:text="${ss.sellId}">FM001</td>
+												<td th:text="${ss.type}">单品</td>
+												<td th:text="${ss.sku}">MC8012MX300</td>
 												<td>Crucial SSD MX300 525GB</td>
-												<td>1</td>
 												<td>
 													<button class="btn btn-info btn-xs dropdown-toggle"
 														type="button" data-toggle="modal" data-target="#myModal"
-														onclick="edit__sheves('1');">
+														th:onclick="|javascript:showInfo(${ss.id})|">
 														<i class="fa fa-edit"></i>编辑
 													</button>
 													<button class="btn btn-danger btn-xs dropdown-toggle"
-														type="button" onClick="check(1)">
-														<i class="fa fa-trash"></i>删除
-													</button>
-												</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>yahoo</td>
-												<td>FM002</td>
-												<td>单品</td>
-												<td>MC8012MX500</td>
-												<td>フラッシュメモリ</td>
-												<td>Crucial SSD MX300 525GB</td>
-												<td>1</td>
-												<td>
-													<button class="btn btn-info btn-xs dropdown-toggle"
-														type="button" data-toggle="modal" data-target="#myModal"
-														onclick="edit__sheves('1');">
-														<i class="fa fa-edit"></i>编辑
-													</button>
-													<button class="btn btn-danger btn-xs dropdown-toggle"
-														type="button" onClick="check(1)">
-														<i class="fa fa-trash"></i>删除
-													</button>
-												</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>yahoo</td>
-												<td>FM003</td>
-												<td>组合品</td>
-												<td>ZH001</td>
-												<td></td>
-												<td>**********</td>
-												<td>1</td>
-												<td>
-													<button class="btn btn-info btn-xs dropdown-toggle"
-														type="button" data-toggle="modal" data-target="#myModal"
-														onclick="edit__sheves('1');">
-														<i class="fa fa-edit"></i>编辑
-													</button>
-													<button class="btn btn-danger btn-xs dropdown-toggle"
-														type="button" onClick="check(1)">
+														type="button" th:onclick="|javascript:deleteInfo(${ss.id})|">
 														<i class="fa fa-trash"></i>删除
 													</button>
 												</td>
@@ -243,44 +197,66 @@
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
 					</button>
-					<h4 class="modal-title">添加贩卖</h4>
+					<h4 class="modal-title">贩卖信息</h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal">
+					<form class="form-horizontal" id="myform">
+						<div class="form-group">
+							<label class="col-lg-3 control-label">销售平台</label>
+							<div class="col-lg-9">
+								<select class="form-control" name="platformId" id="platformId">
+									<option value="0">选择销售平台</option>
+									<option th:each="sp,spIndex:${sellplatformData}" th:value="${sp.id}" th:text="${sp.name}">フラッシュメモリ</option>
+								</select>
+							</div>
+						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">贩卖ID</label>
 							<div class="col-lg-9">
-								<input type="email" placeholder="请输入贩卖ID" class="form-control">
+								<input type="text" placeholder="请输入贩卖ID" class="form-control"
+									name="sellId" id="sellId"> <input type="hidden"
+									name="businessId" th:value="${session.u_bid}" id="businessId"><input
+									type="hidden" name="mode" value="POST" id="mode">
+									<input
+									type="hidden" name="id" value="0" id="id">
+									<input
+									type="hidden" name="sku" value="" id="sku">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">贩卖类型</label>
 							<div class="col-lg-9">
 								<label class="radio-inline"> <input type="radio"
-									value="option1" name="sex" checked>单品
+									value="0" name="type" checked="checked" />单品
 								</label> <label class="radio-inline"> <input type="radio"
-									value="option2" name="sex">组合品
+									value="1" name="type"  />组合品
 								</label>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">商品SKU</label>
 							<div class="col-lg-9">
-								<input type="email" placeholder="请输入商品SKU" class="form-control">
+								<div class="input-group">
+									<input type="text" class="form-control"  id="qry_sku"
+										placeholder="请输入要检索的商品SKU"> <span
+										class="input-group-btn">
+										<button type="button" class="btn btn-primary"
+											onclick="qryProductBySku();">检索</button>
+									</span>
+								</div>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-lg-3 control-label">商品数量</label>
+							<label class="col-lg-3 control-label">商品名称</label>
 							<div class="col-lg-9">
-								<input type="password" placeholder="请输入商品数量"
-									class="form-control">
+								<input type="text" class="form-control" readonly id="gName">
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary">确认添加</button>
+					<button type="button" class="btn btn-primary" id="btn_submit">确认保存</button>
 				</div>
 			</div>
 		</div>
@@ -293,6 +269,8 @@
 	<script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
 	<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
 	<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+	
+	<script th:src="@{/js/jquery.validate.min.js}"></script>
 
 	<!-- Data Tables -->
 	<script th:src="@{/js/plugins/dataTables/datatables.min.js}"></script>
@@ -315,6 +293,7 @@
 
 	<!-- common -->
 	<script th:src="@{/js/common.js}"></script>
+	<script th:src="@{/js/user/sellship.js}"></script>
 
 	<script th:inline="javascript">
 		

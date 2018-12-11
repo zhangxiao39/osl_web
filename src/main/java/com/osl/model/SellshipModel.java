@@ -13,10 +13,11 @@ public class SellshipModel extends BaseModel {
 	private static final long serialVersionUID = -4033050999939859802L;
 
 	private long id;
-	private String sell_id;
+	private String sellId;
 	private String sku;
 	private long business_id;
 	private long platform_id;
+	private String platformName;
 	private int type;
 	private Date deletime;
 	private int isdele;
@@ -30,12 +31,14 @@ public class SellshipModel extends BaseModel {
 		this.id = id;
 	}
 
-	public String getSell_id() {
-		return sell_id;
+
+
+	public String getSellId() {
+		return sellId;
 	}
 
-	public void setSell_id(String sell_id) {
-		this.sell_id = sell_id;
+	public void setSellId(String sellId) {
+		this.sellId = sellId;
 	}
 
 	public String getSku() {
@@ -60,6 +63,14 @@ public class SellshipModel extends BaseModel {
 
 	public void setPlatform_id(long platform_id) {
 		this.platform_id = platform_id;
+	}
+
+	public String getPlatformName() {
+		return platformName;
+	}
+
+	public void setPlatformName(String platformName) {
+		this.platformName = platformName;
 	}
 
 	public int getType() {

@@ -79,7 +79,7 @@
 												class="form-control">
 										</div>
 									</div>
-									<div class="col-sm-3">
+									<div class="col-sm-2">
 										<div class="form-group">
 											<label class="control-label" for="status">商品分类</label> <select
 												name="status" id="status" class="form-control">
@@ -88,11 +88,18 @@
 											</select>
 										</div>
 									</div>
-									<div class="col-sm-3">
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="status">商家</label> <select
+												name="status" id="status" class="form-control">
+												<option value="1" selected>全部商家</option>
+												<option th:each="b,bIndex:${item_business}" th:text="${b.name}" th:value="${b.id}">フラッシュメモリ</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-sm-2">
 										<div class="form-group z-t">
 											<button type="button" class="btn btn-primary">检索</button>
-											<button type="button" class="btn btn-primary"
-												data-toggle="modal" data-target="#myModal">添加新商品</button>
 										</div>
 									</div>
 								</div>
@@ -115,6 +122,7 @@
 										<thead>
 											<tr>
 												<th>#</th>
+												<th>商家</th>
 												<th>SKU</th>
 												<th>分类</th>
 												<th>名称</th>
@@ -122,51 +130,19 @@
 												<th>重量(kg)</th>
 												<th>形状</th>
 												<th>备注</th>
-												<th>操作</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>1</td>
-												<td>MC8012MX300</td>
-												<td>フラッシュメモリ</td>
-												<td>Crucial SSD MX300 525GB</td>
-												<td>10</td>
-												<td>0.01</td>
-												<td>固体</td>
-												<td></td>
-												<td>
-													<button class="btn btn-info btn-xs dropdown-toggle"
-														type="button" data-toggle="modal" data-target="#myModal"
-														onclick="edit__sheves('1');">
-														<i class="fa fa-edit"></i>编辑
-													</button>
-													<button class="btn btn-danger btn-xs dropdown-toggle"
-														type="button" onClick="check(1)">
-														<i class="fa fa-trash"></i>删除
-													</button>
-												</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>MC8012MX500</td>
-												<td>フラッシュメモリ</td>
-												<td>Crucial SSD MX500 500G</td>
-												<td>10</td>
-												<td>0.01</td>
-												<td>固体</td>
-												<td></td>
-												<td>
-													<button class="btn btn-info btn-xs dropdown-toggle"
-														type="button" data-toggle="modal" data-target="#myModal"
-														onclick="edit__sheves('1');">
-														<i class="fa fa-edit"></i>编辑
-													</button>
-													<button class="btn btn-danger btn-xs dropdown-toggle"
-														type="button" onClick="check(1)">
-														<i class="fa fa-trash"></i>删除
-													</button>
-												</td>
+											<tr th:each="p,pIndex:${item}">
+												<td th:text="${pIndex.count}">1</td>
+												<td th:text="${p.bName}"></td>
+												<td th:text="${p.sku}">MC8012MX300</td>
+												<td th:text="${p.categoryName}">フラッシュメモリ</td>
+												<td th:text="${p.name}">Crucial SSD MX300 525GB</td>
+												<td th:text="${p.volume}">10</td>
+												<td th:text="${p.weight}">0.01</td>
+												<td th:text="${p.shape}">固体</td>
+												<td th:text="${p.remark}"></td>
 											</tr>
 										</tbody>
 									</table>
@@ -310,62 +286,10 @@
 
 	<!-- common -->
 	<script th:src="@{/js/common.js}"></script>
+	<script th:src="@{/js/user/a_product.js}"></script>
 
 	<script th:inline="javascript">
-		$(document)
-				.ready(
-						function() {
-							$('.dataTables-example')
-									.DataTable(
-											{
-												pageLength : 25,
-												responsive : true,
-												dom : '<"html5buttons"B>lTfgitp',
-												buttons : [
-														{
-															extend : 'copy'
-														},
-														{
-															extend : 'csv'
-														},
-														{
-															extend : 'excel',
-															title : 'ExampleFile'
-														},
-														{
-															extend : 'pdf',
-															title : 'ExampleFile'
-														},
 
-														{
-															extend : 'print',
-															customize : function(
-																	win) {
-																$(
-																		win.document.body)
-																		.addClass(
-																				'white-bg');
-																$(
-																		win.document.body)
-																		.css(
-																				'font-size',
-																				'10px');
-
-																$(
-																		win.document.body)
-																		.find(
-																				'table')
-																		.addClass(
-																				'compact')
-																		.css(
-																				'font-size',
-																				'inherit');
-															}
-														} ]
-
-											});
-
-						});
 	</script>
 
 </body>
