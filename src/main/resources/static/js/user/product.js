@@ -187,7 +187,7 @@ function showInfo(id) {
 			$("#name").val(data.name);
 			setShapeChecked(data.shape);
 			$("input[type='radio'][name='shape'][value='" + data.shape + "']")
-			.click();
+					.click();
 			$("#length").val(data.length);
 			$("#width").val(data.width);
 			$("#height").val(data.height);

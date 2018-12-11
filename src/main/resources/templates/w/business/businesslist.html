@@ -86,42 +86,18 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>1</td>
-											<td>b01</td>
-											<td>JNH</td>
+										<tr th:each="b,bIndex:${item}">
+											<td th:text="${bIndex.count}">1</td>
+											<td th:text="${b.id}">b01</td>
+											<td th:text="${b.name}">JNH</td>
 											<td>default</td>
-											<td>东京都*****</td>
-											<td>000-0000</td>
-											<td>8965-8974-965</td>
-											<td>6358-9865-548</td>
-											<td>kanenka@yahoo.co.jp</td>
-											<td>李四</td>
-											<td>cad784679849161651</td>
-											<td>
-												<button class="btn btn-info btn-xs dropdown-toggle"
-													type="button" data-toggle="modal" data-target="#myModal"
-													onclick="edit__sheves('1');">
-													<i class="fa fa-edit"></i>编辑
-												</button>
-												<button class="btn btn-danger btn-xs dropdown-toggle"
-													type="button" onClick="check(1)">
-													<i class="fa fa-trash"></i>删除
-												</button>
-											</td>
-										</tr>
-										<tr>
-											<td>2</td>
-											<td>b02</td>
-											<td>HANYE</td>
-											<td>vip2</td>
-											<td>东京都*****</td>
-											<td>000-0000</td>
-											<td>8965-8974-965</td>
-											<td>6358-9865-548</td>
-											<td>kanenka@yahoo.co.jp</td>
-											<td>李四</td>
-											<td>cad784679849161651</td>
+											<td th:text="${b.address}">东京都*****</td>
+											<td th:text="${b.postcode}">000-0000</td>
+											<td th:text="${b.tele}">8965-8974-965</td>
+											<td th:text="${b.tax}">6358-9865-548</td>
+											<td th:text="${b.email}">kanenka@yahoo.co.jp</td>
+											<td th:text="${b.contacts}">李四</td>
+											<td th:text="${b.url}">cad784679849161651</td>
 											<td>
 												<button class="btn btn-info btn-xs dropdown-toggle"
 													type="button" data-toggle="modal" data-target="#myModal"

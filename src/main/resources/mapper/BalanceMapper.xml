@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.osl.mapper.BalanceMapper">
+<select id="findBalanceAll"
+		resultType="com.osl.model.BalancebaseModel" parameterType="int">
+		select
+		t_balance_base.*,t_business.name as bName from t_balance_base,t_business
+		where t_balance_base.delete_flg=0 and t_business.id=t_balance_base.business_id and
+		t_balance_base.warehouse_id=#{bid}
+	</select>
+</mapper>

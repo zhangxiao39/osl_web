@@ -88,4 +88,46 @@ public class GoodscategoryServiceImpl implements GoodscategoryService {
 		return goodscategoryMapper.deleteById(id);
 	}
 
+	@Override
+	public String getGoodsCategorySelect() {
+		// TODO Auto-generated method stub
+		StringBuilder _html = new StringBuilder();
+		List<GoodsCategoryModel> c1 = this.getCategoryByC1();
+		List<GoodsCategoryModel> c2 = this.getCategoryByC2();
+		_html.append("<option value=\"0\"  data-select2-id=\"0\">全部商品分类</option>");
+		for (int i = 0; i < c1.size(); i++) {
+			GoodsCategoryModel gc1 = c1.get(i);
+			_html.append("<option value=\"" + gc1.getId() + "\">" + gc1.getName() + "</option>");
+			for (int j = 0; j < c2.size(); j++) {
+				GoodsCategoryModel gc2 = c2.get(j);
+				if (gc2.getParentId() == gc1.getId()) {
+					_html.append("<option value=\"" + gc2.getId() + "\">&#8195;&#8195;" + gc2.getName() + "</option>");
+				}
+			}
+		}
+		return _html.toString();
+	}
+
+	@Override
+	public String getGoodsCategorySelect2() {
+		// TODO Auto-generated method stub
+		StringBuilder _html = new StringBuilder();
+		List<GoodsCategoryModel> c1 = this.getCategoryByC1();
+		List<GoodsCategoryModel> c2 = this.getCategoryByC2();
+		_html.append("<option value=\"0\"  data-select2-id=\"0\">选择商品分类</option>");
+		for (int i = 0; i < c1.size(); i++) {
+			GoodsCategoryModel gc1 = c1.get(i);
+			_html.append("<optgroup label=\"" + gc1.getName() + "\" data-select2-id=\"" + gc1.getId() + "\">");
+			for (int j = 0; j < c2.size(); j++) {
+				GoodsCategoryModel gc2 = c2.get(j);
+				if (gc2.getParentId() == gc1.getId()) {
+					_html.append("<option value=\"" + gc2.getId() + "\"  data-select2-id=\"" + gc2.getId() + "\">"
+							+ gc2.getName() + "</option>");
+				}
+			}
+			_html.append("</optgroup>");
+		}
+		return _html.toString();
+	}
+
 }

@@ -84,60 +84,16 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>1</td>
-											<td>JNH</td>
-											<td>1</td>
-											<td>入库</td>
-											<td>1</td>
-											<td>100</td>
-											<td>0.01</td>
-											<td>5</td>
-											<td>2</td>
-											<td>
-												<button class="btn btn-info btn-xs dropdown-toggle"
-													type="button" data-toggle="modal" data-target="#myModal"
-													onclick="edit__sheves('1');">
-													<i class="fa fa-edit"></i>编辑
-												</button>
-												<button class="btn btn-danger btn-xs dropdown-toggle"
-													type="button" onClick="check(1)">
-													<i class="fa fa-trash"></i>删除
-												</button>
-											</td>
-										</tr>
-										<tr>
-											<td>2</td>
-											<td>JNH</td>
-											<td>1</td>
-											<td>出库</td>
-											<td>1</td>
-											<td>100</td>
-											<td>0.01</td>
-											<td>5</td>
-											<td>5</td>
-											<td>
-												<button class="btn btn-info btn-xs dropdown-toggle"
-													type="button" data-toggle="modal" data-target="#myModal"
-													onclick="edit__sheves('1');">
-													<i class="fa fa-edit"></i>编辑
-												</button>
-												<button class="btn btn-danger btn-xs dropdown-toggle"
-													type="button" onClick="check(1)">
-													<i class="fa fa-trash"></i>删除
-												</button>
-											</td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td>JNH</td>
-											<td>1</td>
-											<td>保管</td>
-											<td>1</td>
-											<td>100</td>
-											<td>0.01</td>
-											<td>5</td>
-											<td>1</td>
+										<tr th:each="bs,bsIndex:${item}">
+											<td th:text="${bsIndex.count}">1</td>
+											<td th:text="${bs.bName}">JNH</td>
+											<td th:text="${bs.grade}">1</td>
+											<td th:text="${bs.type}">入库</td>
+											<td th:text="${bs.minVolume}">1</td>
+											<td th:text="${bs.maxVolume}">100</td>
+											<td th:text="${bs.minWeight}">0.01</td>
+											<td th:text="${bs.maxWeight}">5</td>
+											<td th:text="${bs.price}">2</td>
 											<td>
 												<button class="btn btn-info btn-xs dropdown-toggle"
 													type="button" data-toggle="modal" data-target="#myModal"
@@ -169,7 +125,7 @@
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
 					</button>
-					<h4 class="modal-title">添加结算设定</h4>
+					<h4 class="modal-title">结算设定</h4>
 				</div>
 				<div class="modal-body">
 					<form class="form-horizontal">
@@ -178,7 +134,7 @@
 							<div class="col-lg-9">
 								<select name="status" id="status" class="form-control">
 									<option value="0" selected="">全部商家</option>
-									<option value="2">JNH</option>
+									<option th:each="b,bIndex:${item_business}" th:text="${b.name}" th:value="${b.id}">フラッシュメモリ</option>
 								</select>
 							</div>
 						</div>
@@ -238,7 +194,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary">确认添加</button>
+					<button type="button" class="btn btn-primary">确认保存</button>
 				</div>
 			</div>
 		</div>

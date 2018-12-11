@@ -12,7 +12,7 @@ public class DepotModel extends BaseModel {
 	private static final long serialVersionUID = 2599925481362946040L;
 
 	private long id;
-	private String depot_id;
+	private String depotId;
 	private String name;
 	private String address;
 	private String postcode;
@@ -28,12 +28,14 @@ public class DepotModel extends BaseModel {
 		this.id = id;
 	}
 
-	public String getDepot_id() {
-		return depot_id;
+
+
+	public String getDepotId() {
+		return depotId;
 	}
 
-	public void setDepot_id(String depot_id) {
-		this.depot_id = depot_id;
+	public void setDepotId(String depotId) {
+		this.depotId = depotId;
 	}
 
 	public String getName() {

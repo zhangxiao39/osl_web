@@ -19,4 +19,8 @@ public interface GoodscategoryService {
 	public int updateGoodscategoryName(GoodsCategoryEntity _goodscategory);
 	
 	public int deleteById(int id);
+	
+	public String getGoodsCategorySelect();
+	
+	public String getGoodsCategorySelect2();
 }

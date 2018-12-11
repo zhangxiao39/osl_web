@@ -72,53 +72,34 @@
 									<thead>
 										<tr>
 											<th>#</th>
+											<th>仓库名称</th>
 											<th>货架ID</th>
+											<th>货架名称</th>
 											<th>方位</th>
 											<th>面积(cm)</th>
 											<th>区域ID</th>
-											<th>排</th>
-											<th>列</th>
-											<th>层</th>
+											<th>层数</th>
+											<th>行数</th>
+											<th>列数</th>
 											<th>商品类型</th>
 											<th>承重(KG)</th>
 											<th>操作</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>1</td>
-											<td>s_01_111</td>
-											<td>01</td>
-											<td>300</td>
-											<td>s01111</td>
-											<td>1</td>
-											<td>1</td>
-											<td>1</td>
+										<tr th:each="s,sIndex:${item}">
+											<td th:text="${sIndex.count}">1</td>
+											<td th:text="${s.depotName}">s_01_111</td>
+											<td th:text="${s.shelvesId}">s_01_111</td>
+											<td th:text="${s.name}">s_01_111</td>
+											<td th:text="${s.position}">01</td>
+											<td th:text="${s.acreage}">300</td>
+											<td th:text="${s.areacode}">s01111</td>
+											<td th:text="${s.layer}">1</td>
+											<td th:text="${s.row}">1</td>
+											<td th:text="${s.column}">1</td>
 											<td>SD卡</td>
-											<td>50</td>
-											<td>
-												<button class="btn btn-info btn-xs dropdown-toggle"
-													type="button" data-toggle="modal" data-target="#myModal"
-													onclick="edit__sheves('1');">
-													<i class="fa fa-edit"></i>编辑
-												</button>
-												<button class="btn btn-danger btn-xs dropdown-toggle"
-													type="button" onClick="check(1)">
-													<i class="fa fa-trash"></i>删除
-												</button>
-											</td>
-										</tr>
-										<tr>
-											<td>2</td>
-											<td>s_01_113</td>
-											<td>01</td>
-											<td>300</td>
-											<td>s01113</td>
-											<td>1</td>
-											<td>1</td>
-											<td>3</td>
-											<td>SD卡</td>
-											<td>50</td>
+											<td th:text="${s.bearing}">50</td>
 											<td>
 												<button class="btn btn-info btn-xs dropdown-toggle"
 													type="button" data-toggle="modal" data-target="#myModal"

@@ -12,9 +12,10 @@ public class ShelvesModel extends BaseModel {
 	private static final long serialVersionUID = -436034603182963616L;
 
 	private long id;
-	private String shelves_id;
+	private String shelvesId;
 	private String name;
-	private long depot_id;
+	private long depotId;
+	private String depotName;
 	private String position;
 	private int layer;
 	private int row;
@@ -34,13 +35,6 @@ public class ShelvesModel extends BaseModel {
 		this.id = id;
 	}
 
-	public String getShelves_id() {
-		return shelves_id;
-	}
-
-	public void setShelves_id(String shelves_id) {
-		this.shelves_id = shelves_id;
-	}
 
 	public String getName() {
 		return name;
@@ -50,12 +44,30 @@ public class ShelvesModel extends BaseModel {
 		this.name = name;
 	}
 
-	public long getDepot_id() {
-		return depot_id;
+	public String getShelvesId() {
+		return shelvesId;
 	}
 
-	public void setDepot_id(long depot_id) {
-		this.depot_id = depot_id;
+	public void setShelvesId(String shelvesId) {
+		this.shelvesId = shelvesId;
+	}
+
+	public long getDepotId() {
+		return depotId;
+	}
+
+	public void setDepotId(long depotId) {
+		this.depotId = depotId;
+	}
+	
+	
+
+	public String getDepotName() {
+		return depotName;
+	}
+
+	public void setDepotName(String depotName) {
+		this.depotName = depotName;
 	}
 
 	public String getPosition() {

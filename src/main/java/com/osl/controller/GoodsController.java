@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.osl.common.web.BaseController;
 import com.osl.mapper.entity.GoodsEntity;
 import com.osl.model.BusinessModel;
+import com.osl.model.GoodsCategoryModel;
 import com.osl.model.GoodsModel;
 import com.osl.service.BusinessService;
 import com.osl.service.GoodsService;
+import com.osl.service.GoodscategoryService;
 
 @Controller
 public class GoodsController extends BaseController<GoodsModel> {
@@ -26,6 +28,8 @@ public class GoodsController extends BaseController<GoodsModel> {
 	private GoodsService service;
 	@Autowired
 	private BusinessService business_service;
+	@Autowired
+	private GoodscategoryService goods_category_service;
 
 	@RequestMapping(value = "/a/goods/goodslist", method = RequestMethod.GET)
 	public String g_listManage(Model model, HttpSession session) {
@@ -50,6 +54,10 @@ public class GoodsController extends BaseController<GoodsModel> {
 			this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
 			List<GoodsModel> _goodsList = service.find_goodsBusiness_All(this.myBusiness_id);
 			model.addAttribute("item", _goodsList);
+			String _goodsCategrory = goods_category_service.getGoodsCategorySelect();
+			model.addAttribute("item_gc", _goodsCategrory);
+			String _goodsCategrory2 = goods_category_service.getGoodsCategorySelect2();
+			model.addAttribute("item_gc2", _goodsCategrory2);
 			model.addAttribute("nav_active2", 2);
 			return "/c/goods/goodslist";
 		}
