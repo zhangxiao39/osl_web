@@ -62,8 +62,8 @@
 										<div class="form-group z_mb0">
 											<button type="button" class="btn btn-primary"
 												onclick="history.go(-1);">返回一览</button>
-												<button type="button" class="btn btn-success"
-												 data-toggle="modal" data-target="#myModal">追加入库</button>
+											<button type="button" class="btn btn-success"
+											 data-toggle="modal" data-target="#myModal">追加入库</button>
 										</div>
 									</div>
 								</div>
@@ -102,46 +102,20 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>1</td>
-												<td>JNH</td>
-												<td>NP201811060001</td>
-												<td>MC8012MX300</td>
-												<td>フラッシュメモリ</td>
-												<td>Crucial SSD MX300 525GB</td>
-												<td>120</td>
-												<td>可以存放</td>
-												<td>NP201811060001</td>
-												<td>良品</td>
-												<td>纳品</td>
-												<td></td>
-												<td>入库完了</td>
-												<td>
-													<button class="btn btn-info btn-xs dropdown-toggle"
-														type="button" data-toggle="modal" data-target="#myModal"
-														onclick="edit__sheves('1');">
-														<i class="fa fa-edit"></i>修改
-													</button>
-													<button class="btn btn-danger btn-xs dropdown-toggle"
-														type="button" onClick="check(1)">
-														<i class="fa fa-trash"></i>删除
-													</button>
-												</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>JNH</td>
-												<td>NP201811060001</td>
-												<td>MC8012MX500</td>
-												<td>フラッシュメモリ</td>
-												<td>Crucial SSD MX500 500G</td>
-												<td>120</td>
-												<td>可以存放</td>
-												<td>NP201811060001</td>
-												<td>良品</td>
-												<td>纳品</td>
-												<td></td>
-												<td>入库完了</td>
+											<tr th:each="p,pIndex:${item}">
+												<td th:text="${pIndex.count}"></td>
+												<td th:text="${p.businessName}"></td>
+												<td th:text="${p.detailId}"></td>
+												<td th:text="${p.sku}"></td>
+												<td th:text="${p.goodscategoryName}"></td>
+												<td th:text="${p.goodsName}"></td>
+												<td th:text="${p.nums}"></td>
+												<td th:text="${p.depotAddress}"></td>
+												<td th:text="${p.inputId}"></td>
+												<td th:text="${p.goodsType}"></td>
+												<td th:text="${p.type}"></td>
+												<td th:text="${p.validityTime}"></td>
+												<td th:text="${p.status}"></td>
 												<td>
 													<button class="btn btn-info btn-xs dropdown-toggle"
 														type="button" data-toggle="modal" data-target="#myModal"

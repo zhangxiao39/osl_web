@@ -53,6 +53,8 @@ public class SellshipController extends BaseController<SellshipModel> {
 				int ok = sellshipService.insertSellship(_sellship);
 				if (ok > 0) {
 					return "ok";
+				} else if (ok == -1) {
+					return "exist";
 				} else {
 					return "fail";
 				}

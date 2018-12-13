@@ -78,10 +78,18 @@ function goEntryDetailed(bid, id) {
 	window.location.href = '/a/entry/detail/' + bid + '/' + id + '/';
 }
 function goIputDetailed_b(id) {
-	window.location.href = '/b/input/detail/' + id + '/';
+	if(id){
+		window.location.href = '/b/input/detail?id=' + id;
+	}else{
+		window.location.href = '/b/input/detail';
+	}
 }
-function goIputDetailed(bid, id) {
-	window.location.href = '/a/input/detail/' + bid + '/' + id + '/';
+function goIputDetailed(id) {
+	if(id){
+		window.location.href = '/a/input/detail?id=' + id;
+	}else{
+		window.location.href = '/a/input/detail';
+	}
 }
 function goOutputDetailed_b(id) {
 	window.location.href = '/b/output/detail/' + id + '/';

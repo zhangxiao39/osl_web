@@ -73,6 +73,8 @@ public class GoodsController extends BaseController<GoodsModel> {
 				int ok = service.insertGoods(_goods);
 				if (ok > 0) {
 					return "ok";
+				} else if (ok == -1) {
+					return "exist";
 				} else {
 					return "fail";
 				}
@@ -80,6 +82,7 @@ public class GoodsController extends BaseController<GoodsModel> {
 				return "fail";
 			}
 		}
+
 	}
 
 	@RequestMapping(value = "/osl/goods/{id}", method = RequestMethod.DELETE)

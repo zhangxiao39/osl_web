@@ -23,5 +23,7 @@ public interface CombinationMapper {
 	public int updateCombinations(List<CombinationEntity> _combinations);
 
 	public int updateCombination(CombinationEntity _combination, int bid);
+	
+	public List<CombinationModel> find_combinationBusiness_sku(int bid,String sku);
 
 }

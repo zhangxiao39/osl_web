@@ -10,11 +10,19 @@
 	</select>
 	<select id="find_sellshipBusiness_All"
 		resultType="com.osl.model.SellshipModel" parameterType="int">
-		select t_sellship.*,t_sellplatform.name as platformName from
+		select
+		t_sellship.*,t_sellplatform.name as platformName from
 		t_sellship,t_sellplatform
 		where t_sellship.delete_flg=0 and
 		t_sellship.platform_id=t_sellplatform.id and
 		t_sellship.business_id=#{bid}
+	</select>
+	<select id="find_sellshipBusiness_sellId"
+		resultType="com.osl.model.SellshipModel">
+		select * from
+		t_sellship
+		where delete_flg=0 and
+		business_id=#{bid} and sell_id=#{sellId} and platform_id=#{platformId}
 	</select>
 	<insert id="insertSellship"
 		parameterType="com.osl.mapper.entity.SellshipEntity">

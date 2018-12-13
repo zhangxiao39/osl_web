@@ -56,8 +56,11 @@ public class CombinationController extends BaseController<CombinationModel> {
 			JavaType javaType = mapper.getTypeFactory().constructParametricType(List.class, CombinationEntity.class);
 			List<CombinationEntity> _combinationEntitys = mapper.readValue(_json, javaType);
 			if (_combinationEntitys.size() > 0) {
-				if (service.insertCombinations(_combinationEntitys) > 0) {
+				int ok = service.insertCombinations(_combinationEntitys);
+				if (ok > 0) {
 					return "ok";
+				} else if (ok == -1) {
+					return "exist";
 				} else {
 					return "fail";
 				}
@@ -66,7 +69,7 @@ public class CombinationController extends BaseController<CombinationModel> {
 			}
 		}
 	}
-	
+
 	@RequestMapping(value = "/osl/combination", method = RequestMethod.PUT)
 	@ResponseBody
 	public String updateCombination(Model model, HttpSession session, @RequestBody String _json)
@@ -96,7 +99,7 @@ public class CombinationController extends BaseController<CombinationModel> {
 		List<CombinationModel> _info = service.find_combinationByCode(combinationId, this.myBusiness_id);
 		return _info;
 	}
-	
+
 	@RequestMapping(value = "/osl/combination/{combinationId}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public String deleteProduct(@PathVariable(required = true) String combinationId) {

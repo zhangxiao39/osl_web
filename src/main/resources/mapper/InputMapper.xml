@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.osl.mapper.InputMapper">
+	<select id="find_inputAll"
+		resultType="com.osl.model.IputModel" parameterType="com.osl.model.IputModel">
+		select t.* , business.name as businessName
+		from t_input t 
+		left join t_input_detail tdetail on t.input_id = tdetail.input_id 
+		left join t_goods goods on tdetail.sku = goods.sku 
+		left join t_business business on t.business_id = business.id 
+		where 1=1 
+        <if test="businessId !=null and businessId != ''">
+        	and t.business_id= #{businessId} 
+        </if>
+        <if test="warehouseId !=null and warehouseId != ''">
+        	and t.warehouse_id= #{warehouseId} 
+        </if>
+        <if test="sku !=null and sku != ''">
+        	and tdetail.sku= #{sku} 
+        </if>
+        <if test="inputId !=null and inputId != ''">
+        	and t.input_id= #{inputId} 
+        </if>
+        <if test="barcode !=null and barcode != ''">
+        	and goods.barcode= #{barcode} 
+        </if>
+        <if test="goodsName !=null and goodsName != ''">
+        	and goods.name= #{goodsName} 
+        </if>
+        <!-- <if test="startNewDate !=null and startNewDate != ''">
+        	and tdetail.new_date <![CDATA[ >= ]]> #{startNewDate} 
+        </if>
+        <if test="endNewDate !=null and endNewDate != ''">
+        	and tdetail.new_date <![CDATA[ <= ]]> #{endNewDate} 
+        </if> -->
+        and t.delete_flg = 0 
+        order by t.update_date desc
+	</select>
+	
+	<select id="findById" resultType="com.osl.mapper.entity.InputdetailEntity" parameterType="int">
+		select * 
+		from t_input_detail 
+		where 1=1 
+		and delete_flg = 0 
+		and id=#{id} 
+		order by update_date desc
+	</select>
+	
+	<select id="findDetailListById" resultType="com.osl.model.InputdetailModel" parameterType="string">
+		select tdetail.* , goods.name as goodsName , category.name as goodscategoryName 
+		from t_input_detail tdetail 
+		left join t_goods goods on tdetail.sku = goods.sku 
+		left join t_goods_category category on goods.category_id = category.id 
+		left join t_business business on business.id = (select business_id from t_input where id = #{id} )  
+		left join t_depot depot on tdetail.depot_id = depot.id 
+		where 1=1 
+		and tdetail.delete_flg = 0 
+		and tdetail.input_id= ( select input_id from t_input where id = #{id} ) 
+		order by tdetail.update_date desc
+	</select>
+	
+	<select id="deleteInputById" parameterType="int">
+		update t_input set
+		delete_flg=1 , update_date = now() where id=#{id}
+	</select>
+	
+	<select id="deleteInputDetailByInputId" parameterType="int">
+		update t_input_detail set
+		delete_flg=1 , update_date = now() where input_id= ( select input_id from t_input where id = #{id} )
+	</select>
+</mapper>

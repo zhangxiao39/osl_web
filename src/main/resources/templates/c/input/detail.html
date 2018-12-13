@@ -96,29 +96,17 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>1</td>
-												<td>NP201811060001</td>
-												<td>MC8012MX300</td>
-												<td>フラッシュメモリ</td>
-												<td>Crucial SSD MX300 525GB</td>
-												<td>120</td>
-												<td>NP201811060001</td>
-												<td>良品</td>
-												<td></td>
-												<td>入库完了</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>NP201811060001</td>
-												<td>MC8012MX500</td>
-												<td>フラッシュメモリ</td>
-												<td>Crucial SSD MX500 500G</td>
-												<td>120</td>
-												<td>NP201811060001</td>
-												<td>良品</td>
-												<td></td>
-												<td>入库完了</td>
+											<tr th:each="p,pIndex:${item}">
+												<td th:text="${pIndex.count}"></td>
+												<td th:text="${p.detailId}"></td>
+												<td th:text="${p.sku}"></td>
+												<td th:text="${p.goodscategoryName}"></td>
+												<td th:text="${p.goodsName}"></td>
+												<td th:text="${p.nums}"></td>
+												<td th:text="${p.inputId}"></td>
+												<td th:text="${p.goodsType}"></td>
+												<td th:text="${p.validityTime}"></td>
+												<td th:text="${p.status}"></td>
 											</tr>
 										</tbody>
 									</table>
@@ -129,86 +117,6 @@
 				</div>
 			</div>
 			<div class="footer" th:include="/c/footer :: copyright"></div>
-		</div>
-	</div>
-
-	<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog"
-		aria-hidden="true" style="display: none;">
-		<div class="modal-dialog">
-			<div class="modal-content animated bounceInRight">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
-					</button>
-					<h4 class="modal-title">商品入库</h4>
-				</div>
-				<div class="modal-body">
-					<form class="form-horizontal">
-						<div class="form-group">
-							<label class="col-lg-3 control-label">入库ID</label>
-							<div class="col-lg-9">
-								<input type="text" placeholder="请输入商品SKU" class="form-control" value="NP201811060001">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">商品SKU</label>
-							<div class="col-lg-9">
-								<input type="text" placeholder="请输入商品SKU" class="form-control" value="MC8012MX500">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">商品名称</label>
-							<div class="col-lg-9">
-								<input type="text" placeholder="请输入商品名称"
-									class="form-control" value="Crucial SSD MX500 500G">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">商品形状</label>
-							<div class="col-lg-9">
-								<label class="radio-inline"> <input type="radio"
-									value="option1" name="sex" checked>良品
-								</label> <label class="radio-inline"> <input type="radio"
-									value="option2" name="sex">不良品 
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">入库数量</label>
-							<div class="col-lg-9">
-								<input type="text" placeholder="请输入数量" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">仓库ID</label>
-							<div class="col-lg-9">
-								<input type="text" placeholder="请输入仓库ID" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">货架ID</label>
-							<div class="col-lg-9">
-								<input type="text" placeholder="请输入货架ID" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">有效日期</label>
-							<div class="col-lg-9">
-								<input type="text" placeholder="请输入有效日期" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">备注</label>
-							<div class="col-lg-9">
-								<input type="text" placeholder="" class="form-control">
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary">确认入库</button>
-				</div>
-			</div>
 		</div>
 	</div>
 
@@ -242,63 +150,8 @@
 	<!-- common -->
 	<script th:src="@{/js/common.js}"></script>
 
-	<script th:inline="javascript">
-		$(document)
-				.ready(
-						function() {
-							$('.dataTables-example')
-									.DataTable(
-											{
-												pageLength : 25,
-												responsive : true,
-												dom : '<"html5buttons"B>lTfgitp',
-												buttons : [
-														{
-															extend : 'copy'
-														},
-														{
-															extend : 'csv'
-														},
-														{
-															extend : 'excel',
-															title : 'ExampleFile'
-														},
-														{
-															extend : 'pdf',
-															title : 'ExampleFile'
-														},
-
-														{
-															extend : 'print',
-															customize : function(
-																	win) {
-																$(
-																		win.document.body)
-																		.addClass(
-																				'white-bg');
-																$(
-																		win.document.body)
-																		.css(
-																				'font-size',
-																				'10px');
-
-																$(
-																		win.document.body)
-																		.find(
-																				'table')
-																		.addClass(
-																				'compact')
-																		.css(
-																				'font-size',
-																				'inherit');
-															}
-														} ]
-
-											});
-
-						});
-	</script>
-
+	<!-- detail -->
+	<script th:src="@{/js/input/detail.js}"></script>
 </body>
 
 </html>

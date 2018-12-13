@@ -12,16 +12,21 @@ public class StockModel extends BaseModel {
 	private static final long serialVersionUID = -6378104285046437881L;
 	
 	private long id;
-	private String manage_id;
+	private String manageId;
 	private String sku;
-	private long depot_id;
-	private long shelves_id;
+	private long depotId;
+	private long shelvesId;
 	private int nums;
-	private int goods_type;
+	private int goodsType;
 	private Date intime;
 	private double volume;
-	private Date produce_time;
-	private Date validity_time;
+	private Date produceTime;
+	private Date validityTime;
+	
+	private String goodsName;
+	private int categoryId;
+	private String categoryName;
+	private String barCode;
 
 	public long getId() {
 		return id;
@@ -31,12 +36,12 @@ public class StockModel extends BaseModel {
 		this.id = id;
 	}
 
-	public String getManage_id() {
-		return manage_id;
+	public String getManageId() {
+		return manageId;
 	}
 
-	public void setManage_id(String manage_id) {
-		this.manage_id = manage_id;
+	public void setManageId(String manageId) {
+		this.manageId = manageId;
 	}
 
 	public String getSku() {
@@ -47,20 +52,20 @@ public class StockModel extends BaseModel {
 		this.sku = sku;
 	}
 
-	public long getDepot_id() {
-		return depot_id;
+	public long getDepotId() {
+		return depotId;
 	}
 
-	public void setDepot_id(long depot_id) {
-		this.depot_id = depot_id;
+	public void setDepotId(long depotId) {
+		this.depotId = depotId;
 	}
 
-	public long getShelves_id() {
-		return shelves_id;
+	public long getShelvesId() {
+		return shelvesId;
 	}
 
-	public void setShelves_id(long shelves_id) {
-		this.shelves_id = shelves_id;
+	public void setShelvesId(long shelvesId) {
+		this.shelvesId = shelvesId;
 	}
 
 	public int getNums() {
@@ -71,12 +76,12 @@ public class StockModel extends BaseModel {
 		this.nums = nums;
 	}
 
-	public int getGoods_type() {
-		return goods_type;
+	public int getGoodsType() {
+		return goodsType;
 	}
 
-	public void setGoods_type(int goods_type) {
-		this.goods_type = goods_type;
+	public void setGoodsType(int goodsType) {
+		this.goodsType = goodsType;
 	}
 
 	public Date getIntime() {
@@ -95,20 +100,55 @@ public class StockModel extends BaseModel {
 		this.volume = volume;
 	}
 
-	public Date getProduce_time() {
-		return produce_time;
+	public Date getProduceTime() {
+		return produceTime;
 	}
 
-	public void setProduce_time(Date produce_time) {
-		this.produce_time = produce_time;
+	public void setProduceTime(Date produceTime) {
+		this.produceTime = produceTime;
 	}
 
-	public Date getValidity_time() {
-		return validity_time;
+	public Date getValidityTime() {
+		return validityTime;
 	}
 
-	public void setValidity_time(Date validity_time) {
-		this.validity_time = validity_time;
+	public void setValidityTime(Date validityTime) {
+		this.validityTime = validityTime;
 	}
 
+	public String getGoodsName() {
+		return goodsName;
+	}
+
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
+	}
+
+	public int getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	public String getBarCode() {
+		return barCode;
+	}
+
+	public void setBarCode(String barCode) {
+		this.barCode = barCode;
+	}
+
+	
 }

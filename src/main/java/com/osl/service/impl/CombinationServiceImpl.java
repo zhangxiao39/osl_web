@@ -30,11 +30,18 @@ public class CombinationServiceImpl implements CombinationService {
 		// TODO Auto-generated method stub
 		int ok = 0;
 		try {
-			for (int i = 0; i < _combinations.size(); i++) {
-				CombinationEntity _c = _combinations.get(i);
-				combinationMapper.insertCombination(_c);
+			List<CombinationModel> _e = combinationMapper.find_combinationBusiness_sku(
+					(int) _combinations.get(0).getBusinessId(), _combinations.get(0).getSku());
+			if (_e.size() > 0) {
+				ok = -1;
+			} else {
+
+				for (int i = 0; i < _combinations.size(); i++) {
+					CombinationEntity _c = _combinations.get(i);
+					combinationMapper.insertCombination(_c);
+				}
+				ok = 1;
 			}
-			ok = 1;
 
 		} finally {
 			return ok;

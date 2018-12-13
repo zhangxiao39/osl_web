@@ -10,15 +10,16 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.osl.model.UserModel;
 import com.osl.model.Users;
 
 @Mapper
 public interface UsersService {
 	@Select("SELECT *,t_business.name as bname FROM t_user,t_business where t_user.business_id = t_business.id and t_business.url = #{url} and t_user.user_id = #{user_id} and t_user.password = #{password} and t_user.status = 0 and t_business.type=0")
-	Users findByUserName_admin(String user_id, String password, String url);
+	UserModel findByUserName_admin(String user_id, String password, String url);
 
 	@Select("SELECT *,t_business.name as bname FROM t_user,t_business where t_user.business_id = t_business.id and t_business.url = #{url} and t_user.user_id = #{user_id} and t_user.password = #{password} and t_user.status = 0 and t_business.type=1")
-	Users findByUserName_business(String user_id, String password, String url);
+	UserModel findByUserName_business(String user_id, String password, String url);
 	
 	@Select("SELECT * FROM t_user where id = #{id}")
 	Users findById(@Param("id") String id);

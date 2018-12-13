@@ -15,6 +15,12 @@
 		where t_combination.delete_flg=0 and t_goods.sku=t_combination.sku and
 		t_combination.business_id=#{bid}
 	</select>
+	<select id="find_combinationBusiness_sku"
+		resultType="com.osl.model.CombinationModel">
+		select * from t_combination
+		where delete_flg=0 and
+		business_id=#{bid} and sku=#{sku}
+	</select>
 	<select id="find_combinationByCode"
 		resultType="com.osl.model.CombinationModel">
 		select

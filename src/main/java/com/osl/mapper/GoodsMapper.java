@@ -23,5 +23,7 @@ public interface GoodsMapper {
 	public GoodsEntity findById(int id);
 	
 	public GoodsEntity findBySku(String sku);
+	
+	public GoodsModel find_goodsBusiness_sku(int bid,String sku);
 
 }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.osl.mapper.StockMapper">
+	<!-- 商家端，查找当前商家所有的库存列表 -->
+	<select id="find_stockBusiness_All" resultType="com.osl.model.StockModel" parameterType="int">
+		SELECT a.`name` AS goods_name, a.barcode as bar_code,c.id as category_id ,c.`name` as category_name,b.*
+		FROM t_goods a,t_stock b,t_goods_category c
+		WHERE a.sku = b.sku and a.category_id = c.id AND a.business_id = #{bid} ORDER BY new_date
+	</select>
+	
+	<!-- 商家端，条件查询库存信息列表 -->
+	<select id="find_stockBusiness_by_condition" resultType="com.osl.model.StockModel">
+		SELECT a.`name` AS goods_name, a.barcode as bar_code,c.id as category_id ,c.`name` as category_name,b.*
+		FROM t_goods a,t_stock b,t_goods_category c
+		WHERE a.sku = b.sku and a.category_id = c.id AND a.business_id = #{bid}
+       <if test="stockModel.sku != null  and stockModel.sku !=''">
+        	and b.sku = #{stockModel.sku}
+        </if>
+        <if test="stockModel.goodsName != null  and stockModel.goodsName !=''">
+        	and a.name like CONCAT('%', #{stockModel.goodsName},'%')
+        </if>
+        <if test="stockModel.categoryName != null  and stockModel.categoryName !=''">
+        	and c.name = #{stockModel.categoryName}
+        </if>
+         <if test="stockModel.barCode != null  and stockModel.barCode !=''">
+        	and a.barcode = #{stockModel.barCode}
+        </if>
+        <if test="stockModel.nums != null">
+        	and b.nums >= #{stockModel.nums}
+        </if>
+        <if test="stockModel.goodsType != null and stockModel.goodsType !=2 and stockModel.goodsType !=1000"><!-- 合格品，不合格品 -->
+        	and b.goods_type = #{stockModel.goodsType}
+        </if>
+        <if test="stockModel.goodsType == 2">
+        	and b.validity_time &lt;current_timestamp
+        </if>
+        ORDER BY new_date
+	</select>
+	
+	<!-- 运营端，查找当前运营商所对应的参考存储列表 -->
+	<select id="find_adminStock_All" resultType="com.osl.model.StockModel" parameterType="int">
+		SELECT a.*,c.`name` as goods_name,c.barcode as bar_code,d.name as category_name
+		FROM t_stock a
+		LEFT JOIN t_depot b ON a.depot_id = b.id
+		LEFT JOIN t_goods c on a.sku = c.sku
+		LEFT JOIN t_goods_category d ON d.id = c.category_id
+		WHERE b.business_id = #{bid} ORDER BY new_date
+	</select>
+</mapper>

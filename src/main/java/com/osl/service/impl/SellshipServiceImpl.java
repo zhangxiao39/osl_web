@@ -11,8 +11,8 @@ import com.osl.model.SellshipModel;
 import com.osl.service.SellshipService;
 
 @Service
-public class SellshpServiceImpl implements SellshipService{
-	
+public class SellshipServiceImpl implements SellshipService {
+
 	@Autowired
 	private SellshipMapper sellshipMapper;
 
@@ -31,7 +31,13 @@ public class SellshpServiceImpl implements SellshipService{
 	@Override
 	public int insertSellship(SellshipEntity _sellship) {
 		// TODO Auto-generated method stub
-		return sellshipMapper.insertSellship(_sellship);
+		SellshipModel _s = sellshipMapper.find_sellshipBusiness_sellId(_sellship.getBusinessId(), _sellship.getSellId(),
+				_sellship.getPlatformId());
+		if (_s == null) {
+			return sellshipMapper.insertSellship(_sellship);
+		} else {
+			return -1;
+		}
 	}
 
 	@Override

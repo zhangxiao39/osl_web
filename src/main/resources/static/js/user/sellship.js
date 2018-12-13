@@ -144,6 +144,12 @@ $(function() {
 						}, function() {
 							window.location.reload();
 						})
+					} else if (data == "exist") {
+						swal({
+							title : "贩卖ID已经存在！",
+							text : "保存失败！",
+							type : "error"
+						})
 					} else {
 						swal({
 							title : "保存失败",

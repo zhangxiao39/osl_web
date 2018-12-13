@@ -61,12 +61,12 @@
 								<div class="row">
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="product_name1">入库ID</label>
-											<input type="text" id="product_name1" name="product_name1"
+											<label class="control-label" for="inputId">入库编号</label>
+											<input type="text" id="inputId" name="inputId"
 												value="" class="form-control">
 										</div>
 									</div>
-									<div class="col-sm-1">
+									<!-- <div class="col-sm-1">
 										<div class="form-group">
 											<label class="control-label" for="status">商家</label> <select
 												name="status" id="status" class="form-control">
@@ -74,33 +74,40 @@
 												<option value="0">JNH</option>
 											</select>
 										</div>
-									</div>
+									</div> -->
 									<div class="col-sm-2">
 										<div class="form-group">
 											<label class="control-label" for="status">入库状态</label> <select
 												name="status" id="status" class="form-control">
-												<option value="0" selected="">全部状态</option>
-												<option value="1">入库中</option>
+												<option value="-1" selected="selected">全部状态</option>
+												<option value="0">入库中</option>
 												<option value="1">入库完了</option>
-												<option value="1">取消</option>
+												<option value="2">取消</option>
 											</select>
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="product_name">商品SKU</label>
-											<input type="text" id="product_name" name="product_name"
+											<label class="control-label" for="sku">商品SKU</label>
+											<input type="text" id="sku" name="sku"
 												value="" class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="price">商品条码</label> <input
-												type="text" id="price" name="price" value=""
-												class="form-control">
+											<label class="control-label" for="goodsName">商品名称</label>
+											<input type="text" id="goodsName" name="goodsName"
+												value="" class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="barcode">商品条码</label> <input
+												type="text" id="barcode" name="barcode" value=""
+												class="form-control">
+										</div>
+									</div>
+									<!-- <div class="col-sm-2">
 										<div class="form-group" id="input_date">
 											<label class="control-label">入库期间</label>
 											<div class="input-daterange input-group" id="datepicker">
@@ -110,10 +117,13 @@
 													class="form-control" name="end" value="">
 											</div>
 										</div>
-									</div>
+									</div> -->
 									<div class="col-sm-1">
 										<div class="form-group z-t">
-											<button type="button" class="btn btn-primary">检索</button>
+											<button type="button" class="btn btn-primary" onclick="wSearchInputList()">检索</button>
+										</div>
+										<div class="form-group z-t">
+											<button type="button" class="btn btn-primary" onclick="goIputDetailed()">新建</button>
 										</div>
 									</div>
 								</div>
@@ -132,7 +142,7 @@
 							<div class="ibox-content">
 								<div class="table-responsive">
 									<table
-										class="table table-striped table-bordered table-hover dataTables-example">
+										class="table table-striped table-bordered table-hover dataTables-example" id="w_table_refresh" th:fragment="table_refresh">
 										<thead>
 											<tr>
 												<th>#</th>
@@ -146,61 +156,21 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>1</td>
-												<td>JNH</td>
-												<td>IN201811060001</td>
-												<td>2018-11-06</td>
-												<td>2</td>
-												<td>100</td>
-												<td>入库完了</td>
+											<tr th:each="p,pIndex:${item}">
+												<td th:text="${pIndex.count}"></td>
+												<td th:text="${p.businessName}"></td>
+												<td th:text="${p.inputId}"></td>
+												<td th:text="${#dates.format(p.inputTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+												<td th:text="${p.skuNums}"></td>
+												<td th:text="${p.goodsNums}"></td>
+												<td th:text="${p.status == 1 ? '入库完了' : '入库中'}"></td>
 												<td>
 													<button class="btn btn-info btn-xs dropdown-toggle"
-														type="button" onclick="goIputDetailed('2','IN201811060001');">
-														<i class="fa fa-edit"></i>查看明细
+														type="button" th:onclick="|javascript:goIputDetailed(${p.id})|">
+														<i class="fa fa-edit"></i>修改
 													</button>
 													<button class="btn btn-danger btn-xs dropdown-toggle"
-														type="button" onClick="check(1)">
-														<i class="fa fa-trash"></i>删除
-													</button>
-												</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>JNH</td>
-												<td>IN201811010001</td>
-												<td>2018-11-01</td>
-												<td>2</td>
-												<td>100</td>
-												<td>入库完了</td>
-												<td>
-													<button class="btn btn-info btn-xs dropdown-toggle"
-														type="button"
-														onclick="goIputDetailed('2','IN201811060001');">
-														<i class="fa fa-edit"></i>查看明细
-													</button>
-													<button class="btn btn-danger btn-xs dropdown-toggle"
-														type="button" onClick="check(1)">
-														<i class="fa fa-trash"></i>删除
-													</button>
-												</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>JNH</td>
-												<td>IN201810060001</td>
-												<td>2018-10-06</td>
-												<td>5</td>
-												<td>1020</td>
-												<td>入库完了</td>
-												<td>
-													<button class="btn btn-info btn-xs dropdown-toggle"
-														type="button"
-														onclick="goIputDetailed('2','IN201810060001');">
-														<i class="fa fa-edit"></i>查看明细
-													</button>
-													<button class="btn btn-danger btn-xs dropdown-toggle"
-														type="button" onClick="check(1)">
+														type="button" th:onClick="|javascript:deleteInput(${p.id})|">
 														<i class="fa fa-trash"></i>删除
 													</button>
 												</td>
@@ -214,107 +184,6 @@
 				</div>
 			</div>
 			<div class="footer" th:include="/w/footer :: copyright"></div>
-		</div>
-	</div>
-
-	<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog"
-		aria-hidden="true" style="display: none;">
-		<div class="modal-dialog">
-			<div class="modal-content animated bounceInRight">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
-					</button>
-					<h4 class="modal-title">添加商品</h4>
-				</div>
-				<div class="modal-body">
-					<form class="form-horizontal">
-						<div class="form-group">
-							<label class="col-lg-3 control-label">商品分类</label>
-							<div class="col-lg-9">
-								<select class="form-control" name="account">
-									<option>选择分类</option>
-									<option>フラッシュメモリ</option>
-									<option>PC周边</option>
-									<option>服装</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">商品SKU</label>
-							<div class="col-lg-9">
-								<input type="email" placeholder="请输入商品SKU" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">商品条码</label>
-							<div class="col-lg-9">
-								<input type="email" placeholder="请输入商品条码" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">商品名称</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="请输入商品名称"
-									class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">商品形状</label>
-							<div class="col-lg-9">
-								<label class="radio-inline"> <input type="radio"
-									value="option1" name="sex" checked>固体
-								</label> <label class="radio-inline"> <input type="radio"
-									value="option2" name="sex">液体
-								</label> <label class="radio-inline"> <input type="radio"
-									value="option3" name="sex">气体
-								</label>
-
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">长(cm)</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="请输入长" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">宽(cm)</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="请输入宽" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">高(cm)</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="请输入高" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">重量(KG)</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="请输入重量" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">颜色</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="请输入颜色" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">备注</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="" class="form-control">
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary">确认添加</button>
-				</div>
-			</div>
 		</div>
 	</div>
 
@@ -349,6 +218,9 @@
 	<!-- common -->
 	<script th:src="@{/js/common.js}"></script>
 
+	<!-- input -->
+	<script th:src="@{/js/input/input.js}"></script>
+	
 	<script th:inline="javascript">
 	$(document).ready(function(){
         $('#input_date .input-daterange').datepicker({

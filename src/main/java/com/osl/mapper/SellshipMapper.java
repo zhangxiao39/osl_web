@@ -23,4 +23,6 @@ public interface SellshipMapper {
 	public SellshipEntity findById(int id);
 
 	public SellshipEntity findBySku(String sku);
+
+	public SellshipModel find_sellshipBusiness_sellId(long bid, String sellId, long platformId);
 }

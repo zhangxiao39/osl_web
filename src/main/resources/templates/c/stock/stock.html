@@ -65,43 +65,53 @@
 									<div class="col-sm-2">
 										<div class="form-group">
 											<label class="control-label" for="product_name">商品SKU</label>
-											<input type="text" id="product_name" name="product_name"
-												value="" class="form-control">
+											<input type="text" id="goods_sku" name="product_name" class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
 											<label class="control-label" for="price">商品条码</label> <input
-												type="text" id="price" name="price" value=""
+												type="text" id="goods_barCode" name="price" value=""
 												class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
 											<label class="control-label" for="quantity">商品名称</label> <input
-												type="text" id="quantity" name="quantity" value=""
+												type="text" id="goods_name" name="quantity" value=""
 												class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
 											<label class="control-label" for="status">商品分类</label> <select
-												name="status" id="status" class="form-control">
+												name="status" id="type" class="form-control">
 												<option value="1" selected="">全部分类</option>
 												<option value="0">フラッシュメモリ</option>
 											</select>
 										</div>
 									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="status">商品状态</label> <select
+												name="status" id="status" class="form-control">
+											<option value="" selected="">全部</option>
+											<option value="1">良品</option>
+											<option value="0">非良品</option>
+											<option value="2">废弃品</option>
+										</select>
+										</div>
+									</div>
 									<div class="col-sm-1">
 										<div class="form-group">
 											<label class="control-label" for="quantity1">库存数量</label> <input
-												type="text" id="quantity1" name="quantity1" value=""
+												type="text" id="goods_nums" name="quantity1" value=""
 												class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-1">
 											<div class="form-group z-t">
-												<button type="button" class="btn btn-primary">检索</button>
+												<button type="button" class="btn btn-primary" onclick="searchStock()">检索</button>
 											</div>
 									</div>
 								</div>
@@ -119,32 +129,28 @@
 							</div>
 							<div class="ibox-content">
 								<div class="table-responsive">
-									<table
-										class="table table-striped table-bordered table-hover dataTables-example">
+									<table class="table table-striped table-bordered table-hover dataTables-example" id="table_refresh"  th:fragment="table_refresh">
 										<thead>
 											<tr>
 												<th>#</th>
-												<th>SKU</th>
-												<th>分类</th>
 												<th>名称</th>
+												<th>SKU</th>
+												<th>条形码</th>
+												<!--<th>商品状态</th>-->
+												<th>商品分类</th>
 												<th>在库数量</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>1</td>
-												<td>MC8012MX300</td>
-												<td>フラッシュメモリ</td>
-												<td>Crucial SSD MX300 525GB</td>
-												<td>100</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>MC8012MX500</td>
-												<td>フラッシュメモリ</td>
-												<td>Crucial SSD MX500 500G</td>
-												<td>189</td>
-											</tr>
+										<tr th:each="p,pIndex:${item}">
+											<td th:text="${pIndex.count}"></td>
+											<td th:text="${p.goodsName}"></td>
+											<td th:text="${p.sku}"></td>
+											<td th:text="${p.barCode}"></td>
+											<!--<td th:text="${p.goodsType == 0 }?'非良品':'良品'"></td>-->
+											<td th:text="${p.categoryName}"></td>
+											<td th:text="${p.nums}"></td>
+										</tr>
 										</tbody>
 									</table>
 								</div>
@@ -265,7 +271,8 @@
 	<script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
 	<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
 	<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
-
+	<!--cStock.js-->
+	<script th:src="@{/js/stock/cStock.js}"></script>
 	<!-- Data Tables -->
 	<script th:src="@{/js/plugins/dataTables/jquery.dataTables.js}"></script>
 	<script th:src="@{/js/plugins/dataTables/dataTables.bootstrap.js}"></script>

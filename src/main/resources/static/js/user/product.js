@@ -68,6 +68,18 @@ function validform() {
 			},
 			volume : {
 				required : true
+			},
+			length : {
+				required : true
+			},
+			width : {
+				required : true
+			},
+			height : {
+				required : true
+			},
+			weight : {
+				required : true
 			}
 		},
 		messages : {
@@ -83,6 +95,18 @@ function validform() {
 			},
 			volume : {
 				required : "请再次输入商品体积",
+			},
+			length : {
+				required : "请输入长度",
+			},
+			width : {
+				required : "请输入宽度",
+			},
+			height : {
+				required : "请输入高度",
+			},
+			weight : {
+				required : "请输入重量",
 			}
 		}
 	});
@@ -141,6 +165,12 @@ $(function() {
 							type : "success"
 						}, function() {
 							window.location.reload();
+						})
+					} else if (data == "exist") {
+						swal({
+							title : "商品SKU已经存在！",
+							text : "保存失败！",
+							type : "error"
 						})
 					} else {
 						swal({

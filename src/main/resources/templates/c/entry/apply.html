@@ -48,6 +48,7 @@
 
 			<div class="wrapper wrapper-content animated fadeInRight">
 				<div class="row">
+				<form id="form" th:action="@{/b/entry/apply/upload}" method="post" enctype="multipart/form-data">
 					<div class="col-lg-12">
 						<div class="ibox float-e-margins">
 							<div class="ibox-title">
@@ -67,16 +68,17 @@
 									<span class="input-group-addon btn btn-default btn-file">
 										<span class="fileinput-new">Select file</span> <span
 										class="fileinput-exists">Change</span> <input type="file"
-										name="..." />
+										name="applyFile" />
 									</span> <a href="#"
 										class="input-group-addon btn btn-warning fileinput-exists"
-										data-dismiss="fileinput">Remove</a> <a href="#"
+										data-dismiss="fileinput">Remove</a> <a href="#" id="doUpload"
 										class="input-group-addon btn btn-primary fileinput-exists"
 										data-dismiss="fileinput">提交纳品</a>
 								</div>
 							</div>
 						</div>
 					</div>
+					</form>
 					<div class="col-lg-12">
 						<div class="ibox float-e-margins">
 							<div class="ibox-title">
@@ -350,6 +352,10 @@
 			$('.i-checks').iCheck({
 				checkboxClass : 'icheckbox_square-green',
 				radioClass : 'iradio_square-green',
+			});
+			
+			$('#doUpload').click(function(){
+				$('#form').submit();
 			});
 		});
 	</script>

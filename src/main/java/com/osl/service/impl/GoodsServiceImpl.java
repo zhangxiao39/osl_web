@@ -12,7 +12,7 @@ import com.osl.service.GoodsService;
 
 @Service
 public class GoodsServiceImpl implements GoodsService {
-	
+
 	@Autowired
 	private GoodsMapper goodsMapper;
 
@@ -25,7 +25,12 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public int insertGoods(GoodsEntity _goods) {
 		// TODO Auto-generated method stub
-		return goodsMapper.insertGoods(_goods);
+		GoodsModel _g = goodsMapper.find_goodsBusiness_sku(_goods.getBusinessId(), _goods.getSku());
+		if (_g == null) {
+			return goodsMapper.insertGoods(_goods);
+		} else {
+			return -1;
+		}
 	}
 
 	@Override

@@ -13,16 +13,88 @@ public class IputModel extends BaseModel {
 	private static final long serialVersionUID = 4075837601944893951L;
 	
 	private long id;
-	private String input_id;
-	private Date intime;
-	private int sku_nums;
-	private int goods_nums;
+	private String inputId;
+	private Date inputTime;
+	private int skuNums;
+	private int goodsNums;
 	private int status;
-	private long business_id;
-	private long warehouse_id;
+	private long businessId;
+	private long warehouseId;
 	private String oper;
-	private int isdele;
-	private Timestamp addtime;
+	private int deleteFlag;
+	
+	/**
+	 * 新增字段用于条件查询
+	 */
+	//sku
+	private String sku;
+	//商品名称
+	private String goodsName;
+	//条形码
+	private String barcode;
+	//录入开始日期
+	private String startNewDate;
+	//录入结束日期
+	private String endNewDate;
+	//查询flag
+	private String searchFlag;
+	
+	private String businessName;
+	
+	public String getBusinessName() {
+		return businessName;
+	}
+
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
+	}
+	public String getSearchFlag() {
+		return searchFlag;
+	}
+
+	public void setSearchFlag(String searchFlag) {
+		this.searchFlag = searchFlag;
+	}
+
+	public String getGoodsName() {
+		return goodsName;
+	}
+
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
+	}
+
+	public String getSku() {
+		return sku;
+	}
+
+	public void setSku(String sku) {
+		this.sku = sku;
+	}
+
+	public String getBarcode() {
+		return barcode;
+	}
+
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
+	}
+
+	public String getStartNewDate() {
+		return startNewDate;
+	}
+
+	public void setStartNewDate(String startNewDate) {
+		this.startNewDate = startNewDate;
+	}
+
+	public String getEndNewDate() {
+		return endNewDate;
+	}
+
+	public void setEndNewDate(String endNewDate) {
+		this.endNewDate = endNewDate;
+	}
 
 	public long getId() {
 		return id;
@@ -32,36 +104,36 @@ public class IputModel extends BaseModel {
 		this.id = id;
 	}
 
-	public String getInput_id() {
-		return input_id;
+	public String getInputId() {
+		return inputId;
 	}
 
-	public void setInput_id(String input_id) {
-		this.input_id = input_id;
+	public void setInputId(String inputId) {
+		this.inputId = inputId;
 	}
 
-	public Date getIntime() {
-		return intime;
+	public Date getInputTime() {
+		return inputTime;
 	}
 
-	public void setIntime(Date intime) {
-		this.intime = intime;
+	public void setInputTime(Date inputTime) {
+		this.inputTime = inputTime;
 	}
 
-	public int getSku_nums() {
-		return sku_nums;
+	public int getSkuNums() {
+		return skuNums;
 	}
 
-	public void setSku_nums(int sku_nums) {
-		this.sku_nums = sku_nums;
+	public void setSkuNums(int skuNums) {
+		this.skuNums = skuNums;
 	}
 
-	public int getGoods_nums() {
-		return goods_nums;
+	public int getGoodsNums() {
+		return goodsNums;
 	}
 
-	public void setGoods_nums(int goods_nums) {
-		this.goods_nums = goods_nums;
+	public void setGoodsNums(int goodsNums) {
+		this.goodsNums = goodsNums;
 	}
 
 	public int getStatus() {
@@ -72,20 +144,20 @@ public class IputModel extends BaseModel {
 		this.status = status;
 	}
 
-	public long getBusiness_id() {
-		return business_id;
+	public long getBusinessId() {
+		return businessId;
 	}
 
-	public void setBusiness_id(long business_id) {
-		this.business_id = business_id;
+	public void setBusinessId(long businessId) {
+		this.businessId = businessId;
 	}
 
-	public long getWarehouse_id() {
-		return warehouse_id;
+	public long getWarehouseId() {
+		return warehouseId;
 	}
 
-	public void setWarehouse_id(long warehouse_id) {
-		this.warehouse_id = warehouse_id;
+	public void setWarehouseId(long warehouseId) {
+		this.warehouseId = warehouseId;
 	}
 
 	public String getOper() {
@@ -96,20 +168,12 @@ public class IputModel extends BaseModel {
 		this.oper = oper;
 	}
 
-	public int getIsdele() {
-		return isdele;
+	public int getDeleteFlag() {
+		return deleteFlag;
 	}
 
-	public void setIsdele(int isdele) {
-		this.isdele = isdele;
-	}
-
-	public Timestamp getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
+	public void setDeleteFlag(int deleteFlag) {
+		this.deleteFlag = deleteFlag;
 	}
 
 }

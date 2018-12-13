@@ -24,6 +24,16 @@ public class InputdetailEntity extends BaseEntity {
 	private int goodsType;
 	private String inputId;
 	private Date validityTime;
+	private int status;
+	
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 	public long getId() {
 		return id;

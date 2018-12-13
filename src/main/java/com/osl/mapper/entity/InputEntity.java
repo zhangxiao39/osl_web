@@ -13,7 +13,7 @@ public class InputEntity extends BaseEntity {
 
 	private long id;
 	private String inputId;
-	private Date intime;
+	private Date inputTime;
 	private int skuNums;
 	private int goodsNums;
 	private int status;
@@ -37,12 +37,12 @@ public class InputEntity extends BaseEntity {
 		this.inputId = inputId;
 	}
 
-	public Date getIntime() {
-		return intime;
+	public Date getInputTime() {
+		return inputTime;
 	}
 
-	public void setIntime(Date intime) {
-		this.intime = intime;
+	public void setInputTime(Date inputTime) {
+		this.inputTime = inputTime;
 	}
 
 	public int getSkuNums() {

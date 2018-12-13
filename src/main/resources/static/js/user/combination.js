@@ -49,6 +49,12 @@ $(function() {
 							}, function() {
 								window.location.reload();
 							})
+						} else if (data == "exist") {
+							swal({
+								title : "组合品CODE已经存在！",
+								text : "保存失败！",
+								type : "error"
+							})
 						} else {
 							swal({
 								title : "保存失败",
@@ -220,7 +226,9 @@ function formatGoodsTable(data) {
 					+ '<td>'
 					+ data[index].goodsname
 					+ '</td>'
-					+ '<td><input type="Text" name="nums" value="'+data[index].nums+'" class="z_inputl_50" /></td>'
+					+ '<td><input type="Text" name="nums" value="'
+					+ data[index].nums
+					+ '" class="z_inputl_50" /></td>'
 					+ '<td><button class="btn btn-danger btn-xs dropdown-toggle" type="button" onClick="delRow(this)"><i class="fa fa-trash"></i>删除</button></td>'
 					+ '</tr>';
 			$("#qryTable tbody:last").append(rowTem);

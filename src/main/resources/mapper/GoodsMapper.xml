@@ -10,6 +10,11 @@
 		select t_goods.*,t_goods_category.name as categoryName from t_goods,t_goods_category
 		where t_goods.delete_flg=0 and t_goods.category_id=t_goods_category.id and t_goods.business_id=#{bid}
 	</select>
+	<select id="find_goodsBusiness_sku"
+		resultType="com.osl.model.GoodsModel">
+		select * from t_goods
+		where delete_flg=0 and business_id=#{bid} and sku=#{sku}
+	</select>
 	<insert id="insertGoods"
 		parameterType="com.osl.mapper.entity.GoodsEntity">
 		insert into t_goods
@@ -48,6 +53,6 @@
 	<select id="findBySku" parameterType="String"
 		resultType="com.osl.mapper.entity.GoodsEntity">
 		select * from t_goods
-		where sku=#{sku}
+		where sku=#{sku} and delete_flg=0
 	</select>
 </mapper>

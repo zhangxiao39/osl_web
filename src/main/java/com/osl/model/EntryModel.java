@@ -1,7 +1,8 @@
 package com.osl.model;
 
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.osl.common.web.BaseModel;
 
@@ -24,8 +25,7 @@ public class EntryModel extends BaseModel {
 	private long business_id;
 	private long warehouse_id;
 	private String oper;
-	private int isdele;
-	private Timestamp addtime;
+	private MultipartFile applyFile;
 
 	public long getId() {
 		return id;
@@ -123,20 +123,12 @@ public class EntryModel extends BaseModel {
 		this.oper = oper;
 	}
 
-	public int getIsdele() {
-		return isdele;
+	public MultipartFile getApplyFile() {
+		return applyFile;
 	}
 
-	public void setIsdele(int isdele) {
-		this.isdele = isdele;
-	}
-
-	public Timestamp getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
+	public void setApplyFile(MultipartFile applyFile) {
+		this.applyFile = applyFile;
 	}
 
 }

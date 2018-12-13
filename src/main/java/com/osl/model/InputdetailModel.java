@@ -13,35 +13,138 @@ public class InputdetailModel extends BaseModel {
 	private static final long serialVersionUID = -4398144474494325708L;
 	
 	private long id;
-	private String detail_id;
+	private String detailId;
 	private String sku;
 	private int nums;
-	private long depot_id;
-	private long shelves_id;
-	private int inner_nums;
-	private int inner_goods_nums;
+	private long depotId;
+	private long shelvesId;
+	private int innerNums;
+	private int innerGoodsNums;
 	private int type;
-	private long ship_id;
-	private int goods_type;
-	private String input_id;
-	private Date validity_time;
-	private int isdele;
-	private Timestamp addtime;
+	private long shipId;
+	private int goodsType;
+	private String inputId;
+	private Date validityTime;
+	private int status;
+	private int deleteFlag;
+	
+	
+	private String goodsName;
+	private String goodscategoryName;
+	private String businessName;
+	private String depotAddress;
+	
+	
+	public String getDetailId() {
+		return detailId;
+	}
 
+	public void setDetailId(String detailId) {
+		this.detailId = detailId;
+	}
+
+	public long getDepotId() {
+		return depotId;
+	}
+
+	public void setDepotId(long depotId) {
+		this.depotId = depotId;
+	}
+
+	public long getShelvesId() {
+		return shelvesId;
+	}
+
+	public void setShelvesId(long shelvesId) {
+		this.shelvesId = shelvesId;
+	}
+
+	public int getInnerNums() {
+		return innerNums;
+	}
+
+	public void setInnerNums(int innerNums) {
+		this.innerNums = innerNums;
+	}
+
+	public int getInnerGoodsNums() {
+		return innerGoodsNums;
+	}
+
+	public void setInnerGoodsNums(int innerGoodsNums) {
+		this.innerGoodsNums = innerGoodsNums;
+	}
+
+	public long getShipId() {
+		return shipId;
+	}
+
+	public void setShipId(long shipId) {
+		this.shipId = shipId;
+	}
+
+	public int getGoodsType() {
+		return goodsType;
+	}
+
+	public void setGoodsType(int goodsType) {
+		this.goodsType = goodsType;
+	}
+
+	public String getInputId() {
+		return inputId;
+	}
+
+	public void setInputId(String inputId) {
+		this.inputId = inputId;
+	}
+
+	public Date getValidityTime() {
+		return validityTime;
+	}
+
+	public void setValidityTime(Date validityTime) {
+		this.validityTime = validityTime;
+	}
+
+	public String getBusinessName() {
+		return businessName;
+	}
+
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
+	}
+
+	public String getDepotAddress() {
+		return depotAddress;
+	}
+
+	public void setDepotAddress(String depotAddress) {
+		this.depotAddress = depotAddress;
+	}
+
+	public String getGoodsName() {
+		return goodsName;
+	}
+
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
+	}
+
+	public String getGoodscategoryName() {
+		return goodscategoryName;
+	}
+
+	public void setGoodscategoryName(String goodscategoryName) {
+		this.goodscategoryName = goodscategoryName;
+	}
+	
 	public long getId() {
 		return id;
 	}
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public String getDetail_id() {
-		return detail_id;
-	}
-
-	public void setDetail_id(String detail_id) {
-		this.detail_id = detail_id;
 	}
 
 	public String getSku() {
@@ -60,37 +163,6 @@ public class InputdetailModel extends BaseModel {
 		this.nums = nums;
 	}
 
-	public long getDepot_id() {
-		return depot_id;
-	}
-
-	public void setDepot_id(long depot_id) {
-		this.depot_id = depot_id;
-	}
-
-	public long getShelves_id() {
-		return shelves_id;
-	}
-
-	public void setShelves_id(long shelves_id) {
-		this.shelves_id = shelves_id;
-	}
-
-	public int getInner_nums() {
-		return inner_nums;
-	}
-
-	public void setInner_nums(int inner_nums) {
-		this.inner_nums = inner_nums;
-	}
-
-	public int getInner_goods_nums() {
-		return inner_goods_nums;
-	}
-
-	public void setInner_goods_nums(int inner_goods_nums) {
-		this.inner_goods_nums = inner_goods_nums;
-	}
 
 	public int getType() {
 		return type;
@@ -100,52 +172,20 @@ public class InputdetailModel extends BaseModel {
 		this.type = type;
 	}
 
-	public long getShip_id() {
-		return ship_id;
+	public int getStatus() {
+		return status;
 	}
 
-	public void setShip_id(long ship_id) {
-		this.ship_id = ship_id;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
-	public int getGoods_type() {
-		return goods_type;
+	public int getDeleteFlag() {
+		return deleteFlag;
 	}
 
-	public void setGoods_type(int goods_type) {
-		this.goods_type = goods_type;
-	}
-
-	public String getInput_id() {
-		return input_id;
-	}
-
-	public void setInput_id(String input_id) {
-		this.input_id = input_id;
-	}
-
-	public Date getValidity_time() {
-		return validity_time;
-	}
-
-	public void setValidity_time(Date validity_time) {
-		this.validity_time = validity_time;
-	}
-
-	public int getIsdele() {
-		return isdele;
-	}
-
-	public void setIsdele(int isdele) {
-		this.isdele = isdele;
-	}
-
-	public Timestamp getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
+	public void setDeleteFlag(int deleteFlag) {
+		this.deleteFlag = deleteFlag;
 	}
 
 }
