@@ -14,8 +14,8 @@ public class StockModel extends BaseModel {
 	private long id;
 	private String manageId;
 	private String sku;
-	private long depotId;
-	private long shelvesId;
+	private String depotId;
+	private String shelvesId;
 	private int nums;
 	private int goodsType;
 	private Date intime;
@@ -27,7 +27,7 @@ public class StockModel extends BaseModel {
 	private int categoryId;
 	private String categoryName;
 	private String barCode;
-
+	private int businessId;	//…Ãº“id
 	public long getId() {
 		return id;
 	}
@@ -52,19 +52,20 @@ public class StockModel extends BaseModel {
 		this.sku = sku;
 	}
 
-	public long getDepotId() {
+	
+	public String getDepotId() {
 		return depotId;
 	}
 
-	public void setDepotId(long depotId) {
+	public void setDepotId(String depotId) {
 		this.depotId = depotId;
 	}
 
-	public long getShelvesId() {
+	public String getShelvesId() {
 		return shelvesId;
 	}
 
-	public void setShelvesId(long shelvesId) {
+	public void setShelvesId(String shelvesId) {
 		this.shelvesId = shelvesId;
 	}
 
@@ -150,5 +151,15 @@ public class StockModel extends BaseModel {
 		this.barCode = barCode;
 	}
 
+	public int getBusinessId() {
+		return businessId;
+	}
+
+	public void setBusinessId(int businessId) {
+		this.businessId = businessId;
+	}
+
+	
+	
 	
 }

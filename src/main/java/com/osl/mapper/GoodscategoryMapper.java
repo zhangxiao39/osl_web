@@ -16,6 +16,9 @@ public interface GoodscategoryMapper {
 	
 	public List<GoodsCategoryModel> getCategoryByC2();
 	
+	//获取叶子节点分类
+	public List<GoodsCategoryModel> getCategoryMin();
+	
 	public int insertGoodsCategory(GoodsCategoryEntity _goodscategory);
 	
 	public GoodsCategoryEntity findById(long l);

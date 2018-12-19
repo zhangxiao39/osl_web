@@ -16,11 +16,13 @@ public interface InputMapper {
 	
 	public List<IputModel> find_inputAll(IputModel iputModel);
 
-	public InputdetailEntity findById(int id);
+	public InputdetailEntity findById(String detailId);
 	
 	public List<InputdetailModel> findDetailListById(String id);
 	
 	public int deleteInputById(int id);
 	
 	public int deleteInputDetailByInputId(int id);
+	
+	public int saveNewInputDetail(InputdetailModel model);
 }

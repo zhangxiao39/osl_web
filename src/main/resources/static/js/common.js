@@ -77,16 +77,16 @@ function goEntryDetailed_b(id) {
 function goEntryDetailed(bid, id) {
 	window.location.href = '/a/entry/detail/' + bid + '/' + id + '/';
 }
-function goIputDetailed_b(id) {
-	if(id){
-		window.location.href = '/b/input/detail?id=' + id;
+function goIputDetailed_b(inputId) {
+	if(inputId){
+		window.location.href = '/b/input/detail?inputId=' + inputId;
 	}else{
 		window.location.href = '/b/input/detail';
 	}
 }
-function goIputDetailed(id) {
-	if(id){
-		window.location.href = '/a/input/detail?id=' + id;
+function goIputDetailed(inputId) {
+	if(inputId){
+		window.location.href = '/a/input/detail?inputId=' + inputId;
 	}else{
 		window.location.href = '/a/input/detail';
 	}

@@ -143,7 +143,7 @@
 												<td th:text="${p.status == 1 ? '入库完了' : '入库中'}"></td>
 												<td>
 													<button class="btn btn-info btn-xs dropdown-toggle"
-														type="button" th:onclick="|javascript:goIputDetailed_b(${p.id})|">
+														type="button" th:onclick="goIputDetailed_b([[${p.inputId}]])">
 														<i class="fa fa-edit"></i>查看明细
 													</button>
 												</td>

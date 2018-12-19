@@ -105,8 +105,8 @@
 												<td th:text="${p.nums}"></td>
 												<td th:text="${p.inputId}"></td>
 												<td th:text="${p.goodsType}"></td>
-												<td th:text="${p.validityTime}"></td>
-												<td th:text="${p.status}"></td>
+												<td th:text="${#dates.format(p.validityTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+												<td th:text="${p.status == 1 ? '入库完了' : '入库中'}"></td>
 											</tr>
 										</tbody>
 									</table>
@@ -149,7 +149,7 @@
 
 	<!-- common -->
 	<script th:src="@{/js/common.js}"></script>
-
+	
 	<!-- detail -->
 	<script th:src="@{/js/input/detail.js}"></script>
 </body>

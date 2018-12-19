@@ -24,7 +24,7 @@ public interface InputService {
 	 * @param entity
 	 * @return
 	 */
-	public InputdetailEntity findById(int id);
+	public InputdetailEntity findById(String detailId);
 	
 	/**
 	 * 根据入库编号查询入库详情列表
@@ -46,4 +46,11 @@ public interface InputService {
 	 * @return
 	 */
 	public int deleteInputDetailByInputId(int id);
+	
+	/**
+	 * 新建保存入库详情表数据
+	 * @param entity
+	 * @return
+	 */
+	public int saveNewInputDetail(InputdetailModel model);
 }

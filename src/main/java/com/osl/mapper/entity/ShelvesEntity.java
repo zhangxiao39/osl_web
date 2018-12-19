@@ -12,7 +12,7 @@ public class ShelvesEntity extends BaseEntity {
 	private long id;
 	private String shelvesId;
 	private String name;
-	private long depotId;
+	private String depotId;
 	private String position;
 	private int layer;
 	private int row;
@@ -46,11 +46,11 @@ public class ShelvesEntity extends BaseEntity {
 		this.name = name;
 	}
 
-	public long getDepotId() {
+	public String getDepotId() {
 		return depotId;
 	}
 
-	public void setDepotId(long depotId) {
+	public void setDepotId(String depotId) {
 		this.depotId = depotId;
 	}
 

@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.nio.channels.FileChannel;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -636,6 +637,75 @@ public class Util {
 		}
 		timeDot.append(nowStr);
 		return timeDot.toString();
+	}
+	
+	/**
+	 * 利用数据库自己查询序号模式，生成各个数据库表的id
+	 * id格式 → (表标识 + 用户id[6位，0补齐] + 时间[年+月形式] + 序号[当前表中，当前用户，当前年月的序号])
+	 * id格式样例【纳品详情表为例】：纳品明细ID → NPD+000001+201812+00000001
+	 * id中的表标识：表的拼音首字母+(总表【C】/详情表【D】)
+	 * 
+	 * @author zhangzy
+	 * 
+	 * @param tableKey
+	 * @param businessId
+	 * @param time
+	 * @param number
+	 * @return
+	 */
+	public static String generateTableIdByDB(String tableKey , long businessId , long number) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+		StringBuffer str = new StringBuffer();
+		str.append(tableKey);
+		str.append(fillingId(businessId , 6));
+		str.append(sdf.format(new Date()));
+		str.append(fillingId(number , 8));
+		return str.toString();
+	}
+	
+	/**
+	 * 利用redis模式，生成各个数据库表的id
+	 * id格式 → (表标识 + 用户id[6位，0补齐] + 时间[年+月形式] + 序号[当前表中，当前用户，当前年月的序号])
+	 * id格式样例【纳品详情表为例】：纳品明细ID → NPD+000001+201812+00000001
+	 * id中的表标识：表的拼音首字母+(总表【C】/详情表【D】)
+	 * 
+	 * @author zhangzy
+	 * 
+	 * @param tableKey
+	 * @param businessId
+	 * @param time
+	 * @param number
+	 * @return
+	 */
+	public static String generateTableIdByRedis(String tableKey , long businessId) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+		StringBuffer str = new StringBuffer();
+		str.append(tableKey);
+		str.append(fillingId(businessId , 6));
+		str.append(sdf.format(new Date()));
+		/*Jedis jedis = null;
+		try {
+			jedis = RedisUtil.getJedis();
+	        long number = jedis.incr(str);
+	        str.append(fillingId(number , 8));
+		}catch(Exception e) {
+			jedis.decr(str);
+			str.append(fillingId(1 , 8));
+		}*/
+		return str.toString();
+	}
+	
+	/**
+	 * 用于补齐字符串
+	 * @author zhangzy
+	 * 
+	 * @param object
+	 * @param digit
+	 * @return
+	 */
+	public static String fillingId(long object , int digit) {
+		String str=String.format("%0"+digit+"d", object);
+		return str;
 	}
 	
 	public static void main(String[] args) {

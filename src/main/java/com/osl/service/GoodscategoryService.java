@@ -12,6 +12,9 @@ public interface GoodscategoryService {
 
 	public List<GoodsCategoryModel> getCategoryByC2();
 	
+	//获取叶子节点分类
+	public List<GoodsCategoryModel> getCategoryMin();
+	
 	public String setCategoryHtml();
 	
 	public int insertGoodsCategory(GoodsCategoryEntity _goodscategory);

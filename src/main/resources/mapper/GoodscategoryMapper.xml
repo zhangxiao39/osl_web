@@ -15,6 +15,11 @@
 		select * from t_goods_category where delete_flg=0 and
 		parent_id>0
 	</select>
+	<!-- 查询商品分类的最底层分类 -->
+	<select id="getCategoryMin"
+		resultType="com.osl.model.GoodsCategoryModel">
+		SELECT * FROM `t_goods_category` a  where a.id not in (select parent_id from t_goods_category) and delete_flg  = 0
+	</select>
 	<select id="findById"
 		resultType="com.osl.mapper.entity.GoodsCategoryEntity">
 		select * from t_goods_category where delete_flg=0 and

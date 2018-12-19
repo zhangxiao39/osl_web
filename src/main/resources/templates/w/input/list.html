@@ -118,11 +118,9 @@
 											</div>
 										</div>
 									</div> -->
-									<div class="col-sm-1">
+									<div class="col-sm-2">
 										<div class="form-group z-t">
 											<button type="button" class="btn btn-primary" onclick="wSearchInputList()">检索</button>
-										</div>
-										<div class="form-group z-t">
 											<button type="button" class="btn btn-primary" onclick="goIputDetailed()">新建</button>
 										</div>
 									</div>
@@ -166,11 +164,11 @@
 												<td th:text="${p.status == 1 ? '入库完了' : '入库中'}"></td>
 												<td>
 													<button class="btn btn-info btn-xs dropdown-toggle"
-														type="button" th:onclick="|javascript:goIputDetailed(${p.id})|">
+														type="button" th:onclick="goIputDetailed([[${p.inputId}]])">
 														<i class="fa fa-edit"></i>修改
 													</button>
 													<button class="btn btn-danger btn-xs dropdown-toggle"
-														type="button" th:onClick="|javascript:deleteInput(${p.id})|">
+														type="button" th:onClick="deleteInput([[${p.inputId}]])">
 														<i class="fa fa-trash"></i>删除
 													</button>
 												</td>

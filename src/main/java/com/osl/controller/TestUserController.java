@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.osl.common.web.BaseController;
+import com.osl.common.web.RedisUtils;
 import com.osl.exception.ApplException;
 import com.osl.mapper.entity.TestUserEntity;
 import com.osl.mapper.entity.UserEntity;
@@ -20,6 +21,9 @@ public class TestUserController extends BaseController<TestUserModel> {
 	
 	@Autowired
 	private TestUserService service;
+	
+	@Autowired
+	private RedisUtils redisUtils;
 
 	@RequestMapping("/osl/testUser")
 	@ResponseBody
@@ -31,6 +35,8 @@ public class TestUserController extends BaseController<TestUserModel> {
 	@RequestMapping("/osl/userList")
 	@ResponseBody
 	public List<UserEntity> userFindAll() {
+		redisUtils.set("testKey1", "test1111");
+		System.out.println("redis test:" + redisUtils.get("testKey1"));
 		return service.findUserListAll();
 		
 	}

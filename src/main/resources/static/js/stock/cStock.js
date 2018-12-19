@@ -60,6 +60,7 @@ var table = {};
 $(function() {
     var $wrapper = $('#div-table-container');
     setTableCss();
+    getBusiness();
 
 });
 
@@ -114,6 +115,7 @@ function searchStock()
     var barCode = $('#goods_barCode').val().trim(); //根据商品条形码查询
     var nums = $('#goods_nums').val().trim(); //根据商品数量查询
     var status = $('#status').val();    //良品和非良品
+    var goodsCategoryId = $('#type').val();	//根据商品分类id查询
     // $.ajax({
     //     url : "/b/stock/condition",
     //     type : "POST",
@@ -133,6 +135,33 @@ function searchStock()
     var dttable = $('.dataTables-example').dataTable();
     dttable.fnClearTable(); //清空一下table
     dttable.fnDestroy(); //还原初始化了的datatable
-    $('#table_refresh').load("/b/stock/condition" , {'sku':sku,'name':name,'barCode':barCode,'nums':nums,'status':status});
+    $('#table_refresh').load("/b/stock/condition" , {'sku':sku,'name':name,'barCode':barCode,'nums':nums,'status':status,'goodsCategoryId':goodsCategoryId});
     setTableCss();
+
+}
+
+/*
+ * 	获取叶子节点分类列表
+ */
+
+function getBusiness()
+{
+    $.ajax({
+        url : "/osl/goods/categoryMinList",
+        data:{},
+        type : "POST",
+        success : function(data) {
+            var categoryList = data;
+            var categorySelect = $('#type');
+            var strOption ='<option value="10000" selected>全部</option>';
+            for(var i=0;i<categoryList.length;i++)
+            {
+                strOption+='<option value='+data[i].id+'>'+data[i].name+'</option>'
+            }
+            categorySelect.html(strOption);
+        },
+        error : function(e) {
+            alert("查询错误！！");
+        }
+    });
 }

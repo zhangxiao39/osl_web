@@ -13,6 +13,10 @@
 	rel="stylesheet" />
 
 <!-- Data Tables -->
+<link th:href="@{/css/bootstrap-select.css}"
+	rel="stylesheet">
+	
+<!-- select data -->
 <link th:href="@{/css/plugins/dataTables/datatables.min.css}"
 	rel="stylesheet">
 
@@ -64,6 +68,8 @@
 												onclick="history.go(-1);">返回一览</button>
 											<button type="button" class="btn btn-success"
 											 data-toggle="modal" data-target="#myModal">追加入库</button>
+											<button type="button" class="btn btn-success"
+											 data-toggle="modal" data-target="#myModal" onclick="wNewInputDetail()">新建入库</button>											 
 										</div>
 									</div>
 								</div>
@@ -114,8 +120,8 @@
 												<td th:text="${p.inputId}"></td>
 												<td th:text="${p.goodsType}"></td>
 												<td th:text="${p.type}"></td>
-												<td th:text="${p.validityTime}"></td>
-												<td th:text="${p.status}"></td>
+												<td th:text="${#dates.format(p.validityTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+												<td th:text="${p.status == 1 ? '入库完了' : '入库中'}"></td>
 												<td>
 													<button class="btn btn-info btn-xs dropdown-toggle"
 														type="button" data-toggle="modal" data-target="#myModal"
@@ -151,70 +157,78 @@
 					<h4 class="modal-title">商品入库</h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal">
+					<form id="myform" class="form-horizontal">
+						<input type="hidden" name="businessId" th:value="${session.u_bid}"> 
+						<input type="hidden" name="mode" value="POST" id="mode">
+						<input type="hidden" name="indexId" value="" id="indexId">
+						<input type="hidden" name="innerNums" value="0" id="innerNums">
+						<input type="hidden" name="innerGoodsNums" value="0" id="innerGoodsNums">
+						<input type="hidden" name="type" value="0" id="type">
+						<input type="hidden" name="status" value="0" id="status">
+						<input type="hidden" name="deleteFlag" value="0" id="deleteFlag">
 						<div class="form-group">
-							<label class="col-lg-3 control-label">入库ID</label>
+							<label class="col-lg-3 control-label">纳品ID</label>
 							<div class="col-lg-9">
-								<input type="text" placeholder="请输入商品SKU" class="form-control" value="NP201811060001">
+								<select class="selectpicker" data-live-search="true" id="entryId" name="entryId" title="请根据纳品ID选择纳品" data-size="5" onchange="wSelectOnchangByEntryId(this)"></select>
+								<!-- <input type="text" placeholder="请输入商品SKU" class="form-control" value="NP201811060001"> -->
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">商品SKU</label>
 							<div class="col-lg-9">
-								<input type="text" placeholder="请输入商品SKU" class="form-control" value="MC8012MX500">
+								<input type="text" id="sku" name="sku" placeholder="请输入商品SKU" class="form-control" value="">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">商品名称</label>
 							<div class="col-lg-9">
 								<input type="text" placeholder="请输入商品名称"
-									class="form-control" value="Crucial SSD MX500 500G">
+									class="form-control" id="goodsName" name="goodsName" value="">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">商品形状</label>
 							<div class="col-lg-9">
 								<label class="radio-inline"> <input type="radio"
-									value="option1" name="sex" checked>良品
+									value="0" name="goodsType" checked>良品
 								</label> <label class="radio-inline"> <input type="radio"
-									value="option2" name="sex">不良品 
+									value="1" name="goodsType">不良品 
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">入库数量</label>
 							<div class="col-lg-9">
-								<input type="text" placeholder="请输入数量" class="form-control">
+								<input type="text" id="nums" name="nums" placeholder="请输入数量" class="form-control">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-lg-3 control-label">仓库ID</label>
+							<label class="col-lg-3 control-label">仓库</label>
 							<div class="col-lg-9">
-								<input type="text" placeholder="请输入仓库ID" class="form-control">
+								<!-- <input type="text" placeholder="请输入仓库ID" class="form-control"> -->
+								<select class="selectpicker" data-live-search="true" id="depotId" name="depotId" title="请根据仓库" data-size="5" onchange="wSelectOnchangByDepotId(this)"></select>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-lg-3 control-label">货架ID</label>
+							<label class="col-lg-3 control-label">货架</label>
 							<div class="col-lg-9">
-								<input type="text" placeholder="请输入货架ID" class="form-control">
+								<!-- <input type="text" placeholder="请输入货架ID" class="form-control"> -->
+								<select class="selectpicker" data-live-search="true" id="shelvesId" name="shelvesId" title="请根据货架" data-size="5"></select>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">有效日期</label>
 							<div class="col-lg-9">
-								<input type="text" placeholder="请输入有效日期" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">备注</label>
-							<div class="col-lg-9">
-								<input type="text" placeholder="" class="form-control">
+								<div class="input-daterange input-group">
+									<input type="text" id="validityTime" name="validityTime" placeholder="请输入有效日期" class="form-control">
+								</div>
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary">确认入库</button>
+					<button type="button" class="btn btn-primary" id="before_save_submit" onclick="saveDetails(1)">保存</button>
+					<button type="button" class="btn btn-primary" id="btn_submit" onclick="saveDetails(0)">确认入库</button>
 				</div>
 			</div>
 		</div>
@@ -230,6 +244,9 @@
 
 	<!-- Data Tables -->
 	<script th:src="@{/js/plugins/dataTables/datatables.min.js}"></script>
+	
+	<!-- select data -->
+	<script th:src="@{/js/bootstrap-select.js}"></script>
 
 	<!-- Peity -->
 	<script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
@@ -249,63 +266,11 @@
 
 	<!-- common -->
 	<script th:src="@{/js/common.js}"></script>
-
-	<script th:inline="javascript">
-		$(document)
-				.ready(
-						function() {
-							$('.dataTables-example')
-									.DataTable(
-											{
-												pageLength : 25,
-												responsive : true,
-												dom : '<"html5buttons"B>lTfgitp',
-												buttons : [
-														{
-															extend : 'copy'
-														},
-														{
-															extend : 'csv'
-														},
-														{
-															extend : 'excel',
-															title : 'ExampleFile'
-														},
-														{
-															extend : 'pdf',
-															title : 'ExampleFile'
-														},
-
-														{
-															extend : 'print',
-															customize : function(
-																	win) {
-																$(
-																		win.document.body)
-																		.addClass(
-																				'white-bg');
-																$(
-																		win.document.body)
-																		.css(
-																				'font-size',
-																				'10px');
-
-																$(
-																		win.document.body)
-																		.find(
-																				'table')
-																		.addClass(
-																				'compact')
-																		.css(
-																				'font-size',
-																				'inherit');
-															}
-														} ]
-
-											});
-
-						});
-	</script>
+	<script th:src="@{/js/jquery.validate.min.js}"></script>
+	<!-- Data picker -->
+	<script th:src="@{/js/plugins/datapicker/bootstrap-datepicker.js}"></script>
+	<!-- detail -->
+	<script th:src="@{/js/input/detail.js}"></script>
 
 </body>
 

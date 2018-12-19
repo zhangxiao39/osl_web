@@ -15,12 +15,12 @@ public class InputdetailEntity extends BaseEntity {
 	private String detailId;
 	private String sku;
 	private int nums;
-	private long depotId;
-	private long shelvesId;
+	private String depotId;
+	private String shelvesId;
 	private int innerNums;
 	private int innerGoodsNums;
 	private int type;
-	private long shipId;
+	private String shipId;
 	private int goodsType;
 	private String inputId;
 	private Date validityTime;
@@ -67,19 +67,19 @@ public class InputdetailEntity extends BaseEntity {
 		this.nums = nums;
 	}
 
-	public long getDepotId() {
+	public String getDepotId() {
 		return depotId;
 	}
 
-	public void setDepotId(long depotId) {
+	public void setDepotId(String depotId) {
 		this.depotId = depotId;
 	}
 
-	public long getShelvesId() {
+	public String getShelvesId() {
 		return shelvesId;
 	}
 
-	public void setShelvesId(long shelvesId) {
+	public void setShelvesId(String shelvesId) {
 		this.shelvesId = shelvesId;
 	}
 
@@ -107,11 +107,11 @@ public class InputdetailEntity extends BaseEntity {
 		this.type = type;
 	}
 
-	public long getShipId() {
+	public String getShipId() {
 		return shipId;
 	}
 
-	public void setShipId(long shipId) {
+	public void setShipId(String shipId) {
 		this.shipId = shipId;
 	}
 

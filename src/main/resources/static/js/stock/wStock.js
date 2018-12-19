@@ -58,9 +58,10 @@ var CONSTANT = {
 };
 var table = {};
 $(function() {
-    var $wrapper = $('#div-table-container');
     setTableCss();
-
+    getBusiness();  //获取商家
+    getAdminSkuList();  //获取商品sku列表
+    getCategpry();				//获取叶子节点分类列表
 });
 
 //加载table样式
@@ -103,4 +104,103 @@ function setTableCss() {
                 } ]
 
         });
+}
+/*
+   库存搜索
+ */
+function searchStock()
+{
+    var sku = $('#goods_sku').val(); //根据商品sku查询
+    var name = $('#goods_name').val().trim(); //根据商品名称查询
+    var barCode = $('#goods_barCode').val().trim(); //根据商品条形码查询
+    var nums = $('#goods_nums').val().trim(); //根据商品数量查询
+    var status = $('#status').val();    //良品和非良品
+    var bussinessId = $('#businessSelect').val();	//根据商家查询
+    var goodsCategoryId = $('#type').val();	//根据商品分类id查询
+    var dttable = $('.dataTables-example').dataTable();
+    dttable.fnClearTable(); //清空一下table
+    dttable.fnDestroy(); //还原初始化了的datatable
+    $('#data_table').load("/b/stock/adminCondition" , {'sku':sku,'name':name,'barCode':barCode,'nums':nums,'status':status,'businessId':bussinessId,'goodsCategoryId':goodsCategoryId});
+    setTableCss();
+
+}
+
+/*
+    加载和当前仓库有合作关系的商家
+ */
+function getBusiness()
+{
+    $.ajax({
+        url : "/a/businessList",
+        data:{},
+        type : "POST",
+        success : function(data) {
+            var businessList = data;
+            var busiSelect = $('#businessSelect');
+            var strOption ='<option value="-1" selected>全部</option>';
+            for(var i=0;i<data.length;i++)
+            {
+                strOption+='<option value='+data[i].id+'>'+data[i].name+'</option>'
+            }
+            busiSelect.append(strOption);
+        },
+        error : function(e) {
+            alert("查询错误！！");
+        }
+    });
+}
+
+
+/*
+ * 	获取叶子节点分类列表
+ */
+
+function getCategpry()
+{
+    $.ajax({
+        url : "/osl/goods/categoryMinList",
+        data:{},
+        type : "POST",
+        success : function(data) {
+            var categoryList = data;
+            var categorySelect = $('#type');
+            var strOption ='<option value="10000" selected>全部</option>';
+            for(var i=0;i<categoryList.length;i++)
+            {
+                strOption+='<option value='+data[i].id+'>'+data[i].name+'</option>'
+            }
+            categorySelect.html(strOption);
+        },
+        error : function(e) {
+            alert("查询错误！！");
+        }
+    });
+}
+/*
+    加载当前运营商仓库对应的商品sku列表
+ */
+function getAdminSkuList() {
+    $.ajax({
+        url : "/b/ModelList",
+        data:{},
+        type : "POST",
+        success : function(data) {
+
+            var businessList = data;
+            var busiSelect = $('#goods_sku');
+            document.getElementById("goods_sku").options.selectedIndex = 0;
+            var strOption ='';
+            for(var i=0;i<data.length;i++)
+            {
+                strOption+='<option value='+data[i].sku+'>'+data[i].sku+'</option>'
+            }
+            strOption+='<option>俺的沙发</option>';
+            $("#goods_sku").append(strOption);
+            $('#goods_sku').selectpicker('refresh');    //刷新数据
+            $('#goods_sku').selectpicker('render');  
+        },
+        error : function(e) {
+            alert("查询错误！！");
+        }
+    });
 }

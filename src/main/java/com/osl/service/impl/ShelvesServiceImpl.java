@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.osl.mapper.ShelvesMapper;
+import com.osl.mapper.entity.ShelvesEntity;
 import com.osl.model.ShelvesModel;
 import com.osl.service.ShelvesService;
 
@@ -19,6 +20,12 @@ public class ShelvesServiceImpl implements ShelvesService{
 	public List<ShelvesModel> findShelvesAll(int bid) {
 		// TODO Auto-generated method stub
 		return shelvesMapper.findShelvesAll(bid);
+	}
+
+	@Override
+	public List<ShelvesEntity> queryShelvesEntityListByDepotId(String depotId) {
+		// TODO Auto-generated method stub
+		return shelvesMapper.queryShelvesEntityListByDepotId(depotId);
 	}
 
 }

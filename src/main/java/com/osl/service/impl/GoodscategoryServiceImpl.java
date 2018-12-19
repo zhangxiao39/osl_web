@@ -129,5 +129,11 @@ public class GoodscategoryServiceImpl implements GoodscategoryService {
 		}
 		return _html.toString();
 	}
+	
+	//获取叶子节点分类
+	@Override
+	public List<GoodsCategoryModel> getCategoryMin() {
+		return goodscategoryMapper.getCategoryMin();
+	}
 
 }

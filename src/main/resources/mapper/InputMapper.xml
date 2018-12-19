@@ -37,12 +37,12 @@
         order by t.update_date desc
 	</select>
 	
-	<select id="findById" resultType="com.osl.mapper.entity.InputdetailEntity" parameterType="int">
+	<select id="findById" resultType="com.osl.mapper.entity.InputdetailEntity" parameterType="string">
 		select * 
 		from t_input_detail 
 		where 1=1 
 		and delete_flg = 0 
-		and id=#{id} 
+		and detail_id=#{detailId} 
 		order by update_date desc
 	</select>
 	
@@ -51,21 +51,31 @@
 		from t_input_detail tdetail 
 		left join t_goods goods on tdetail.sku = goods.sku 
 		left join t_goods_category category on goods.category_id = category.id 
-		left join t_business business on business.id = (select business_id from t_input where id = #{id} )  
-		left join t_depot depot on tdetail.depot_id = depot.id 
+		left join t_business business on business.id = (select business_id from t_input where input_id = #{inputId} )  
+		left join t_depot depot on tdetail.depot_id = depot.depot_id 
 		where 1=1 
 		and tdetail.delete_flg = 0 
-		and tdetail.input_id= ( select input_id from t_input where id = #{id} ) 
+		and tdetail.input_id= #{inputId}
 		order by tdetail.update_date desc
 	</select>
 	
 	<select id="deleteInputById" parameterType="int">
 		update t_input set
-		delete_flg=1 , update_date = now() where id=#{id}
+		delete_flg=1 , update_date = now() where input_id= #{inputId}
 	</select>
 	
 	<select id="deleteInputDetailByInputId" parameterType="int">
 		update t_input_detail set
-		delete_flg=1 , update_date = now() where input_id= ( select input_id from t_input where id = #{id} )
+		delete_flg=1 , update_date = now() where input_id= #{inputId}
 	</select>
+	
+	<insert id="saveNewInputDetail"
+		parameterType="com.osl.model.InputdetailModel">
+		insert into t_input_detail
+		(detail_id, sku, nums, depot_id, shelves_id, inner_nums, inner_goods_nums, type, status, ship_id, goods_type, input_id, validity_time, new_date, update_date, delete_flg)
+		values
+		(#{detailId},#{sku},#{nums},#{depotId},#{shelvesId},#{innerNums},#{innerGoodsNums},#{type},#{status},#{shipId},#{goodsType},#{inputId},#{validityTime},#{newDate},#{updateDate},#{deleteFlag})
+	</insert>
+	
+	
 </mapper>

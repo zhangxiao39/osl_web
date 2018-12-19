@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.osl.common.web.BaseController;
+import com.osl.model.BusinessModel;
 import com.osl.model.GoodsModel;
 import com.osl.model.StockModel;
 import com.osl.service.GoodsService;
@@ -34,7 +35,7 @@ public class StockController extends BaseController<StockModel> {
 	 * @return:list<StockModel>
 	 */
 	@RequestMapping(value = "/b/stock/stock", method = RequestMethod.GET)
-	public String c_s_stockManage(Model model, HttpSession session) {
+	public String cStockManage(Model model, HttpSession session) {
 		if (session.getAttribute("u_login") == null) {
 			return "redirect:/admin/login";
 		} else {
@@ -54,11 +55,13 @@ public class StockController extends BaseController<StockModel> {
 	 * @return:list<StockModel>
 	 */
 	@RequestMapping(value = "/b/stock/condition")
-	public String c_s_stockListByCondition(Model model, HttpSession session,@RequestParam(required = false) String sku,
+	public String cStockListByCondition(Model model, HttpSession session,@RequestParam(required = false) String sku,
 				@RequestParam(required = false) String name,
 				@RequestParam(required = false) String barCode,
 				@RequestParam(required = false) String nums,
-				@RequestParam(required = false) String status) {
+				@RequestParam(required = false) String status,
+				@RequestParam(required = false) int goodsCategoryId
+				) {
 		if (session.getAttribute("u_login") == null) {
 			return "redirect:/admin/login";
 		} else {
@@ -68,6 +71,7 @@ public class StockController extends BaseController<StockModel> {
 			stockModel.setGoodsName(name);
 			stockModel.setNums((!nums.equals("")&&nums!=null)?Integer.parseInt(nums):0);
 			stockModel.setBarCode(barCode);
+			stockModel.setCategoryId(goodsCategoryId);
 			if((!status.equals("")&&null!=status))
 			{
 				stockModel.setGoodsType(Integer.parseInt(status));
@@ -82,6 +86,21 @@ public class StockController extends BaseController<StockModel> {
 	}
 	
 	/*
+	 * @des:商家端，获取对应的商品列表
+	 * @author：sun-hongyu
+	 * @date:2018-12-13
+	 * @param:
+	 * @return:list<StockModel>
+	 */
+	@RequestMapping(value = "/a/ModelList", method = RequestMethod.POST)
+	@ResponseBody
+	public List<StockModel> cGetModelList(HttpSession session) {
+			this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
+			List<StockModel> stockList = service.find_stockBusiness_All(this.myBusiness_id);
+			return stockList;
+	}
+	
+	/*
 	 * @des:运营商端，获取库存一览
 	 * @author：sun-hongyu
 	 * @date:2018-12-12
@@ -89,7 +108,7 @@ public class StockController extends BaseController<StockModel> {
 	 * @return:list<StockModel>
 	 */
 	@RequestMapping(value = "/a/stock/adminStock")
-	public String s_adminStockManage(Model model, HttpSession session) {
+	public String wAdminStockManage(Model model, HttpSession session) {
 		if (session.getAttribute("u_login") == null) {
 			return "redirect:/admin/login";
 		} else {
@@ -99,6 +118,60 @@ public class StockController extends BaseController<StockModel> {
 			model.addAttribute("nav_active1", 1);
 			return "/w/stock/stock";
 		}
+	}
+	
+	/*
+	 * @des:运营商端，条件查询库存一览
+	 * @author：sun-hongyu
+	 * @date:2018-12-10
+	 * @param:
+	 * @return:list<StockModel>
+	 */
+	@RequestMapping(value = "/b/stock/adminCondition")
+	public String wAdminStockListByCondition(Model model, HttpSession session,@RequestParam(required = false) String sku,
+				@RequestParam(required = false) String name,
+				@RequestParam(required = false) String barCode,
+				@RequestParam(required = false) String nums,
+				@RequestParam(required = false) String status,
+				@RequestParam(required = false) int goodsCategoryId,
+				@RequestParam(required = false) int businessId) {
+		if (session.getAttribute("u_login") == null) {
+			return "redirect:/admin/login";
+		} else {
+			this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
+			StockModel stockModel = new StockModel();
+			stockModel.setSku(sku);
+			stockModel.setGoodsName(name);
+			stockModel.setNums((!nums.equals("")&&nums!=null)?Integer.parseInt(nums):0);
+			stockModel.setBarCode(barCode);
+			stockModel.setBusinessId(businessId);
+			stockModel.setCategoryId(goodsCategoryId);
+			if((!status.equals("")&&null!=status))
+			{
+				stockModel.setGoodsType(Integer.parseInt(status));
+			}else {
+				stockModel.setGoodsType(1000);
+			}
+			List<StockModel> _stockList = service.find_adminStock_by_condition(this.myBusiness_id,stockModel);
+			model.addAttribute("item", _stockList);
+			model.addAttribute("nav_active1", 1);
+			return "/w/stock/stock::table_refresh";
+		}
+	}
+	
+	/*
+	 * @des:运营商端，获取对应的商品列表
+	 * @author：sun-hongyu
+	 * @date:2018-12-13
+	 * @param:
+	 * @return:list<StockModel>
+	 */
+	@RequestMapping(value = "/b/ModelList", method = RequestMethod.POST)
+	@ResponseBody
+	public List<StockModel> wGetModelList(HttpSession session) {
+			this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
+			List<StockModel> stockList = service.find_adminStock_All(this.myBusiness_id);
+			return stockList;
 	}
 	
 	@RequestMapping(value = "/a/stock/goodsDetail/{bid}/{goodsSku}/")

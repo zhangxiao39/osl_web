@@ -1,6 +1,7 @@
 package com.osl.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import com.osl.common.Util;
 import com.osl.exception.ApplException;
 import com.osl.mapper.EntryMapper;
 import com.osl.mapper.entity.EntryEntity;
+import com.osl.mapper.entity.EntrydetailEntity;
 import com.osl.model.EntryModel;
 import com.osl.service.EntryService;
 
@@ -46,6 +48,18 @@ public class EntryServiceImpl implements EntryService {
 		entryMapper.insertEntry(entity);
 		
 		return false;
+	}
+
+	@Override
+	public List<EntrydetailEntity> queryEntrydetailEntityListByStatus(int status) {
+		// TODO Auto-generated method stub
+		return entryMapper.queryEntrydetailEntityListByStatus(status);
+	}
+
+	@Override
+	public EntrydetailEntity queryEntrydetailEntityByDetailId(String detailId) {
+		// TODO Auto-generated method stub
+		return entryMapper.queryEntrydetailEntityByDetailId(detailId);
 	}
 
 }

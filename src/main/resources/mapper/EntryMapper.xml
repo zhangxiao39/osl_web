@@ -5,4 +5,21 @@
     	INSERT INTO t_entry (entry_id, oper_time, complete_time, sku_nums, goods_nums, input_sku_nums, input_goods_nums, status, business_id, warehouse_id, oper, new_date)
 			VALUES(#{entryId}, #{operTime}, #{completeTime}, #{skuNums}, #{goodsNums}, #{inputSkuNums}, #{inputGoodsNums}, #{status}, #{businessId}, #{warehouseId}, #{oper}, #{newDate});
     </insert>
+    
+    <select id="queryEntrydetailEntityListByStatus" resultType="com.osl.mapper.entity.EntrydetailEntity" parameterType="int">
+		select * 
+		from t_entry_detail 
+		where 1=1 
+		and status = #{status}
+	</select>
+    
+    <select id="queryEntrydetailEntityByDetailId" resultType="com.osl.mapper.entity.EntrydetailEntity" parameterType="string">
+		select entryDetail.* , goods.name as goodsName 
+		from t_entry_detail entryDetail 
+		left join t_goods goods on entryDetail.sku = goods.sku 
+		where 1=1 
+		and entryDetail.delete_flg = 0 
+		and entryDetail.detail_id = #{detailId}
+	</select>
+    
 </mapper>

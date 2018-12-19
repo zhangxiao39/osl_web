@@ -19,11 +19,31 @@ public class EntrydetailEntity extends BaseEntity {
 	private int innerNums;
 	private int innerGoodsNums;
 	private String sendId;
-	private long entryId;
+	private String entryId;
 	private int inputNums;
 	private int inputDiff;
 	private Date produceTime;
 	private int maxNums;
+	private String status;
+	
+	private String goodsName;
+	
+
+	public String getGoodsName() {
+		return goodsName;
+	}
+
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public long getId() {
 		return id;
@@ -89,11 +109,11 @@ public class EntrydetailEntity extends BaseEntity {
 		this.sendId = sendId;
 	}
 
-	public long getEntryId() {
+	public String getEntryId() {
 		return entryId;
 	}
 
-	public void setEntryId(long entryId) {
+	public void setEntryId(String entryId) {
 		this.entryId = entryId;
 	}
 

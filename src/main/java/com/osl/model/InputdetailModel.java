@@ -1,7 +1,6 @@
 package com.osl.model;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 import com.osl.common.web.BaseModel;
 
@@ -16,25 +15,51 @@ public class InputdetailModel extends BaseModel {
 	private String detailId;
 	private String sku;
 	private int nums;
-	private long depotId;
-	private long shelvesId;
+	private String depotId;
+	private String shelvesId;
 	private int innerNums;
 	private int innerGoodsNums;
 	private int type;
-	private long shipId;
+	private String shipId;
 	private int goodsType;
 	private String inputId;
 	private Date validityTime;
 	private int status;
 	private int deleteFlag;
+	private Date newDate;
+	private Date updateDate;
 	
-	
+	private String entryId;
 	private String goodsName;
 	private String goodscategoryName;
 	private String businessName;
 	private String depotAddress;
 	
 	
+	public String getEntryId() {
+		return entryId;
+	}
+
+	public void setEntryId(String entryId) {
+		this.entryId = entryId;
+	}
+
+	public Date getNewDate() {
+		return newDate;
+	}
+
+	public void setNewDate(Date newDate) {
+		this.newDate = newDate;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+
 	public String getDetailId() {
 		return detailId;
 	}
@@ -43,19 +68,19 @@ public class InputdetailModel extends BaseModel {
 		this.detailId = detailId;
 	}
 
-	public long getDepotId() {
+	public String getDepotId() {
 		return depotId;
 	}
 
-	public void setDepotId(long depotId) {
+	public void setDepotId(String depotId) {
 		this.depotId = depotId;
 	}
 
-	public long getShelvesId() {
+	public String getShelvesId() {
 		return shelvesId;
 	}
 
-	public void setShelvesId(long shelvesId) {
+	public void setShelvesId(String shelvesId) {
 		this.shelvesId = shelvesId;
 	}
 
@@ -75,11 +100,11 @@ public class InputdetailModel extends BaseModel {
 		this.innerGoodsNums = innerGoodsNums;
 	}
 
-	public long getShipId() {
+	public String getShipId() {
 		return shipId;
 	}
 
-	public void setShipId(long shipId) {
+	public void setShipId(String shipId) {
 		this.shipId = shipId;
 	}
 

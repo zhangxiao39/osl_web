@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.osl.common.web.BaseController;
 import com.osl.mapper.entity.GoodsCategoryEntity;
 import com.osl.model.GoodsCategoryModel;
+import com.osl.model.StockModel;
 import com.osl.service.GoodscategoryService;
 
 @Controller
@@ -40,6 +41,19 @@ public class GoodsCategoryController extends BaseController<GoodsCategoryModel>{
 	public List<GoodsCategoryModel> showInfo() {
 		List<GoodsCategoryModel> _info = service.getCategoryByC1();
 		return _info;
+	}
+	
+	/*@des:获取叶子节点分类列表
+	 * @author：sun-hongyu
+	 * @date:2018-12-14
+	 * @param:
+	 * @return:list<GoodsCategoryModel>
+	 */
+	@RequestMapping(value = "/osl/goods/categoryMinList", method = RequestMethod.POST)
+	@ResponseBody
+	public List<GoodsCategoryModel> getCategoryMin(HttpSession session) {
+			List<GoodsCategoryModel> list = service.getCategoryMin();
+			return list;
 	}
 	
 	@RequestMapping(value = "/osl/goodscategory", method = RequestMethod.POST)
