@@ -14,14 +14,17 @@ public class SellshipModel extends BaseModel {
 
 	private long id;
 	private String sellId;
-	private String sku;
-	private long business_id;
-	private long platform_id;
+	private String goodsId;
+	private long businessId;
+	private long platformId;
 	private String platformName;
 	private int type;
 	private Date deletime;
 	private int isdele;
 	private Timestamp addtime;
+	public String typeText;
+	private String sku;
+	private String name;
 
 	public long getId() {
 		return id;
@@ -31,15 +34,11 @@ public class SellshipModel extends BaseModel {
 		this.id = id;
 	}
 
-
-
 	public String getSellId() {
 		return sellId;
 	}
-
-	public void setSellId(String sellId) {
-		this.sellId = sellId;
-	}
+	
+	
 
 	public String getSku() {
 		return sku;
@@ -49,20 +48,41 @@ public class SellshipModel extends BaseModel {
 		this.sku = sku;
 	}
 
-	public long getBusiness_id() {
-		return business_id;
+	public String getName() {
+		return name;
 	}
 
-	public void setBusiness_id(long business_id) {
-		this.business_id = business_id;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public long getPlatform_id() {
-		return platform_id;
+	public void setSellId(String sellId) {
+		this.sellId = sellId;
 	}
 
-	public void setPlatform_id(long platform_id) {
-		this.platform_id = platform_id;
+	public String getGoodsId() {
+		return goodsId;
+	}
+
+	public void setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
+	}
+
+
+	public long getBusinessId() {
+		return businessId;
+	}
+
+	public void setBusinessId(long businessId) {
+		this.businessId = businessId;
+	}
+
+	public long getPlatformId() {
+		return platformId;
+	}
+
+	public void setPlatformId(long platformId) {
+		this.platformId = platformId;
 	}
 
 	public String getPlatformName() {
@@ -78,6 +98,14 @@ public class SellshipModel extends BaseModel {
 	}
 
 	public void setType(int type) {
+		switch (type) {
+		case 0:
+			this.typeText = "单品";
+			break;
+		case 1:
+			this.typeText = "组合品";
+			break;
+		}
 		this.type = type;
 	}
 

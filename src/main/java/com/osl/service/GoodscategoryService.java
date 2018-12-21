@@ -12,7 +12,7 @@ public interface GoodscategoryService {
 
 	public List<GoodsCategoryModel> getCategoryByC2();
 	
-	//»ñÈ¡Ò¶×Ó½Úµã·ÖÀà
+	//ï¿½ï¿½È¡Ò¶ï¿½Ó½Úµï¿½ï¿½ï¿½ï¿½
 	public List<GoodsCategoryModel> getCategoryMin();
 	
 	public String setCategoryHtml();
@@ -23,7 +23,7 @@ public interface GoodscategoryService {
 	
 	public int deleteById(int id);
 	
-	public String getGoodsCategorySelect();
+	public String getGoodsCategorySelect(String qry_categoryId);
 	
 	public String getGoodsCategorySelect2();
 }

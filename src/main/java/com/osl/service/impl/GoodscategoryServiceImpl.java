@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.osl.common.Util;
 import com.osl.mapper.GoodscategoryMapper;
 import com.osl.mapper.entity.GoodsCategoryEntity;
 import com.osl.model.GoodsCategoryModel;
@@ -89,7 +90,7 @@ public class GoodscategoryServiceImpl implements GoodscategoryService {
 	}
 
 	@Override
-	public String getGoodsCategorySelect() {
+	public String getGoodsCategorySelect(String qry_categoryId) {
 		// TODO Auto-generated method stub
 		StringBuilder _html = new StringBuilder();
 		List<GoodsCategoryModel> c1 = this.getCategoryByC1();
@@ -97,11 +98,31 @@ public class GoodscategoryServiceImpl implements GoodscategoryService {
 		_html.append("<option value=\"0\"  data-select2-id=\"0\">全部商品分类</option>");
 		for (int i = 0; i < c1.size(); i++) {
 			GoodsCategoryModel gc1 = c1.get(i);
-			_html.append("<option value=\"" + gc1.getId() + "\">" + gc1.getName() + "</option>");
+			if (!Util.isEmpty(qry_categoryId)) {
+				if (Long.valueOf(qry_categoryId) == gc1.getId()) {
+					_html.append("<option value=\"" + gc1.getId() + "\" selected>" + gc1.getName() + "</option>");
+				} else {
+					_html.append("<option value=\"" + gc1.getId() + "\">" + gc1.getName() + "</option>");
+				}
+			} else {
+				_html.append("<option value=\"" + gc1.getId() + "\">" + gc1.getName() + "</option>");
+			}
 			for (int j = 0; j < c2.size(); j++) {
 				GoodsCategoryModel gc2 = c2.get(j);
 				if (gc2.getParentId() == gc1.getId()) {
-					_html.append("<option value=\"" + gc2.getId() + "\">&#8195;&#8195;" + gc2.getName() + "</option>");
+					if (!Util.isEmpty(qry_categoryId)) {
+						if (Long.valueOf(qry_categoryId) == gc2.getId()) {
+							_html.append("<option selected value=\"" + gc2.getId() + "\">&#8195;&#8195;" + gc2.getName()
+									+ "</option>");
+						} else {
+							_html.append("<option value=\"" + gc2.getId() + "\">&#8195;&#8195;" + gc2.getName()
+									+ "</option>");
+						}
+					} else {
+						_html.append(
+								"<option value=\"" + gc2.getId() + "\">&#8195;&#8195;" + gc2.getName() + "</option>");
+					}
+
 				}
 			}
 		}
@@ -129,8 +150,8 @@ public class GoodscategoryServiceImpl implements GoodscategoryService {
 		}
 		return _html.toString();
 	}
-	
-	//获取叶子节点分类
+
+	// 获取叶子节点分类
 	@Override
 	public List<GoodsCategoryModel> getCategoryMin() {
 		return goodscategoryMapper.getCategoryMin();

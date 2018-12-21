@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.osl.common.Util;
+import com.osl.common.UtilConst;
 import com.osl.mapper.GoodsMapper;
 import com.osl.mapper.entity.GoodsEntity;
 import com.osl.model.GoodsModel;
@@ -17,9 +19,9 @@ public class GoodsServiceImpl implements GoodsService {
 	private GoodsMapper goodsMapper;
 
 	@Override
-	public List<GoodsModel> find_goodsAll() {
+	public List<GoodsModel> find_goodsAll(GoodsModel goodsModel) {
 		// TODO Auto-generated method stub
-		return goodsMapper.find_goodsAll();
+		return goodsMapper.find_goodsAll(goodsModel);
 	}
 
 	@Override
@@ -27,6 +29,13 @@ public class GoodsServiceImpl implements GoodsService {
 		// TODO Auto-generated method stub
 		GoodsModel _g = goodsMapper.find_goodsBusiness_sku(_goods.getBusinessId(), _goods.getSku());
 		if (_g == null) {
+			String _goodsId = Util.generateTableIdByDB(UtilConst.TABLE_KEY_TO_GOODS, _goods.getBusinessId(), 1);
+			String tmpId = goodsMapper.getGoodsId(_goods.getBusinessId(), _goodsId.substring(0, 14));
+			if (tmpId != null) {
+				int _id = Integer.valueOf(tmpId.replace(_goodsId.substring(0, 14), "")) + 1;
+				_goodsId = Util.generateTableIdByDB(UtilConst.TABLE_KEY_TO_GOODS, _goods.getBusinessId(), _id);
+			}
+			_goods.setGoodsId(_goodsId);
 			return goodsMapper.insertGoods(_goods);
 		} else {
 			return -1;
@@ -34,15 +43,15 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
-	public int deleteById(int id) {
+	public int deleteById(String goodsId) {
 		// TODO Auto-generated method stub
-		return goodsMapper.deleteById(id);
+		return goodsMapper.deleteById(goodsId);
 	}
 
 	@Override
-	public GoodsEntity findById(int id) {
+	public GoodsEntity findById(String goodsId) {
 		// TODO Auto-generated method stub
-		return goodsMapper.findById(id);
+		return goodsMapper.findById(goodsId);
 	}
 
 	@Override
@@ -61,6 +70,12 @@ public class GoodsServiceImpl implements GoodsService {
 	public GoodsEntity findBySku(String sku) {
 		// TODO Auto-generated method stub
 		return goodsMapper.findBySku(sku);
+	}
+
+	@Override
+	public GoodsModel find_goodsBusiness_sku(int bid, String sku) {
+		// TODO Auto-generated method stub
+		return goodsMapper.find_goodsBusiness_sku(bid, sku);
 	}
 
 }

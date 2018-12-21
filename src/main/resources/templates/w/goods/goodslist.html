@@ -58,50 +58,53 @@
 							</div>
 							<div class="ibox-content" style="display: block;">
 								<div class="row">
-									<div class="col-sm-2">
-										<div class="form-group">
-											<label class="control-label" for="product_name">商品SKU</label>
-											<input type="text" id="product_name" name="product_name"
-												value="" class="form-control">
+									<form id="qry_form" name="qry_form" method="GET">
+										<div class="col-sm-2">
+											<div class="form-group">
+												<label class="control-label" for="qry_sku">商品SKU</label>
+												<input type="text" id="qry_sku" name="qry_sku"
+													th:value="${#httpServletRequest.getParameter('qry_sku')}" class="form-control">
+											</div>
 										</div>
-									</div>
-									<div class="col-sm-2">
-										<div class="form-group">
-											<label class="control-label" for="price">商品条码</label> <input
-												type="text" id="price" name="price" value=""
-												class="form-control">
+										<div class="col-sm-2">
+											<div class="form-group">
+												<label class="control-label" for="qry_barcode">商品条码</label> <input
+													type="text" id="qry_barcode" name="qry_barcode" th:value="${#httpServletRequest.getParameter('qry_barcode')}"
+													class="form-control">
+											</div>
 										</div>
-									</div>
-									<div class="col-sm-2">
-										<div class="form-group">
-											<label class="control-label" for="quantity">商品名称</label> <input
-												type="text" id="quantity" name="quantity" value=""
-												class="form-control">
+										<div class="col-sm-2">
+											<div class="form-group">
+												<label class="control-label" for="qry_name">商品名称</label> <input
+													type="text" id="qry_name" name="qry_name" th:value="${#httpServletRequest.getParameter('qry_name')}"
+													class="form-control">
+											</div>
 										</div>
-									</div>
-									<div class="col-sm-2">
-										<div class="form-group">
-											<label class="control-label" for="status">商品分类</label> <select
-												name="status" id="status" class="form-control">
-												<option value="1" selected="">全部分类</option>
-												<option value="0">フラッシュメモリ</option>
-											</select>
+										<div class="col-sm-2">
+											<div class="form-group">
+												<label class="control-label" for="status">商品分类</label> <select
+													name="qry_categoryId" id="qry_categoryId"
+													class="form-control goods_category_select3"
+													th:utext="${item_gc}">
+												</select>
+											</div>
 										</div>
-									</div>
-									<div class="col-sm-2">
-										<div class="form-group">
-											<label class="control-label" for="status">商家</label> <select
-												name="status" id="status" class="form-control">
-												<option value="1" selected>全部商家</option>
-												<option th:each="b,bIndex:${item_business}" th:text="${b.name}" th:value="${b.id}">フラッシュメモリ</option>
-											</select>
+										<div class="col-sm-2">
+											<div class="form-group">
+												<label class="control-label" for="qry_businessId">商家</label> <select
+													name="qry_businessId" id="qry_businessId" class="form-control">
+													<option value="0">全部商家</option>
+													<option th:each="b,bIndex:${item_business}"
+														th:text="${b.name}" th:value="${b.id}" th:selected="${#httpServletRequest.getParameter('qry_businessId')} eq ${b.id}">フラッシュメモリ</option>
+												</select>
+											</div>
 										</div>
-									</div>
-									<div class="col-sm-2">
-										<div class="form-group z-t">
-											<button type="button" class="btn btn-primary">检索</button>
+										<div class="col-sm-2">
+											<div class="form-group z-t">
+												<button type="submit" class="btn btn-primary">检索</button>
+											</div>
 										</div>
-									</div>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -129,6 +132,7 @@
 												<th>体积(cm3)</th>
 												<th>重量(kg)</th>
 												<th>形状</th>
+												<th>颜色</th>
 												<th>备注</th>
 											</tr>
 										</thead>
@@ -141,7 +145,8 @@
 												<td th:text="${p.name}">Crucial SSD MX300 525GB</td>
 												<td th:text="${p.volume}">10</td>
 												<td th:text="${p.weight}">0.01</td>
-												<td th:text="${p.shape}">固体</td>
+												<td th:text="${p.shapeText}">固体</td>
+												<td th:text="${p.color}">MC8012MX300</td>
 												<td th:text="${p.remark}"></td>
 											</tr>
 										</tbody>
@@ -289,7 +294,7 @@
 	<script th:src="@{/js/user/a_product.js}"></script>
 
 	<script th:inline="javascript">
-
+		
 	</script>
 
 </body>

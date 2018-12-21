@@ -58,41 +58,44 @@
 							</div>
 							<div class="ibox-content" style="display: block;">
 								<div class="row">
+								<form id="qry_form" name="qry_form" method="GET">
 									<div class="col-sm-2">
+									
 										<div class="form-group">
-											<label class="control-label" for="product_name1">组合品CODE</label>
-											<input type="text" id="product_name1" name="product_name1"
-												value="" class="form-control">
+											<label class="control-label" for="qry_combinationId">组合品CODE</label>
+											<input type="text" id="qry_combinationId" name="qry_combinationId"
+												th:value="${#httpServletRequest.getParameter('qry_combinationId')}" class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="quantity">组合品名称</label> <input
-												type="text" id="quantity" name="quantity" value=""
+											<label class="control-label" for="qry_name">组合品名称</label> <input
+												type="text" id="qry_name" name="qry_name" th:value="${#httpServletRequest.getParameter('qry_name')}"
 												class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="product_name">商品SKU</label>
-											<input type="text" id="product_name" name="product_name"
-												value="" class="form-control">
+											<label class="control-label" for="qry_sku2">商品SKU</label>
+											<input type="text" id="qry_sku2" name="qry_sku2"
+												th:value="${#httpServletRequest.getParameter('qry_sku2')}" class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="price">商品条码</label> <input
-												type="text" id="price" name="price" value=""
+											<label class="control-label" for="qry_barcode">商品条码</label> <input
+												type="text" id="qry_barcode" name="qry_barcode" th:value="${#httpServletRequest.getParameter('qry_barcode')}"
 												class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-4">
 										<div class="form-group z-t">
-											<button type="button" class="btn btn-primary">检索</button>
+											<button type="submit" class="btn btn-primary">检索</button>
 											<button type="button" class="btn btn-primary"
 												data-toggle="modal" data-target="#myModal">添加组合品</button>
 										</div>
 									</div>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -129,10 +132,13 @@
 												<td th:text="${c.nums}">10</td>
 												<td>
 													<button class="btn btn-info btn-xs dropdown-toggle"
-														type="button" data-toggle="modal" data-target="#myModal"  th:onclick="showInfo([[${c.combinationId}]])">
+														type="button" data-toggle="modal" data-target="#myModal"
+														th:onclick="showInfo([[${c.combinationId}]])">
 														<i class="fa fa-edit"></i>编辑
 													</button>
-													<button class="btn btn-danger btn-xs dropdown-toggle" type="button" th:onclick="deleteInfo([[${c.combinationId}]])">
+													<button class="btn btn-danger btn-xs dropdown-toggle"
+														type="button"
+														th:onclick="deleteInfo([[${c.combinationId}]])">
 														<i class="fa fa-trash"></i>删除
 													</button>
 												</td>
@@ -160,19 +166,19 @@
 					<h4 class="modal-title">组合品信息</h4>
 				</div>
 				<div class="modal-body z_pbv">
-				<div class="sk-spinner sk-spinner-double-bounce">
-                                <div class="sk-double-bounce1"></div>
-                                <div class="sk-double-bounce2"></div>
-                            </div>
+					<div class="sk-spinner sk-spinner-double-bounce">
+						<div class="sk-double-bounce1"></div>
+						<div class="sk-double-bounce2"></div>
+					</div>
 					<form class="form-horizontal" id="myform">
 						<div class="form-group">
 							<label class="col-lg-3 control-label">组合品CODE</label>
 							<div class="col-lg-9">
 								<input type="text" placeholder="请输入组合品CODE" class="form-control"
-									name="combinationId" id="combinationId">
-									<input type="hidden"
-									name="businessId" th:value="${session.u_bid}" id="businessId"><input
-									type="hidden" name="mode" value="POST" id="mode">
+									name="combinationId" id="combinationId"> <input
+									type="hidden" name="businessId" th:value="${session.u_bid}"
+									id="businessId"><input type="hidden" name="mode"
+									value="POST" id="mode">
 							</div>
 						</div>
 						<div class="form-group">
@@ -201,6 +207,7 @@
 									id="qryTable">
 									<thead>
 										<tr>
+											<th class="z-hidden">商品ID</th>
 											<th>商品SKU</th>
 											<th>商品名称</th>
 											<th>商品数量</th>

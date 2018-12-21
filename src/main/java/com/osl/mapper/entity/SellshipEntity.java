@@ -11,7 +11,7 @@ public class SellshipEntity extends BaseEntity {
 
 	private long id;
 	private String sellId;
-	private String sku;
+	private String goodsId;
 	private long businessId;
 	private long platformId;
 	private int type;
@@ -32,12 +32,14 @@ public class SellshipEntity extends BaseEntity {
 		this.sellId = sellId;
 	}
 
-	public String getSku() {
-		return sku;
+
+
+	public String getGoodsId() {
+		return goodsId;
 	}
 
-	public void setSku(String sku) {
-		this.sku = sku;
+	public void setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
 	}
 
 	public long getBusinessId() {

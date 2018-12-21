@@ -24,10 +24,10 @@ $(validform());
 $(function() {
 	var $wrapper = $('#div-table-container');
 	$('.dataTables-example').DataTable({
-		bFilter : false,
+		bFilter : true,
 		ordering : false,
 		iDisplayLength : 10,
-		sDom : 'itlp',
+		sDom : 'iftlp',
 		pageLength : 25
 	});
 	$('#btn_submit').click(function() {
@@ -168,6 +168,9 @@ function qryProductBySku() {
 					success : function(data) {
 						if (data != "" && data != undefined) {
 							var rowTem = '<tr>'
+									+ '<td class="z-hidden">'
+									+ data.goodsId
+									+ '</td>'
 									+ '<td>'
 									+ data.sku
 									+ '</td>'
@@ -204,12 +207,13 @@ function initData() {
 	var _name = $("#name").val();
 	var _businessId = $("#businessId").val();
 	$('#qryTable tbody tr').each(function(i) {
-		_sku = $(this).children('td').eq(0).text();
-		_nums = $(this).children('td').eq(2).find('input[name="nums"]').val();
+		_goodsId = $(this).children('td').eq(0).text();
+		_sku = $(this).children('td').eq(1).text();
+		_nums = $(this).children('td').eq(3).find('input[name="nums"]').val();
 		var _tmpData = {
 			'combinationId' : _combinationid,
 			'name' : _name,
-			'sku' : _sku,
+			'goodsId' : _goodsId,
 			'nums' : _nums,
 			'businessId' : _businessId
 		};
@@ -220,6 +224,9 @@ function formatGoodsTable(data) {
 	if (data != "" && data != undefined) {
 		for (index in data) {
 			var rowTem = '<tr>'
+					+ '<td class="z-hidden">'
+					+ data[index].goodsId
+					+ '</td>'
 					+ '<td>'
 					+ data[index].sku
 					+ '</td>'

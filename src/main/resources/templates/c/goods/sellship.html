@@ -58,77 +58,49 @@
 							</div>
 							<div class="ibox-content" style="display: block;">
 								<div class="row">
+								<form id="qry_form" name="qry_form" method="GET">
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="product_name1">贩卖ID</label>
-											<input type="text" id="product_name1" name="product_name1"
-												value="" class="form-control">
+											<label class="control-label" for="qry_sellId">贩卖ID</label>
+											<input type="text" id="qry_sellId" name="qry_sellId"
+												th:value="${#httpServletRequest.getParameter('qry_sellId')}" class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="product_name">商品SKU</label>
-											<input type="text" id="product_name" name="product_name"
-												value="" class="form-control">
+											<label class="control-label" for="qry_sku2">商品SKU/组合品CODE</label>
+											<input type="text" id="qry_sku2" name="qry_sku2"
+												th:value="${#httpServletRequest.getParameter('qry_sku2')}" class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="price">商品条码</label> <input
-												type="text" id="price" name="price" value=""
-												class="form-control">
-										</div>
-									</div>
-									<div class="col-sm-2">
-										<div class="form-group">
-											<label class="control-label" for="quantity">商品名称</label> <input
-												type="text" id="quantity" name="quantity" value=""
-												class="form-control">
-										</div>
-									</div>
-									<div class="col-sm-2">
-										<div class="form-group">
-											<label class="control-label" for="status">商品分类</label> <select
-												name="status" id="status" class="form-control">
-												<option value="1" selected="">全部分类</option>
-												<option value="0">フラッシュメモリ</option>
+											<label class="control-label" for="qry_type">类型</label> <select
+												name="qry_type" id="qry_type" class="form-control">
+												<option value="0">全部类型</option>
+												<option value="1" th:selected="${#httpServletRequest.getParameter('qry_type')} eq 1">单品</option>
+												<option value="2" th:selected="${#httpServletRequest.getParameter('qry_type')} eq 2">组合品</option>
 											</select>
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="status">类型</label> <select
-												name="status" id="status" class="form-control">
-												<option value="0" selected="">全部类型</option>
-												<option value="1">单品</option>
-												<option value="2">组合品</option>
+											<label class="control-label" for="qry_platformId">销售平台</label> <select
+												name="qry_platformId" id="qry_platformId" class="form-control">
+												<option value="0">全部销售平台</option>
+												<option th:each="sp,spIndex:${sellplatformData}"
+													th:value="${sp.id}" th:text="${sp.name}" th:selected="${#httpServletRequest.getParameter('qry_platformId')} eq ${sp.id}">フラッシュメモリ</option>
 											</select>
-										</div>
-									</div>
-									<div class="col-sm-2">
-										<div class="form-group">
-											<label class="control-label" for="status">销售平台</label> <select
-												name="status" id="status" class="form-control">
-												<option value="0" selected="">全部平台</option>
-												<option value="1">yahoo</option>
-												<option value="2">qoo10</option>
-											</select>
-										</div>
-									</div>
-									<div class="col-sm-2">
-										<div class="form-group">
-											<label class="control-label" for="quantity2">在库数量</label> <input
-												type="text" id="quantity2" name="quantity2" value=""
-												class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group z-t">
-											<button type="button" class="btn btn-primary" onclick="do_qry();">检索</button>
+											<button type="submit" class="btn btn-primary">检索</button>
 											<button type="button" class="btn btn-primary"
 												data-toggle="modal" data-target="#myModal">添加贩卖</button>
 										</div>
 									</div>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -152,7 +124,7 @@
 												<th>销售平台</th>
 												<th>贩卖ID</th>
 												<th>类型</th>
-												<th>SKU</th>
+												<th>商品CODE</th>
 												<th>名称</th>
 												<th>操作</th>
 											</tr>
@@ -162,9 +134,9 @@
 												<td th:text="${ssIndex.count}">1</td>
 												<td th:text="${ss.platformName}">yahoo</td>
 												<td th:text="${ss.sellId}">FM001</td>
-												<td th:text="${ss.type}">单品</td>
+												<td th:text="${ss.typeText}">单品</td>
 												<td th:text="${ss.sku}">MC8012MX300</td>
-												<td>Crucial SSD MX300 525GB</td>
+												<td th:text="${ss.name}">Crucial SSD MX300 525GB</td>
 												<td>
 													<button class="btn btn-info btn-xs dropdown-toggle"
 														type="button" data-toggle="modal" data-target="#myModal"
@@ -172,7 +144,8 @@
 														<i class="fa fa-edit"></i>编辑
 													</button>
 													<button class="btn btn-danger btn-xs dropdown-toggle"
-														type="button" th:onclick="|javascript:deleteInfo(${ss.id})|">
+														type="button"
+														th:onclick="|javascript:deleteInfo(${ss.id})|">
 														<i class="fa fa-trash"></i>删除
 													</button>
 												</td>
@@ -206,7 +179,8 @@
 							<div class="col-lg-9">
 								<select class="form-control" name="platformId" id="platformId">
 									<option value="0">选择销售平台</option>
-									<option th:each="sp,spIndex:${sellplatformData}" th:value="${sp.id}" th:text="${sp.name}">フラッシュメモリ</option>
+									<option th:each="sp,spIndex:${sellplatformData}"
+										th:value="${sp.id}" th:text="${sp.name}">フラッシュメモリ</option>
 								</select>
 							</div>
 						</div>
@@ -216,11 +190,9 @@
 								<input type="text" placeholder="请输入贩卖ID" class="form-control"
 									name="sellId" id="sellId"> <input type="hidden"
 									name="businessId" th:value="${session.u_bid}" id="businessId"><input
-									type="hidden" name="mode" value="POST" id="mode">
-									<input
-									type="hidden" name="id" value="0" id="id">
-									<input
-									type="hidden" name="sku" value="" id="sku">
+									type="hidden" name="mode" value="POST" id="mode"> <input
+									type="hidden" name="id" value="0" id="id"> <input
+									type="hidden" name="goodsId" value="" id="goodsId">
 							</div>
 						</div>
 						<div class="form-group">
@@ -229,7 +201,7 @@
 								<label class="radio-inline"> <input type="radio"
 									value="0" name="type" checked="checked" />单品
 								</label> <label class="radio-inline"> <input type="radio"
-									value="1" name="type"  />组合品
+									value="1" name="type" />组合品
 								</label>
 							</div>
 						</div>
@@ -237,7 +209,7 @@
 							<label class="col-lg-3 control-label">商品SKU</label>
 							<div class="col-lg-9">
 								<div class="input-group">
-									<input type="text" class="form-control"  id="qry_sku"
+									<input type="text" class="form-control" id="qry_sku"
 										placeholder="请输入要检索的商品SKU"> <span
 										class="input-group-btn">
 										<button type="button" class="btn btn-primary"
@@ -269,7 +241,7 @@
 	<script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
 	<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
 	<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
-	
+
 	<script th:src="@{/js/jquery.validate.min.js}"></script>
 
 	<!-- Data Tables -->

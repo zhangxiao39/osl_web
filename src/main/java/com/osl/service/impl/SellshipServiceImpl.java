@@ -23,9 +23,9 @@ public class SellshipServiceImpl implements SellshipService {
 	}
 
 	@Override
-	public List<SellshipModel> find_sellshipBusiness_All(int bid) {
+	public List<SellshipModel> find_sellshipBusiness_All(SellshipModel sellshipModel) {
 		// TODO Auto-generated method stub
-		return sellshipMapper.find_sellshipBusiness_All(bid);
+		return sellshipMapper.find_sellshipBusiness_All(sellshipModel);
 	}
 
 	@Override
@@ -59,9 +59,15 @@ public class SellshipServiceImpl implements SellshipService {
 	}
 
 	@Override
-	public SellshipEntity findBySku(String sku) {
+	public SellshipEntity findByGoodsId(String goodsId) {
 		// TODO Auto-generated method stub
-		return sellshipMapper.findBySku(sku);
+		return sellshipMapper.findByGoodsId(goodsId);
+	}
+
+	@Override
+	public SellshipModel showById(int id) {
+		// TODO Auto-generated method stub
+		return sellshipMapper.showById(id);
 	}
 
 }

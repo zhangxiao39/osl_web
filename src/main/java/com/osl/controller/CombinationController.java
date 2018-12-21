@@ -33,12 +33,20 @@ public class CombinationController extends BaseController<CombinationModel> {
 	private CombinationService service;
 
 	@RequestMapping(value = "/b/goods/combinationlist")
-	public String b_g_combinationlistManage(Model model, HttpSession session) {
+	public String b_g_combinationlistManage(Model model, HttpSession session,
+			@RequestParam(required = false) String qry_combinationId, @RequestParam(required = false) String qry_sku2,
+			@RequestParam(required = false) String qry_barcode, @RequestParam(required = false) String qry_name) {
 		if (session.getAttribute("u_login") == null) {
 			return "redirect:/business/login";
 		} else {
 			this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
-			List<CombinationModel> _combinationList = service.find_combinationBusiness_All(myBusiness_id);
+			CombinationModel combinationModel = new CombinationModel();
+			combinationModel.setBusinessId(myBusiness_id);
+			combinationModel.setSku(qry_sku2);
+			combinationModel.setName(qry_name);
+			combinationModel.setCombinationId(qry_combinationId);
+			combinationModel.setGoodsBarcode(qry_barcode);
+			List<CombinationModel> _combinationList = service.find_combination_All(combinationModel);
 			model.addAttribute("item", _combinationList);
 			model.addAttribute("nav_active2", 3);
 			return "/c/goods/combinationlist";
@@ -56,7 +64,7 @@ public class CombinationController extends BaseController<CombinationModel> {
 			JavaType javaType = mapper.getTypeFactory().constructParametricType(List.class, CombinationEntity.class);
 			List<CombinationEntity> _combinationEntitys = mapper.readValue(_json, javaType);
 			if (_combinationEntitys.size() > 0) {
-				int ok = service.insertCombinations(_combinationEntitys);
+				int ok = service.doInsertCombinations(_combinationEntitys);
 				if (ok > 0) {
 					return "ok";
 				} else if (ok == -1) {
@@ -102,7 +110,7 @@ public class CombinationController extends BaseController<CombinationModel> {
 
 	@RequestMapping(value = "/osl/combination/{combinationId}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public String deleteProduct(@PathVariable(required = true) String combinationId) {
+	public String deleteProduct(@PathVariable(required = true) String combinationId) throws IOException {
 		this.myBusiness_id = Integer.valueOf(this.getSessAttr("u_bid").toString());
 		int ok = service.deleteByCode(combinationId, this.myBusiness_id);
 		if (ok > 0) {

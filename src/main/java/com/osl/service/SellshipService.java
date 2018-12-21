@@ -8,7 +8,7 @@ import com.osl.model.SellshipModel;
 public interface SellshipService {
 	public List<SellshipModel> findAll();
 
-	public List<SellshipModel> find_sellshipBusiness_All(int bid);
+	public List<SellshipModel> find_sellshipBusiness_All(SellshipModel sellshipModel);
 
 	public int insertSellship(SellshipEntity _sellship);
 
@@ -18,5 +18,7 @@ public interface SellshipService {
 
 	public SellshipEntity findById(int id);
 
-	public SellshipEntity findBySku(String sku);
+	public SellshipEntity findByGoodsId(String goodsId);
+	
+	public SellshipModel showById(int id);
 }

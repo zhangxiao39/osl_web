@@ -1,30 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.osl.mapper.GoodsMapper">
-	<select id="find_goodsAll" resultType="com.osl.model.GoodsModel">
-		select t_goods.*,t_goods_category.name as categoryName,t_business.name as bName from t_goods,t_goods_category,t_business
-		where t_goods.delete_flg=0 and t_goods.category_id=t_goods_category.id and t_goods.business_id=t_business.id
+	<select id="find_goodsAll" resultType="com.osl.model.GoodsModel"
+		parameterType="com.osl.model.GoodsModel">
+		select t_goods.*,t_goods_category.name as categoryName,t_business.name
+		as bName from t_goods,t_goods_category,t_business
+		where
+		t_goods.delete_flg=0 and t_goods.category_id=t_goods_category.id and
+		t_goods.business_id=t_business.id
+		<if test="businessId !=null and businessId != '' and businessId != '0'">
+			and t_goods.business_id= #{businessId}
+		</if>
+		<if test="sku !=null and sku != ''">
+			and t_goods.sku= #{sku}
+		</if>
+		<if test="barcode !=null and barcode != ''">
+			and t_goods.barcode= #{barcode}
+		</if>
+		<if test="name !=null and name != ''">
+			and t_goods.name like CONCAT('%', #{name},'%')
+		</if>
+		<if
+			test="categoryId !=null and categoryId != '' and categoryId != '0'">
+			and (t_goods.category_id= #{categoryId} or
+			t_goods_category.parent_id=#{categoryId})
+		</if>
 	</select>
 	<select id="find_goodsBusiness_All"
 		resultType="com.osl.model.GoodsModel" parameterType="int">
-		select t_goods.*,t_goods_category.name as categoryName from t_goods,t_goods_category
-		where t_goods.delete_flg=0 and t_goods.category_id=t_goods_category.id and t_goods.business_id=#{bid}
+		select
+		t_goods.*,t_goods_category.name as categoryName from
+		t_goods,t_goods_category
+		where t_goods.delete_flg=0 and
+		t_goods.category_id=t_goods_category.id and t_goods.business_id=#{bid}
 	</select>
 	<select id="find_goodsBusiness_sku"
 		resultType="com.osl.model.GoodsModel">
 		select * from t_goods
-		where delete_flg=0 and business_id=#{bid} and sku=#{sku}
+		where delete_flg=0 and
+		business_id=#{bid} and sku=#{sku}
+	</select>
+	<select id="getGoodsId" resultType="String">
+		select max(goods_id) from
+		t_goods
+		where business_id=#{bid} and goods_id like CONCAT(
+		#{goodsId},'%')
 	</select>
 	<insert id="insertGoods"
 		parameterType="com.osl.mapper.entity.GoodsEntity">
 		insert into t_goods
-		(category_id,sku,barcode,name,shape,volume,length,width,height,weight,business_id,color,remark,new_date)
+		(goods_id,category_id,sku,barcode,name,shape,volume,length,width,height,weight,business_id,color,remark,new_date)
 		values
-		(#{categoryId},#{sku},#{barcode},#{name},#{shape},#{volume},#{length},#{width},#{height},#{weight},#{businessId},#{color},#{remark},now())
+		(#{goodsId},#{categoryId},#{sku},#{barcode},#{name},#{shape},#{volume},#{length},#{width},#{height},#{weight},#{businessId},#{color},#{remark},now())
 	</insert>
-	<update id="deleteById" parameterType="int">
+	<update id="deleteById" parameterType="String">
 		update t_goods set
-		delete_flg=1 where id=#{id}
+		delete_flg=1 where goods_id=#{goodsId}
 	</update>
 	<update id="updateGoods"
 		parameterType="com.osl.mapper.entity.GoodsEntity">
@@ -43,12 +74,12 @@
 		color=#{color},
 		remark=#{remark}
 		where
-		id=#{id}
+		goods_id=#{goodsId}
 	</update>
-	<select id="findById" parameterType="int"
+	<select id="findById" parameterType="String"
 		resultType="com.osl.mapper.entity.GoodsEntity">
 		select * from t_goods
-		where id=#{id}
+		where goods_id=#{goodsId}
 	</select>
 	<select id="findBySku" parameterType="String"
 		resultType="com.osl.mapper.entity.GoodsEntity">

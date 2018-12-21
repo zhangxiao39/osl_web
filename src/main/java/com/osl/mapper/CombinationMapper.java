@@ -12,7 +12,7 @@ public interface CombinationMapper {
 
 	public int insertCombinations(List<CombinationEntity> _combinations);
 
-	public List<CombinationModel> find_combinationBusiness_All(int bid);
+	public List<CombinationModel> find_combination_All(CombinationModel combinationModel);
 
 	public int insertCombination(CombinationEntity _combination);
 
@@ -24,6 +24,6 @@ public interface CombinationMapper {
 
 	public int updateCombination(CombinationEntity _combination, int bid);
 	
-	public List<CombinationModel> find_combinationBusiness_sku(int bid,String sku);
+	public List<CombinationModel> find_combinationBusiness_combinationId(int bid,String combinationId);
 
 }

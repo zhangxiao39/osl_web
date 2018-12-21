@@ -19,9 +19,9 @@ public class CombinationServiceImpl implements CombinationService {
 	private CombinationMapper combinationMapper;
 
 	@Override
-	public List<CombinationModel> find_combinationBusiness_All(int bid) {
+	public List<CombinationModel> find_combination_All(CombinationModel combinationModel) {
 		// TODO Auto-generated method stub
-		return combinationMapper.find_combinationBusiness_All(bid);
+		return combinationMapper.find_combination_All(combinationModel);
 	}
 
 	@Override
@@ -29,23 +29,27 @@ public class CombinationServiceImpl implements CombinationService {
 	public int insertCombinations(List<CombinationEntity> _combinations) throws IOException {
 		// TODO Auto-generated method stub
 		int ok = 0;
-		try {
-			List<CombinationModel> _e = combinationMapper.find_combinationBusiness_sku(
-					(int) _combinations.get(0).getBusinessId(), _combinations.get(0).getSku());
-			if (_e.size() > 0) {
-				ok = -1;
-			} else {
-
-				for (int i = 0; i < _combinations.size(); i++) {
-					CombinationEntity _c = _combinations.get(i);
-					combinationMapper.insertCombination(_c);
-				}
-				ok = 1;
-			}
-
-		} finally {
-			return ok;
+		for (int i = 0; i < _combinations.size(); i++) {
+			CombinationEntity _c = _combinations.get(i);
+			combinationMapper.insertCombination(_c);
 		}
+		ok = 1;
+		return ok;
+	}
+
+	@Override
+	public int doInsertCombinations(List<CombinationEntity> _combinations) throws IOException {
+		int ok = 0;
+		List<CombinationModel> _e = combinationMapper.find_combinationBusiness_combinationId(
+				(int) _combinations.get(0).getBusinessId(), _combinations.get(0).getCombinationId());
+		if (_e.size() > 0) {
+			ok = -1;
+		} else {
+
+			ok = this.insertCombinations(_combinations);
+		}
+
+		return ok;
 	}
 
 	@Override
@@ -55,7 +59,8 @@ public class CombinationServiceImpl implements CombinationService {
 	}
 
 	@Override
-	public int deleteByCode(String combinationId, int bid) {
+	@Transactional
+	public int deleteByCode(String combinationId, int bid) throws IOException {
 		// TODO Auto-generated method stub
 		return combinationMapper.deleteByCode(combinationId, bid);
 	}
@@ -65,19 +70,16 @@ public class CombinationServiceImpl implements CombinationService {
 	public int updateCombinations(List<CombinationEntity> _combinations) throws IOException {
 		// TODO Auto-generated method stub
 		int ok = 0;
-		try {
-			String combinationId = _combinations.get(0).getCombinationId();
-			int bid = (int) _combinations.get(0).getBusinessId();
-			combinationMapper.deleteByCode(combinationId, bid);
-			for (int i = 0; i < _combinations.size(); i++) {
-				CombinationEntity _c = _combinations.get(i);
-				combinationMapper.insertCombination(_c);
-			}
-			ok = 1;
-
-		} finally {
-			return ok;
+		String combinationId = _combinations.get(0).getCombinationId();
+		int bid = (int) _combinations.get(0).getBusinessId();
+		combinationMapper.deleteByCode(combinationId, bid);
+		for (int i = 0; i < _combinations.size(); i++) {
+			CombinationEntity _c = _combinations.get(i);
+			combinationMapper.insertCombination(_c);
 		}
+		ok = 1;
+
+		return ok;
 	}
 
 }

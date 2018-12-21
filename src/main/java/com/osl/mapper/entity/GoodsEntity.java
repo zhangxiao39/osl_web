@@ -8,9 +8,12 @@ public class GoodsEntity extends BaseEntity {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 8180151520387193211L;
+	private static final long serialVersionUID = -7614405098009401921L;
+	/**
+	 * 
+	 */
 
-	private long id;
+	private String goodsId;
 	private int categoryId;
 	private String sku;
 	private String barcode;
@@ -25,15 +28,14 @@ public class GoodsEntity extends BaseEntity {
 	private String color;
 	private String remark;
 
-	public long getId() {
-		return id;
+
+	public String getGoodsId() {
+		return goodsId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
 	}
-
-
 
 	public int getCategoryId() {
 		return categoryId;

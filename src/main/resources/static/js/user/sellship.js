@@ -60,7 +60,7 @@ function validform() {
 				required : true,
 				range : [ 1, 10000000 ]
 			},
-			sku : {
+			goodsId : {
 				required : true
 			},
 			sellId : {
@@ -72,7 +72,7 @@ function validform() {
 				required : "请选择销售平台",
 				range : "请选择销售平台"
 			},
-			sku : {
+			goodsId : {
 				required : "请输入商品SKU",
 			},
 			sellId : {
@@ -86,10 +86,10 @@ $(function() {
 	var $wrapper = $('#div-table-container');
 	$('.dataTables-example').DataTable(
 			{
-				bFilter : false,
+				bFilter : true,
 				ordering : false,
 				iDisplayLength : 10,
-				sDom : 'itlp',
+				sDom : 'iftlp',
 				pageLength : 25,
 				responsive : true,
 				dom : '<"html5buttons"B>lTfgitp',
@@ -123,7 +123,7 @@ $(function() {
 			});
 	$('#btn_submit').click(function() {
 		if (validform().form()) {
-			if ($("#sku").val() == "") {
+			if ($("#goodsId").val() == "") {
 				swal({
 					title : "提示信息",
 					text : "请输入商品SKU！",
@@ -169,7 +169,7 @@ $(function() {
 		$("input[type='radio'][name='type'][value='0']").click();
 		validform().resetForm();
 		$("#platformId").val("0");
-		$("#sku").val("");
+		$("#goodsId").val("");
 		$("#qry_sku").val("");
 		$("#sellId").val("");
 		$("#name").val("");
@@ -188,7 +188,7 @@ function showInfo(id) {
 			$("input[type='radio'][name='type'][value='" + data.type + "']")
 					.click();
 			$("#platformId").val(data.platformId);
-			$("#sku").val(data.sku);
+			$("#goodsId").val(data.goodsId);
 			$("#qry_sku").val(data.sku);
 			$("#sellId").val(data.sellId);
 			qryProductBySku();
@@ -256,7 +256,7 @@ function setShapeChecked(v) {
 function qryProductBySku() {
 	var _sku = $("#qry_sku").val();
 	if (_sku != "") {
-		var _url = "/osl/goods/sku/";
+		var _url = "/osl/goods/mysku/";
 		var type = $('input:radio[name="type"]:checked').val();
 		if (type == "1") {
 			_url = "/osl/combinationshow/";
@@ -267,10 +267,10 @@ function qryProductBySku() {
 			success : function(data) {
 				if (data != "" && data != undefined) {
 					if (type == "0") {
-						$("#sku").val(data.sku);
+						$("#goodsId").val(data.goodsId);
 						$("#gName").val(data.name);
 					} else {
-						$("#sku").val(data[0].combinationId);
+						$("#goodsId").val(data[0].combinationId);
 						$("#gName").val(data[0].name);
 					}
 				} else {
@@ -280,7 +280,7 @@ function qryProductBySku() {
 						type : "warning"
 					});
 					$("#gName").val("");
-					$("#sku").val("");
+					$("#goodsId").val("");
 				}
 			},
 			error : function(e) {

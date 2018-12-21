@@ -32,6 +32,7 @@ public class BusinessController extends BaseController<BusinessModel>{
 		}
 	}
 	
+
 	@RequestMapping(value = "/a/business/list")
 	public String b_listManage(Model model, HttpSession session) {
 		if (session.getAttribute("u_login") == null) {
@@ -47,7 +48,7 @@ public class BusinessController extends BaseController<BusinessModel>{
 	
 	/*
 	 * 	
-	 * @Des:获取有合作关系的商家
+	 * @Des:锟斤拷取锟叫猴拷锟斤拷锟斤拷系锟斤拷锟教硷拷
 	 */
 	@RequestMapping(value = "/a/businessList", method = RequestMethod.POST)
 	@ResponseBody

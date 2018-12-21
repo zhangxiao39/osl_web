@@ -14,12 +14,14 @@ public class CombinationModel extends BaseModel {
 	private long id;
 	private String combinationId;
 	private String name;
+	private String goodsId;
 	private String sku;
 	private int nums;
 	private long businessId;
 	private int isdele;
 	private Timestamp addtime;
 	private String goodsname;
+	private String goodsBarcode;
 
 	public long getId() {
 		return id;
@@ -39,6 +41,14 @@ public class CombinationModel extends BaseModel {
 	}
 
 
+
+	public String getSku() {
+		return sku;
+	}
+
+	public void setSku(String sku) {
+		this.sku = sku;
+	}
 
 	public String getCombinationId() {
 		return combinationId;
@@ -64,12 +74,14 @@ public class CombinationModel extends BaseModel {
 		this.name = name;
 	}
 
-	public String getSku() {
-		return sku;
+
+
+	public String getGoodsId() {
+		return goodsId;
 	}
 
-	public void setSku(String sku) {
-		this.sku = sku;
+	public void setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
 	}
 
 	public int getNums() {
@@ -95,5 +107,14 @@ public class CombinationModel extends BaseModel {
 	public void setAddtime(Timestamp addtime) {
 		this.addtime = addtime;
 	}
+
+	public String getGoodsBarcode() {
+		return goodsBarcode;
+	}
+
+	public void setGoodsBarcode(String goodsBarcode) {
+		this.goodsBarcode = goodsBarcode;
+	}
+
 
 }

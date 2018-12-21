@@ -4,36 +4,48 @@
 	<insert id="insertCombination"
 		parameterType="com.osl.mapper.entity.CombinationEntity">
 		insert into t_combination
-		(combination_id,name,sku,nums,business_id,new_date)
+		(combination_id,name,goods_id,nums,business_id,new_date)
 		values
-		(#{combinationId},#{name},#{sku},#{nums},#{businessId},now())
+		(#{combinationId},#{name},#{goodsId},#{nums},#{businessId},now())
 	</insert>
-	<select id="find_combinationBusiness_All"
-		resultType="com.osl.model.CombinationModel" parameterType="int">
+	<select id="find_combination_All"
+		resultType="com.osl.model.CombinationModel" parameterType="com.osl.model.CombinationModel">
 		select
-		t_combination.*,t_goods.name as goodsname from t_goods,t_combination
-		where t_combination.delete_flg=0 and t_goods.sku=t_combination.sku and
-		t_combination.business_id=#{bid}
+		t_combination.*,t_goods.name as goodsname,t_goods.sku as sku from t_goods,t_combination
+		where t_combination.delete_flg=0 and t_goods.goods_id=t_combination.goods_id and
+		t_combination.business_id=#{businessId}
+		<if test="sku !=null and sku != ''">
+			and t_goods.sku= #{sku}
+		</if>
+		<if test="goodsBarcode !=null and goodsBarcode != ''">
+			and t_goods.barcode= #{goodsBarcode}
+		</if>
+		<if test="combinationId !=null and combinationId != ''">
+			and t_combination.combination_id= #{combinationId}
+		</if>
+		<if test="name !=null and name != ''">
+			and t_combination.name like CONCAT('%', #{name},'%')
+		</if>
 	</select>
-	<select id="find_combinationBusiness_sku"
+	<select id="find_combinationBusiness_combinationId"
 		resultType="com.osl.model.CombinationModel">
 		select * from t_combination
 		where delete_flg=0 and
-		business_id=#{bid} and sku=#{sku}
+		business_id=#{bid} and combination_id=#{combinationId}
 	</select>
 	<select id="find_combinationByCode"
 		resultType="com.osl.model.CombinationModel">
 		select
-		t_combination.*,t_goods.name as goodsname from
+		t_combination.*,t_goods.name as goodsname,t_goods.sku as sku from
 		t_goods,t_combination
 		where t_combination.delete_flg=0 and
-		t_goods.sku=t_combination.sku and
+		t_goods.goods_id=t_combination.goods_id and
 		t_combination.business_id=#{bid} and
 		t_combination.combination_id=#{combinationId}
 	</select>
-	<update id="deleteByCode">
-		update t_combination set
-		delete_flg=1 where
+	<delete id="deleteByCode">
+		delete from t_combination
+		where
 		business_id=#{bid} and combination_id=#{combinationId}
-	</update>
+	</delete>
 </mapper>

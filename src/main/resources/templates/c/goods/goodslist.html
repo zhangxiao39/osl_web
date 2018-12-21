@@ -61,24 +61,25 @@
 							</div>
 							<div class="ibox-content" style="display: block;">
 								<div class="row">
+								<form id="qry_form" name="qry_form" method="GET">
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="product_name">商品SKU</label>
-											<input type="text" id="product_name" name="product_name"
-												value="" class="form-control">
+											<label class="control-label" for="qry_sku">商品SKU</label>
+											<input type="text" id="qry_sku" name="qry_sku"
+												th:value="${#httpServletRequest.getParameter('qry_sku')}" class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="price">商品条码</label> <input
-												type="text" id="price" name="price" value=""
+											<label class="control-label" for="qry_barcode">商品条码</label> <input
+												type="text" id="qry_barcode" name="qry_barcode" th:value="${#httpServletRequest.getParameter('qry_barcode')}"
 												class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="quantity">商品名称</label> <input
-												type="text" id="quantity" name="quantity" value=""
+											<label class="control-label" for="qry_name">商品名称</label> <input
+												type="text" id="qry_name" name="qry_name" th:value="${#httpServletRequest.getParameter('qry_name')}"
 												class="form-control">
 										</div>
 									</div>
@@ -86,18 +87,19 @@
 										<div class="form-group">
 											<label class="control-label" for="status">商品分类</label> 
 											<select
-												name="status" id="status" class="form-control goods_category_select3" th:utext="${item_gc}">
+												name="qry_categoryId" id="qry_categoryId" class="form-control goods_category_select3" th:utext="${item_gc}">
 											</select>
 											
 										</div>
 									</div>
 									<div class="col-sm-3">
 										<div class="form-group z-t">
-											<button type="button" class="btn btn-primary">检索</button>
+											<button type="submit" class="btn btn-primary">检索</button>
 											<button type="button" class="btn btn-primary"
 												data-toggle="modal" data-target="#myModal">添加新商品</button>
 										</div>
 									</div>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -114,7 +116,7 @@
 							<div class="ibox-content">
 								<div class="table-responsive">
 									<table
-										class="table table-striped table-bordered table-hover dataTables-example">
+										class="table table-striped table-bordered table-hover dataTables-example" id="w_table_refresh" th:fragment="table_refresh">
 										<thead>
 											<tr>
 												<th>#</th>
@@ -139,17 +141,17 @@
 												<td th:text="${p.name}">Crucial SSD MX300 525GB</td>
 												<td th:text="${p.volume}">10</td>
 												<td th:text="${p.weight}">0.01</td>
-												<td th:text="${p.shape}">固体</td>
+												<td th:text="${p.shapeText}">固体</td>
 												<td th:text="${p.color}">MC8012MX300</td>
 												<td th:text="${p.remark}"></td>
 												<td>
 													<button class="btn btn-info btn-xs dropdown-toggle"
 														type="button" data-toggle="modal" data-target="#myModal"
-														th:onclick="|javascript:showInfo(${p.id})|">
+														th:onclick="showInfo([[${p.goodsId}]])">
 														<i class="fa fa-edit"></i>编辑
 													</button>
 													<button class="btn btn-danger btn-xs dropdown-toggle"
-														type="button" th:onclick="|javascript:deleteInfo(${p.id})|">
+														type="button" th:onclick="deleteInfo([[${p.goodsId}]])">
 														<i class="fa fa-trash"></i>删除
 													</button>
 												</td>
@@ -193,7 +195,7 @@
 								<input type="text" placeholder="请输入商品SKU" class="form-control"
 									name="sku" id="sku"> <input type="hidden"
 									name="businessId" th:value="${session.u_bid}"> <input
-									type="hidden" name="id" value="0" id="id"> <input
+									type="hidden" name="goodsId" value="0" id="goodsId"> <input
 									type="hidden" name="mode" value="POST" id="mode">
 							</div>
 						</div>

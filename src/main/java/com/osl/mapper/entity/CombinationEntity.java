@@ -12,7 +12,7 @@ public class CombinationEntity extends BaseEntity {
 	private long id;
 	private String combinationId;
 	private String name;
-	private String sku;
+	private String goodsId;
 	private int nums;
 	private long businessId;
 
@@ -41,12 +41,14 @@ public class CombinationEntity extends BaseEntity {
 		this.name = name;
 	}
 
-	public String getSku() {
-		return sku;
+
+
+	public String getGoodsId() {
+		return goodsId;
 	}
 
-	public void setSku(String sku) {
-		this.sku = sku;
+	public void setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
 	}
 
 	public int getNums() {

@@ -10,8 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.osl.common.Util;
 import com.osl.common.web.BaseController;
 import com.osl.mapper.entity.SellshipEntity;
 import com.osl.model.SellplatformModel;
@@ -29,14 +31,26 @@ public class SellshipController extends BaseController<SellshipModel> {
 	private SellshipService sellshipService;
 
 	@RequestMapping(value = "/b/goods/sellship")
-	public String b_g_selllistManage(Model model, HttpSession session) {
+	public String b_g_selllistManage(Model model, HttpSession session, @RequestParam(required = false) String qry_sku2,
+			@RequestParam(required = false) String qry_sellId, @RequestParam(required = false) String qry_platformId,
+			@RequestParam(required = false) String qry_type) {
 		if (session.getAttribute("u_login") == null) {
 			return "redirect:/business/login";
 		} else {
 			this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
 			List<SellplatformModel> _sellplatform = sellplatformService.find_sellplatform_All(myBusiness_id);
 			model.addAttribute("sellplatformData", _sellplatform);
-			List<SellshipModel> _sellshipInfo = sellshipService.find_sellshipBusiness_All(myBusiness_id);
+			SellshipModel sellshipModel = new SellshipModel();
+			sellshipModel.setBusinessId(myBusiness_id);
+			sellshipModel.setSku(qry_sku2);
+			sellshipModel.setSellId(qry_sellId);
+			if (!Util.isEmpty(qry_platformId)) {
+				sellshipModel.setPlatformId(Long.valueOf(qry_platformId));
+			}
+			if (!Util.isEmpty(qry_type)) {
+				sellshipModel.setType(Integer.valueOf(qry_type));
+			}
+			List<SellshipModel> _sellshipInfo = sellshipService.find_sellshipBusiness_All(sellshipModel);
 			model.addAttribute("sellshipData", _sellshipInfo);
 			model.addAttribute("nav_active2", 4);
 			return "/c/goods/sellship";
@@ -77,9 +91,9 @@ public class SellshipController extends BaseController<SellshipModel> {
 
 	@RequestMapping(value = "/osl/sellship/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public SellshipEntity showInfo(@PathVariable(required = true) int id) {
-		SellshipEntity _info = new SellshipEntity();
-		_info = sellshipService.findById(id);
+	public SellshipModel showInfo(@PathVariable(required = true) int id) {
+		SellshipModel _info = new SellshipModel();
+		_info = sellshipService.showById(id);
 		return _info;
 	}
 

@@ -13,7 +13,7 @@ public class GoodsModel extends BaseModel {
 	 */
 	private static final long serialVersionUID = -6377691010821265641L;
 
-	private long id;
+	private String goodsId;
 	private int categoryId;
 	private String categoryName;
 	private String sku;
@@ -31,13 +31,16 @@ public class GoodsModel extends BaseModel {
 	private int isdele;
 	private String remark;
 	private Timestamp addtime;
+	public String shapeText;
 
-	public long getId() {
-		return id;
+	
+
+	public String getGoodsId() {
+		return goodsId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
 	}
 
 	public String getSku() {
@@ -69,6 +72,17 @@ public class GoodsModel extends BaseModel {
 	}
 
 	public void setShape(int shape) {
+		switch(shape) {
+		case 1:
+			this.shapeText="固体";
+			break;
+		case 2:
+			this.shapeText="液体";
+			break;
+		case 3:
+			this.shapeText="气体";
+			break;
+		}
 		this.shape = shape;
 	}
 
@@ -135,7 +149,6 @@ public class GoodsModel extends BaseModel {
 	public void setBusinessId(int businessId) {
 		this.businessId = businessId;
 	}
-	
 	
 
 	public String getbName() {

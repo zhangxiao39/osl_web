@@ -10,7 +10,7 @@ import com.osl.model.GoodsModel;
 
 public interface GoodsService {
 	
-	public List<GoodsModel> find_goodsAll();
+	public List<GoodsModel> find_goodsAll(GoodsModel goodsModel);
 	
 	public List<GoodsModel> find_goodsBusiness_All(int bid);
 	
@@ -18,10 +18,12 @@ public interface GoodsService {
 	
 	public int updateGoods(GoodsEntity _goods);
 	
-	public int deleteById(int id);
+	public int deleteById(String goodsId);
 	
-	public GoodsEntity findById(int id);
+	public GoodsEntity findById(String goodsId);
 	
 	public GoodsEntity findBySku(String sku);
+	
+	public GoodsModel find_goodsBusiness_sku(int bid,String sku);
 
 }

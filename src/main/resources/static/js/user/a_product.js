@@ -2,10 +2,10 @@ $(function() {
 	var $wrapper = $('#div-table-container');
 	$('.dataTables-example').DataTable(
 			{
-				bFilter : false,
+				bFilter : true,
 				ordering : false,
 				iDisplayLength : 10,
-				sDom : 'itlp',
+				sDom : 'iftlp',
 				pageLength : 25,
 				responsive : true,
 				dom : '<"html5buttons"B>lTfgitp',
