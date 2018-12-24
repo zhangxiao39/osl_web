@@ -72,7 +72,6 @@
 									<thead>
 										<tr>
 											<th>#</th>
-											<th>商家ID</th>
 											<th>商家名称</th>
 											<th>商家等级</th>
 											<th>地址</th>
@@ -81,28 +80,39 @@
 											<th>传真</th>
 											<th>邮箱</th>
 											<th>联系人</th>
-											<th>URL</th>
+											<th>关系状态</th>
 											<th>操作</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr th:each="b,bIndex:${item}">
 											<td th:text="${bIndex.count}">1</td>
-											<td th:text="${b.id}">b01</td>
 											<td th:text="${b.name}">JNH</td>
-											<td>default</td>
+											<td th:text="${b.gradeName}">default</td>
 											<td th:text="${b.address}">东京都*****</td>
 											<td th:text="${b.postcode}">000-0000</td>
 											<td th:text="${b.tele}">8965-8974-965</td>
 											<td th:text="${b.tax}">6358-9865-548</td>
 											<td th:text="${b.email}">kanenka@yahoo.co.jp</td>
 											<td th:text="${b.contacts}">李四</td>
-											<td th:text="${b.url}">cad784679849161651</td>
+											<td th:text="${b.shipText}"></td>
 											<td>
 												<button class="btn btn-info btn-xs dropdown-toggle"
 													type="button" data-toggle="modal" data-target="#myModal"
-													onclick="edit__sheves('1');">
+													th:onclick="|javascript:showInfo(${b.id})|">
 													<i class="fa fa-edit"></i>编辑
+												</button>
+												<button type="button" class="btn btn-info btn-xs"
+													th:if="${b.userId}>0">
+													<i class="fa fa-edit"></i>添加管理员
+												</button>
+												<button type="button" class="btn btn-info btn-xs"
+													th:if="${b.ship} eq 1">
+													<i class="fa fa-edit"></i>解除关联
+												</button>
+												<button type="button" class="btn btn-info btn-xs"
+													th:if="${b.ship} eq 0">
+													<i class="fa fa-edit"></i>关联
 												</button>
 												<button class="btn btn-danger btn-xs dropdown-toggle"
 													type="button" onClick="check(1)">
@@ -129,80 +139,84 @@
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
 					</button>
-					<h4 class="modal-title">添加商家</h4>
+					<h4 class="modal-title">商家信息</h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal">
-						<div class="form-group">
-							<label class="col-lg-3 control-label">ID</label>
-							<div class="col-lg-9">
-								<input type="email" placeholder="请输入ID" class="form-control">
-							</div>
-						</div>
+					<form class="form-horizontal" name="myform" id="myform">
 						<div class="form-group">
 							<label class="col-lg-3 control-label">名称</label>
 							<div class="col-lg-9">
-								<input type="email" placeholder="请输入名称" class="form-control">
+								<input type="text" placeholder="请输入名称" class="form-control"
+									name="name" id="name"> <input type="hidden"
+									name="businessId" th:value="${session.u_bid}"> <input
+									type="hidden" name="id" value="0" id="id"> <input
+									type="hidden" name="mode" value="POST" id="mode">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">等级</label>
 							<div class="col-lg-9">
-								<select name="status" id="status" class="form-control">
-									<option value="0" selected="">选择等级</option>
-									<option value="1">default</option>
-									<option value="2">vip1</option>
-									<option value="3">vip2</option>
+								<select name="gradeId" id="gradeId" class="form-control">
+									<option value="1" selected="">Default</option>
+									<option th:each="g:${item_grade}" th:value="${g.id}"
+										th:text="${g.name}">default</option>
 								</select>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">地址</label>
 							<div class="col-lg-9">
-								<input type="email" placeholder="请输入地址" class="form-control">
+								<input type="text" placeholder="请输入地址" class="form-control"
+									name="address" id="address">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">邮编</label>
 							<div class="col-lg-9">
-								<input type="email" placeholder="请输入邮编" class="form-control">
+								<input type="text" placeholder="请输入邮编" class="form-control"
+									name="postcode" id="postcode">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">电话</label>
 							<div class="col-lg-9">
-								<input type="email" placeholder="请输入电话" class="form-control">
+								<input type="text" placeholder="请输入电话" class="form-control"
+									name="tele" id="tele">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">传真</label>
 							<div class="col-lg-9">
-								<input type="email" placeholder="请输入传真" class="form-control">
+								<input type="text" placeholder="请输入传真" class="form-control"
+									name="tax" id="tax">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">邮箱</label>
 							<div class="col-lg-9">
-								<input type="email" placeholder="请输入邮箱" class="form-control">
+								<input type="email" placeholder="请输入邮箱" class="form-control"
+									name="email" id="email">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">联系人</label>
 							<div class="col-lg-9">
-								<input type="email" placeholder="请输入联系人" class="form-control">
+								<input type="text" placeholder="请输入联系人" class="form-control"
+									name="contacts" id="contacts">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">URL</label>
 							<div class="col-lg-9">
-								<input type="email" placeholder="请输入URL" class="form-control">
+								<input type="text" placeholder="请输入URL" class="form-control"
+									name="url" id="url">
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary">确认添加</button>
+					<button type="button" class="btn btn-primary" id="btn_submit">确认保存</button>
 				</div>
 			</div>
 		</div>
@@ -210,11 +224,13 @@
 
 	<!-- Mainly scripts -->
 	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
-	
+
 	<script th:src="@{/js/bootstrap.min.js}"></script>
 	<script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
 	<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
 	<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+	<script th:src="@{/js/jquery.validate.min.js}"></script>
 
 	<!-- Peity -->
 	<script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
@@ -234,6 +250,7 @@
 
 	<!-- common -->
 	<script th:src="@{/js/common.js}"></script>
+	<script th:src="@{/js/user/business.js}"></script>
 
 	<script th:inline="javascript">
 		

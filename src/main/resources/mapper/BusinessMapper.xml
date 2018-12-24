@@ -1,11 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.osl.mapper.BusinessMapper">
-<select id="findBusinessAll"
+	<select id="findBusinessAll"
 		resultType="com.osl.model.BusinessModel" parameterType="int">
 		select
-		t_business.* from t_business,t_relationship
-		where t_business.delete_flg=0 and t_business.id=t_relationship.business_id and
-		t_relationship.warehouse_id=#{bid}
+		t1.*,t2.id as userId FROM(select
+		t_business.*,t_business_grade.name as
+		gradeName,t_relationship.ship as ship from
+		t_business,t_relationship,t_business_grade
+		where
+		t_business.delete_flg=0 and t_business.id=t_relationship.business_id
+		and t_business.grade_id=t_business_grade.id and
+		t_relationship.warehouse_id=#{bid}) as t1
+		LEFT JOIN (select * from
+		t_user where isadmin=0) as t2 on
+		t2.business_id=t1.id
 	</select>
+	<select id="findById" resultType="com.osl.model.BusinessModel"
+		parameterType="int">
+		select * from t_business
+		where delete_flg=0 and id=#{id}
+	</select>
+	<insert id="insert"
+		parameterType="com.osl.mapper.entity.BusinessEntity">
+		insert into t_businesse
+		(name,address,postcode,url,tele,tax,email,type,contacts,grade_id,new_date)
+		values
+		(#{name},#{address},#{postcode},#{url},#{tele},#{tax},#{email},1,#{contacts},#{grade_id},now())
+	</insert>
+	<insert id="insertRelation">
+		insert into t_relationship
+		(business_id,warehouse_id,ship,new_date)
+		values
+		(#{bId},#{wId},1,now())
+	</insert>
+	<update id="delete" parameterType="int">
+		update t_business
+		set
+		delete_flg=1 where id=#{id}
+	</update>
+	<update id="update"
+		parameterType="com.osl.mapper.entity.BusinessEntity">
+		update t_business set
+		name=#{name},
+		address=#{address},
+		postcode=#{postcode},
+		url=#{url},
+		tele=#{tele},
+		tax=#{tax},
+		email=#{email},
+		contacts=#{contacts},
+		grade_id=#{gradeId}
+		where
+		id=#{id}
+	</update>
 </mapper>

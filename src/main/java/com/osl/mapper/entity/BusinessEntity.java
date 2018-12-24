@@ -20,6 +20,7 @@ public class BusinessEntity extends BaseEntity {
 	private String contacts;
 	private int type;
 	private String right;
+	private int gradeId;
 
 	public long getId() {
 		return id;
@@ -51,6 +52,16 @@ public class BusinessEntity extends BaseEntity {
 
 	public void setPostcode(String postcode) {
 		this.postcode = postcode;
+	}
+	
+	
+
+	public int getGradeId() {
+		return gradeId;
+	}
+
+	public void setGradeId(int gradeId) {
+		this.gradeId = gradeId;
 	}
 
 	public String getUrl() {

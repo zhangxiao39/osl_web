@@ -24,6 +24,11 @@ public class BusinessModel extends BaseModel {
 	private int type;
 	private Timestamp addtime;
 	private String right;
+	private int gradeId;
+	private String gradeName;
+	private int ship;
+	public String shipText;
+	private int userId;
 
 	public long getId() {
 		return id;
@@ -63,6 +68,16 @@ public class BusinessModel extends BaseModel {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	
+	
+
+	public int getGradeId() {
+		return gradeId;
+	}
+
+	public void setGradeId(int gradeId) {
+		this.gradeId = gradeId;
 	}
 
 	public int getParent_id() {
@@ -127,6 +142,41 @@ public class BusinessModel extends BaseModel {
 
 	public void setRight(String right) {
 		this.right = right;
+	}
+
+	public String getGradeName() {
+		return gradeName;
+	}
+
+	public void setGradeName(String gradeName) {
+		this.gradeName = gradeName;
+	}
+
+	public int getShip() {
+		return ship;
+	}
+
+	public void setShip(int ship) {
+		switch (ship) {
+		case 0:
+			this.shipText = "申请中";
+			break;
+		case 1:
+			this.shipText = "已关联";
+			break;
+		case 2:
+			this.shipText = "关联停止";
+			break;
+		}
+		this.ship = ship;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 }

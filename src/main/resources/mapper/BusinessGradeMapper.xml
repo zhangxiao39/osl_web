@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.osl.mapper.BusinessGradeMapper">
+	<select id="findAll"
+		resultType="com.osl.model.BusinessGradeModel" parameterType="int">
+		select
+		t_business_grade.*,t_business.name as bName from
+		t_business_grade,t_business
+		where t_business_grade.delete_flg=0 and
+		t_business.id=t_business_grade.business_id and t_business_grade.id>1
+		and t_business_grade.business_id=#{bid}
+	</select>
+	<select id="findById"
+		resultType="com.osl.model.BusinessGradeModel" parameterType="int">
+		select
+		t_business_grade.*,t_business.name as bName from
+		t_business_grade,t_business
+		where t_business_grade.delete_flg=0 and
+		t_business.id=t_business_grade.business_id
+		and t_business_grade.id=#{id}
+	</select>
+	<insert id="insert"
+		parameterType="com.osl.mapper.entity.BusinessGradeEntity">
+		insert into t_business_grade
+		(name,discount,business_id,new_date)
+		values
+		(#{name},#{discount},#{businessId},now())
+	</insert>
+	<update id="delete" parameterType="int">
+		update t_business_grade
+		set
+		delete_flg=1 where id=#{id}
+	</update>
+	<update id="update"
+		parameterType="com.osl.mapper.entity.BusinessGradeEntity">
+		update t_business_grade set
+		name=#{name},
+		discount=#{discount},
+		business_id=#{businessId}
+		where
+		id=#{id}
+	</update>
+</mapper>
