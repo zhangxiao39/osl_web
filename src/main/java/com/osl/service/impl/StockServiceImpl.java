@@ -21,31 +21,59 @@ public class StockServiceImpl implements StockService {
 	@Autowired
 	private StockMapper stockMapper;
 	
-	//商家端，根据商家id获取库存列表
 	@Override
 	public List<StockModel> find_stockBusiness_All(int bid) {
 		return stockMapper.find_stockBusiness_All(bid);
 	}
 
-	//商家端，条件查询库存信息列表
 	@Override
 	public List<StockModel> find_stockBusiness_by_condition(int bid,StockModel stockModel) {
 		List<StockModel> list =  stockMapper.find_stockBusiness_by_condition(bid, stockModel);
 		return list;
 	}
 	
-	//运营商端，根据运营商id获取库存信息列表
 	@Override
 	public List<StockModel> find_adminStock_All(int bid) {
 		List<StockModel> list =  stockMapper.find_adminStock_All(bid);
 		return list;
 	}
 	
-	//运营商端，条件查询库存信息列表
 	@Override
-	public List<StockModel> find_adminStock_by_condition(int bid, StockModel stockModel) {
-		List<StockModel> list =  stockMapper.find_adminStock_by_condition(bid, stockModel);
+	public List<StockModel> find_adminStock_by_condition(List<String> skuList, StockModel stockModel) {
+		List<StockModel> list =  stockMapper.find_adminStock_by_condition(skuList, stockModel);
 		return list;
+	}
+
+	@Override
+	public List<StockModel> find_stock_detail(StockModel stockModel) {
+		List<StockModel> list =  stockMapper.find_stock_detail(stockModel);
+		return list;
+	}
+
+	@Override
+	public List<StockModel> find_stock_detail_condition(StockModel stockModel) {
+		List<StockModel> list =  stockMapper.find_stock_detail_condition(stockModel);
+		return list;
+	}
+
+	@Override
+	public int inset_stock(StockEntity stockEntity) {
+		return stockMapper.inset_stock(stockEntity);
+	}
+
+	@Override
+	public int update_stock(StockEntity stockEntity) {
+		return stockMapper.update_stock(stockEntity);
+	}
+
+	@Override
+	public int update_stock_by_id(String manageId, int nums) {
+		return stockMapper.update_stock_by_id(manageId, nums);
+	}
+
+	@Override
+	public int delete_stock_by_id(String manageId) {
+		return stockMapper.delete_stock_by_id(manageId);
 	}
 	
 }

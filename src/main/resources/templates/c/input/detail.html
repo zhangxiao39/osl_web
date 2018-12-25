@@ -104,7 +104,7 @@
 												<td th:text="${p.goodsName}"></td>
 												<td th:text="${p.nums}"></td>
 												<td th:text="${p.inputId}"></td>
-												<td th:text="${p.goodsType}"></td>
+												<td th:text="${p.goodsType == 1 ? '不良品' : p.goodsType == 2 ? '废弃品' : '良品'}"></td>
 												<td th:text="${#dates.format(p.validityTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
 												<td th:text="${p.status == 1 ? '入库完了' : '入库中'}"></td>
 											</tr>

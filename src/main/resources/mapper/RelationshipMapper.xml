@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.osl.mapper.RelationshipMapper">
+	<insert id="insert"
+		parameterType="com.osl.mapper.entity.RelationshipEntity">
+		insert into
+		t_relationship(business_id,warehouse_id,ship,new_date)
+		values(#{businessId},#{warehouseId},#{ship},now());
+	</insert>
+	<update id="changeShip"
+		parameterType="com.osl.mapper.entity.RelationshipEntity">
+		update t_relationship
+		set
+		ship=#{ship}
+		where business_id=#{businessId} and warehouse_id=#{warehouseId}
+	</update>
+</mapper>

@@ -1,6 +1,7 @@
 package com.osl.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import com.osl.common.web.BaseModel;
 
@@ -11,9 +12,8 @@ public class InputdetailModel extends BaseModel {
 	 */
 	private static final long serialVersionUID = -4398144474494325708L;
 	
-	private long id;
 	private String detailId;
-	private String sku;
+	private String goodsId;
 	private int nums;
 	private String depotId;
 	private String shelvesId;
@@ -26,16 +26,44 @@ public class InputdetailModel extends BaseModel {
 	private Date validityTime;
 	private int status;
 	private int deleteFlag;
-	private Date newDate;
-	private Date updateDate;
+	private Timestamp newDate;
+	private Timestamp updateDate;
 	
 	private String entryId;
+	private String sku;
 	private String goodsName;
 	private String goodscategoryName;
 	private String businessName;
 	private String depotAddress;
 	
+	private int businessId;
+	private int warehouseId;
 	
+
+	public int getBusinessId() {
+		return businessId;
+	}
+
+	public void setBusinessId(int businessId) {
+		this.businessId = businessId;
+	}
+
+	public int getWarehouseId() {
+		return warehouseId;
+	}
+
+	public void setWarehouseId(int warehouseId) {
+		this.warehouseId = warehouseId;
+	}
+
+	public String getGoodsId() {
+		return goodsId;
+	}
+
+	public void setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
+	}
+
 	public String getEntryId() {
 		return entryId;
 	}
@@ -44,19 +72,19 @@ public class InputdetailModel extends BaseModel {
 		this.entryId = entryId;
 	}
 
-	public Date getNewDate() {
+	public Timestamp getNewDate() {
 		return newDate;
 	}
 
-	public void setNewDate(Date newDate) {
+	public void setNewDate(Timestamp newDate) {
 		this.newDate = newDate;
 	}
 
-	public Date getUpdateDate() {
+	public Timestamp getUpdateDate() {
 		return updateDate;
 	}
 
-	public void setUpdateDate(Date updateDate) {
+	public void setUpdateDate(Timestamp updateDate) {
 		this.updateDate = updateDate;
 	}
 
@@ -164,14 +192,6 @@ public class InputdetailModel extends BaseModel {
 		this.goodscategoryName = goodscategoryName;
 	}
 	
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public String getSku() {
 		return sku;
 	}

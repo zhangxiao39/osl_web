@@ -20,6 +20,7 @@ public class UserEntity extends BaseEntity {
     private int status;
     private String url;
     private String bname;
+    private int isadmin;
 
     public long getId() {
         return id;
@@ -92,5 +93,15 @@ public class UserEntity extends BaseEntity {
     public void setBname(String bname) {
         this.bname = bname;
     }
+
+	public int getIsadmin() {
+		return isadmin;
+	}
+
+	public void setIsadmin(int isadmin) {
+		this.isadmin = isadmin;
+	}
+    
+    
 
 }

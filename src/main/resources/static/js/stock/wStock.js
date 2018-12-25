@@ -78,30 +78,18 @@ function setTableCss() {
             dom : '<"html5buttons"B>lTfgitp',
             buttons : [
                 {
-                    extend : 'copy'
-                },
-                {
-                    extend : 'csv'
-                },
-                {
-                    extend : 'excel',
-                    title : 'ExampleFile'
-                },
-                {
-                    extend : 'pdf',
-                    title : 'ExampleFile'
-                },
-
-                {
-                    extend : 'print',
-                    customize : function(win) {
-                        $(win.document.body).addClass('white-bg');
-                        $(win.document.body).css('font-size', '10px');
-
-                        $(win.document.body).find('table').addClass(
-                            'compact').css('font-size', 'inherit');
+                    extend : 'csv',
+                    action : function (nButton, oConfig, oFlash) {
+                        var data = {};
+                        data.inputId = $("#inputId").val();
+                        data.sku = $("#sku").val();
+                        data.barcode = $("#barcode").val();
+                        data.goodsName = $("#goodsName").val();
+                        data.status = $("#status").val();
+                        var dataJson = JSON.stringify(data);
+                        window.location.href='/all/export/input?params=' + encodeURIComponent(dataJson);
                     }
-                } ]
+                }]
 
         });
 }
@@ -110,11 +98,22 @@ function setTableCss() {
  */
 function searchStock()
 {
-    var sku = $('#goods_sku').val(); //根据商品sku查询
+    var skuList = $('#goods_sku').val(); //根据商品sku查询
+    var sku = '';
+    for(var i=0;i<skuList.length;i++)
+    {
+        sku+=skuList[i];
+        if(skuList.length!=1&&i!=skuList.length-1)
+        {
+            sku+=","
+        }
+
+    }
+
     var name = $('#goods_name').val().trim(); //根据商品名称查询
     var barCode = $('#goods_barCode').val().trim(); //根据商品条形码查询
     var nums = $('#goods_nums').val().trim(); //根据商品数量查询
-    var status = $('#status').val();    //良品和非良品
+    var status = -1;    //良品和非良品
     var bussinessId = $('#businessSelect').val();	//根据商家查询
     var goodsCategoryId = $('#type').val();	//根据商品分类id查询
     var dttable = $('.dataTables-example').dataTable();
@@ -194,7 +193,6 @@ function getAdminSkuList() {
             {
                 strOption+='<option value='+data[i].sku+'>'+data[i].sku+'</option>'
             }
-            strOption+='<option>俺的沙发</option>';
             $("#goods_sku").append(strOption);
             $('#goods_sku').selectpicker('refresh');    //刷新数据
             $('#goods_sku').selectpicker('render');  

@@ -13,7 +13,7 @@
 		and t_business.grade_id=t_business_grade.id and
 		t_relationship.warehouse_id=#{bid}) as t1
 		LEFT JOIN (select * from
-		t_user where isadmin=0) as t2 on
+		t_user where isadmin=1) as t2 on
 		t2.business_id=t1.id
 	</select>
 	<select id="findById" resultType="com.osl.model.BusinessModel"
@@ -23,10 +23,14 @@
 	</select>
 	<insert id="insert"
 		parameterType="com.osl.mapper.entity.BusinessEntity">
-		insert into t_businesse
+		<selectKey keyProperty="id" order="AFTER"
+			resultType="java.lang.Integer">
+			select LAST_INSERT_ID()
+		</selectKey>
+		insert into t_business
 		(name,address,postcode,url,tele,tax,email,type,contacts,grade_id,new_date)
 		values
-		(#{name},#{address},#{postcode},#{url},#{tele},#{tax},#{email},1,#{contacts},#{grade_id},now())
+		(#{name},#{address},#{postcode},#{url},#{tele},#{tax},#{email},1,#{contacts},#{gradeId},now())
 	</insert>
 	<insert id="insertRelation">
 		insert into t_relationship

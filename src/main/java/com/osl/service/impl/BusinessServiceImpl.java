@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.osl.mapper.BusinessMapper;
+import com.osl.mapper.RelationshipMapper;
 import com.osl.mapper.entity.BusinessEntity;
+import com.osl.mapper.entity.RelationshipEntity;
 import com.osl.model.BusinessModel;
 import com.osl.service.BusinessService;
 
@@ -15,7 +18,9 @@ public class BusinessServiceImpl implements BusinessService {
 
 	@Autowired
 	private BusinessMapper businessMapper;
-	
+	@Autowired
+	private RelationshipMapper relationshipMapper;
+
 	@Override
 	public List<BusinessModel> findBusinessAll(int bid) {
 		// TODO Auto-generated method stub
@@ -29,9 +34,17 @@ public class BusinessServiceImpl implements BusinessService {
 	}
 
 	@Override
-	public int insert(BusinessEntity _business) {
+	@Transactional
+	public int insert(BusinessEntity _business,int warehouseId) {
 		// TODO Auto-generated method stub
-		return businessMapper.insert(_business);
+		int ok = 0;
+		ok = businessMapper.insert(_business);
+		RelationshipEntity relationshipEntity = new RelationshipEntity();
+		relationshipEntity.setBusinessId((int)_business.getId());
+		relationshipEntity.setWarehouseId(warehouseId);
+		relationshipEntity.setShip(1);
+		ok=relationshipMapper.insert(relationshipEntity);
+		return ok;
 	}
 
 	@Override

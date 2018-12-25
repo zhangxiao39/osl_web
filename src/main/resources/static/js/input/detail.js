@@ -1,3 +1,4 @@
+var detailInputId = "";
 var CONSTANT = {
 	DATA_TABLES : {
 		DEFAULT_OPTION : { // DataTables初始化选项
@@ -54,6 +55,7 @@ var CONSTANT = {
 	}
 };
 $(function() {
+	detailInputId = getThisUrlParam("inputId");
 	reloadTableCss();
 	
 	//初始化日期控件
@@ -68,9 +70,14 @@ $(function() {
     });
 });
 //新建&修改入库信息
-function saveDetails(tmpStatus){
-	$("#status").val(tmpStatus);
+function saveDetails(){
+	if($("#status").val() == ''){
+		$("#status").val(0);
+	}
 	if (validform().form()) {
+		$("#depotId").attr("disabled",false);
+		$("#shelvesId").attr("disabled",false);
+		$("input[name='goodsType']").attr("disabled",false);
 		$.ajax({
 			url : "/a/save/inputdetail",
 			type : $("#mode").val(),
@@ -79,14 +86,14 @@ function saveDetails(tmpStatus){
 				if (data == "ok") {
 					swal({
 						title : "保存成功！",
-						text : "成功保存了一条商品信息。",
+						text : "成功保存了一条入库详情信息。",
 						type : "success"
 					}, function() {
 						window.location.reload();
 					})
 				} else if (data == "exist") {
 					swal({
-						title : "商品SKU已经存在！",
+						title : "入库详情ID已经存在！",
 						text : "保存失败！",
 						type : "error"
 					})
@@ -113,45 +120,15 @@ function reloadTableCss(){
 			dom : '<"html5buttons"B>lTfgitp',
 			buttons : [
 					{
-						extend : 'copy'
-					},
-					{
-						extend : 'csv'
-					},
-					{
-						extend : 'excel',
-						title : 'ExampleFile'
-					},
-					{
-						extend : 'pdf',
-						title : 'ExampleFile'
-					},
-	
-					{
-						extend : 'print',
-						customize : function(
-								win) {
-							$(
-									win.document.body)
-									.addClass(
-											'white-bg');
-							$(
-									win.document.body)
-									.css(
-											'font-size',
-											'10px');
-	
-							$(
-									win.document.body)
-									.find(
-											'table')
-									.addClass(
-											'compact')
-									.css(
-											'font-size',
-											'inherit');
+						extend : 'csv',
+						action : function (nButton, oConfig, oFlash) {
+							var data = {};
+							data.inputId = detailInputId;
+							var dataJson = JSON.stringify(data);
+							window.location.href='/all/export/inputDetail?params=' + encodeURIComponent(dataJson);
 						}
-					} ]
+					}
+					 ]
 	
 		});
 }
@@ -213,10 +190,103 @@ function validform() {
 		}
 	});
 }
-
+/**
+ * 新建入库
+ * @returns
+ */
 function wNewInputDetail(){
 	wQueryEntryDetailList();
 	wQueryDepotList();
+}
+
+function editDetail(detailId){
+	$.ajax({
+		url : "/a/inputDetail/detail/"+detailId,
+		type : "POST",
+		contentType : 'application/json;charset=utf-8',
+		data: {},
+		dataType: 'text',
+		success : function(data) {
+			debugger;
+			var tmp = JSON.parse(data);
+			$("#tmpDepotId").val(tmp.depotId);
+			$("#tmpShelvesId").val(tmp.shelvesId);
+			$("#sku").val(tmp.sku);
+			$("#nums").val(tmp.nums);
+			$("#inputId").val(tmp.inputId);
+			$("#innerNums").val(tmp.innerNums);
+			$("#innerGoodsNums").val(tmp.innerGoodsNums);
+			$("#type").val(tmp.type);
+			$("#status").val(tmp.status);
+			$("#deleteFlag").val(tmp.deleteFlag);
+			$("#entryId").val(tmp.entryId);
+			$("#goodsName").val(tmp.goodsName);
+			$("input[name='goodsType'][value="+tmp.goodsType+"]").attr("checked",true); 
+			$("#validityTime").val(tmp.validityTime);
+			$("#detailId").val(tmp.detailId);
+			$("#goodsId").val(tmp.goodsId);
+			$("#shipId").val(tmp.shipId);
+			$("#deleteFlg").val(tmp.deleteFlg);
+			$("input[name='goodsType']").attr("disabled",true);
+			$("#sku").attr("readonly",true); 
+			$("#goodsName").attr("readonly",true);
+			wQueryDepotList();
+		},
+		error : function(e) {
+			alert("错误！！");
+		}
+	});
+}
+
+/**
+ * 删除
+ * @returns
+ */
+function deleteDetail(id){
+	swal({
+		title : "您确定要删除这条入库详情信息吗？",
+		text : "删除后将无法恢复，请谨慎操作！",
+		type : "warning",
+		showCancelButton : true,
+		confirmButtonColor : "#DD6B55",
+		confirmButtonText : "是的，我要删除！",
+		cancelButtonText : "让我再考虑一下…",
+		closeOnConfirm : false,
+		closeOnCancel : false
+	}, function(isConfirm) {
+		if (isConfirm) {
+			$.ajax({
+				url : "/a/delete/detail/" + id,
+				type : "delete",
+				success : function(data) {
+					if (data == "ok") {
+						swal({
+							title : "删除成功！",
+							text : "成功删除了一条入库详情信息。",
+							type : "success"
+						}, function() {
+							window.location.reload();
+						})
+					} else {
+						swal({
+							title : "删除失败",
+							text : "删除失败！",
+							type : "error"
+						})
+					}
+				},
+				error : function(e) {
+					alert("错误！！");
+				}
+			});
+		} else {
+			swal({
+				title : "已取消",
+				text : "您取消了删除操作！",
+				type : "error"
+			})
+		}
+	})
 }
 
 /**
@@ -241,7 +311,7 @@ function wQueryEntryDetailList(){
 				}
 				tmpStr += "</optgroup>";
 			}
-			$("#entryId").append(tmpStr);
+			$("#entryId").html(tmpStr);
 			$("#entryId").selectpicker('refresh');
 		},
 		error : function(e) {
@@ -281,7 +351,7 @@ function wSelectOnchangByEntryId(obj){
  * @returns
  */
 function wQueryDepotList(){
-	$("#deoptId").html("");
+	$("#deoptId").empty();
 	$.ajax({
 		url : "/a/search/depot",
 		type : "get",
@@ -294,8 +364,12 @@ function wQueryDepotList(){
 			for(var i = 0 ; i < tmp.length; i++){
 				tmpStr += "<option value="+tmp[i].depotId+" >"+tmp[i].name+"</option>";
 			}
-			$("#depotId").append(tmpStr);
+			$("#depotId").html(tmpStr);
 			$("#depotId").selectpicker('refresh');
+			if($("#tmpDepotId").val() != null && $("#tmpDepotId").val() != ''){
+				$("#depotId").selectpicker('val',$("#tmpDepotId").val());
+			}
+			$("#depotId").attr("disabled",true); 
 		},
 		error : function(e) {
 			alert("错误！！");
@@ -304,6 +378,7 @@ function wQueryDepotList(){
 }
 
 function wSelectOnchangByDepotId(obj){
+	$("#shelvesId").empty();
 	$.ajax({
 		url : "/a/search/shelves/" + obj.value,
 		type : "POST",
@@ -316,8 +391,12 @@ function wSelectOnchangByDepotId(obj){
 			for(var i = 0 ; i < tmp.length; i++){
 				tmpStr += "<option value="+tmp[i].shelvesId+" >"+tmp[i].name+"</option>";
 			}
-			$("#shelvesId").append(tmpStr);
+			$("#shelvesId").html(tmpStr);
 			$("#shelvesId").selectpicker('refresh');
+			if($("#tmpShelvesId").val() != null && $("#tmpShelvesId").val() != ''){
+				$("#shelvesId").selectpicker('val',$("#tmpShelvesId").val());
+			}
+			$("#shelvesId").attr("disabled",true);
 		},
 		error : function(e) {
 			alert("错误！！");

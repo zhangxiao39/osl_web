@@ -34,6 +34,21 @@ public class GoodsController extends BaseController<GoodsModel> {
 	@Autowired
 	private GoodscategoryService goods_category_service;
 
+	/**
+	 * 
+	* @Title: g_listManage  
+	* @Description: 运营商  商品一览显示  检索查询
+	* @param @param model
+	* @param @param session
+	* @param @param qry_categoryId  分类ID检索
+	* @param @param qry_sku  SKU检索
+	* @param @param qry_barcode  条码枷锁
+	* @param @param qry_name   名称教唆
+	* @param @param qry_businessId   商家枷锁
+	* @param @return    参数  
+	* @return String    返回类型  
+	* @@author zhangxiao
+	 */
 	@RequestMapping(value = "/a/goods/goodslist", method = RequestMethod.GET)
 	public String g_listManage(Model model, HttpSession session, @RequestParam(required = false) String qry_categoryId,
 			@RequestParam(required = false) String qry_sku, @RequestParam(required = false) String qry_barcode,
@@ -56,6 +71,8 @@ public class GoodsController extends BaseController<GoodsModel> {
 			goodsModel.setName(qry_name);
 			List<GoodsModel> _goodsList = service.find_goodsAll(goodsModel);
 			model.addAttribute("item", _goodsList);
+			
+			//商品分类显示
 			String _goodsCategrory = goods_category_service.getGoodsCategorySelect(qry_categoryId);
 			model.addAttribute("item_gc", _goodsCategrory);
 			model.addAttribute("nav_active2", 2);
@@ -63,6 +80,20 @@ public class GoodsController extends BaseController<GoodsModel> {
 		}
 	}
 
+	/**
+	 * 
+	* @Title: b_g_listManage  
+	* @Description: 商家 商品显示一览 检索查询
+	* @param @param model
+	* @param @param session
+	* @param @param qry_categoryId  商品分类检索
+	* @param @param qry_sku  商品SKU检索
+	* @param @param qry_barcode   商品条码检索
+	* @param @param qry_name  商品名称检索
+	* @param @return    参数  
+	* @return String    返回类型  
+	* @@author zhangxiao
+	 */
 	@RequestMapping(value = "/b/goods/goodslist", method = RequestMethod.GET)
 	public String b_g_listManage(Model model, HttpSession session,
 			@RequestParam(required = false) String qry_categoryId, @RequestParam(required = false) String qry_sku,
@@ -81,8 +112,12 @@ public class GoodsController extends BaseController<GoodsModel> {
 			goodsModel.setName(qry_name);
 			List<GoodsModel> _goodsList = service.find_goodsAll(goodsModel);
 			model.addAttribute("item", _goodsList);
+			
+			//商品分类检索部分显示
 			String _goodsCategrory = goods_category_service.getGoodsCategorySelect(qry_categoryId);
 			model.addAttribute("item_gc", _goodsCategrory);
+			
+			//商品分类 商品添加修改部分显示
 			String _goodsCategrory2 = goods_category_service.getGoodsCategorySelect2();
 			model.addAttribute("item_gc2", _goodsCategrory2);
 			model.addAttribute("nav_active2", 2);
@@ -142,6 +177,15 @@ public class GoodsController extends BaseController<GoodsModel> {
 		}
 	}
 
+	/**
+	 * 
+	* @Title: showInfoBySku  
+	* @Description: 根据商品SKU检索商品
+	* @param @param sku
+	* @param @return    参数  
+	* @return GoodsEntity    返回类型  
+	* @@author zhangxiao
+	 */
 	@RequestMapping(value = "/osl/goods/sku/{sku}", method = RequestMethod.GET)
 	@ResponseBody
 	public GoodsEntity showInfoBySku(@PathVariable(required = true) String sku) {
@@ -150,6 +194,17 @@ public class GoodsController extends BaseController<GoodsModel> {
 		return _info;
 	}
 
+	
+	/**
+	 * 
+	* @Title: showBusinessInfoBySku  
+	* @Description: 根据商品SKU和商家ID检索商品
+	* @param @param sku
+	* @param @param session
+	* @param @return    参数  
+	* @return GoodsModel    返回类型  
+	* @@author zhangxiao
+	 */
 	@RequestMapping(value = "/osl/goods/mysku/{sku}", method = RequestMethod.GET)
 	@ResponseBody
 	public GoodsModel showBusinessInfoBySku(@PathVariable(required = true) String sku, HttpSession session) {

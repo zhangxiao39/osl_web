@@ -24,10 +24,15 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.osl.common.web.RedisUtils;
+
 /**
  * 共通方法的定义
  */
 public class Util {
+	
 	/**
 	 * 空检查
 	 */
@@ -677,12 +682,16 @@ public class Util {
 	 * @param number
 	 * @return
 	 */
-	public static String generateTableIdByRedis(String tableKey , long businessId) {
+	public static String generateTableIdByRedis(RedisUtils redisUtils ,String tableKey , long businessId) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
 		StringBuffer str = new StringBuffer();
+		StringBuffer redisKey = new StringBuffer();
 		str.append(tableKey);
 		str.append(fillingId(businessId , 6));
 		str.append(sdf.format(new Date()));
+		String key = redisKey.append(tableKey).append(fillingId(businessId , 6)).toString();
+		long number = redisUtils.incr(key , 1);
+		str.append(fillingId(number , 8));
 		/*Jedis jedis = null;
 		try {
 			jedis = RedisUtil.getJedis();

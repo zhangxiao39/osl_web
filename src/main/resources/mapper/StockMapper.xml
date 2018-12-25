@@ -3,18 +3,21 @@
 <mapper namespace="com.osl.mapper.StockMapper">
 	<!-- 商家端，查找当前商家所有的库存列表 -->
 	<select id="find_stockBusiness_All" resultType="com.osl.model.StockModel" parameterType="int">
-		SELECT a.`name` AS goods_name, a.barcode as bar_code,c.id as category_id ,c.`name` as category_name,b.*
-		FROM t_goods a,t_stock b,t_goods_category c
-		WHERE a.sku = b.sku and a.category_id = c.id AND a.business_id = #{bid} and b.delete_flg = 0  ORDER BY new_date
+		SELECT a.`name` AS goods_name,a.sku, a.barcode AS bar_code, c.id AS category_id, c.`name` AS category_name,	sum(b.nums) as nums
+		FROM t_goods a, t_stock b, t_goods_category c
+		WHERE a.goods_id = b.goods_id
+		AND a.category_id = c.id
+		AND b.business_id= #{bid} and b.delete_flg = 0 GROUP BY a.goods_id ORDER BY b.new_date
 	</select>
 	
 	<!-- 商家端，条件查询库存信息列表 -->
 	<select id="find_stockBusiness_by_condition" resultType="com.osl.model.StockModel">
-		SELECT a.`name` AS goods_name, a.barcode as bar_code,c.id as category_id ,c.`name` as category_name,b.*
-		FROM t_goods a,t_stock b,t_goods_category c
-		WHERE a.sku = b.sku and a.category_id = c.id AND a.business_id = #{bid}
+		SELECT a.`name` AS goods_name,a.sku, a.barcode AS bar_code, c.id AS category_id, c.`name` AS category_name,sum(b.nums) as nums
+		FROM t_goods a, t_stock b, t_goods_category c
+		WHERE a.goods_id = b.goods_id
+		AND a.category_id = c.id and b.business_id= #{bid}
        <if test="stockModel.sku != null  and stockModel.sku !=''">
-        	and b.sku = #{stockModel.sku}
+        	and a.sku = #{stockModel.sku}
         </if>
         <if test="stockModel.goodsName != null  and stockModel.goodsName !=''">
         	and a.name like CONCAT('%', #{stockModel.goodsName},'%')
@@ -37,29 +40,31 @@
         <if test="stockModel.goodsType == 2">
         	and b.validity_time &lt;current_timestamp
         </if>
-        and b.delete_flg = 0 ORDER BY new_date
+        and b.delete_flg = 0 GROUP BY a.goods_id ORDER BY b.new_date
 	</select>
 	
-	<!-- 运营端，查找当前运营商所对应的仓库存储列表 -->
+	<!-- 运营商端，查找当前运营商所对应的仓库存储列表 -->
 	<select id="find_adminStock_All" resultType="com.osl.model.StockModel" parameterType="int">
-		SELECT a.*,c.`name` as goods_name,c.barcode as bar_code,d.name as category_name
+		SELECT c.`name` as goods_name,SUM(a.nums) as nums,a.goods_id,c.sku,c.barcode as bar_code,d.name as category_name
 		FROM t_stock a
 		LEFT JOIN t_depot b ON a.depot_id = b.depot_id
-		LEFT JOIN t_goods c on a.sku = c.sku
+		LEFT JOIN t_goods c on a.goods_id = c.goods_id
 		LEFT JOIN t_goods_category d ON d.id = c.category_id
-		WHERE b.business_id = #{bid}  and a.delete_flg = 0 ORDER BY new_date
+		WHERE a.warehouse_id = #{bid} and a.delete_flg = 0 GROUP BY a.goods_id ORDER BY a.new_date	
 	</select>
 	
 	<!-- 运营商端，条件查找当前运营商所对应的仓库存储列表 -->
-	<select id="find_adminStock_by_condition" resultType="com.osl.model.StockModel" parameterType="int">
-		SELECT a.*,c.`name` as goods_name,c.barcode as bar_code,d.name as category_name
+	<select id="find_adminStock_by_condition" resultType="com.osl.model.StockModel">
+		SELECT c.`name` as goods_name,SUM(a.nums) as nums, a.goods_id,c.sku,c.barcode as bar_code,d.name as category_name
 		FROM t_stock a
 		LEFT JOIN t_depot b ON a.depot_id = b.depot_id
-		LEFT JOIN t_goods c on a.sku = c.sku
+		LEFT JOIN t_goods c on a.goods_id = c.goods_id
 		LEFT JOIN t_goods_category d ON d.id = c.category_id
-		WHERE b.business_id = #{bid}
+		WHERE a.warehouse_id = #{stockModel.warehouseId}
 		 <if test="stockModel.sku != null  and stockModel.sku !=''">
-        	and a.sku = #{stockModel.sku}
+        	and c.sku in 
+        	 <foreach collection="skuList" item="item" index="index" 
+				open="(" separator="," close=")">#{item}</foreach>
         </if>
         <if test="stockModel.goodsName != null  and stockModel.goodsName !=''">
         	and c.name like CONCAT('%', #{stockModel.goodsName},'%')
@@ -73,19 +78,113 @@
          <if test="stockModel.barCode != null  and stockModel.barCode !=''">
         	and c.barcode = #{stockModel.barCode}
         </if>
-        <if test="stockModel.nums != null">
-        	and a.nums >= #{stockModel.nums}
-        </if>
+        
          <if test="stockModel.businessId != null and stockModel.businessId !=-1 ">
-        	and c.business_id = #{stockModel.businessId}
+        	and a.business_id = #{stockModel.businessId}
         </if>
-        <if test="stockModel.goodsType != null and stockModel.goodsType !=2 and stockModel.goodsType !=1000"><!-- 合格品，不合格品 -->
+        <if test="stockModel.goodsType != null  and stockModel.goodsType !=-1"><!-- 合格品，不合格品 -->
         	and a.goods_type = #{stockModel.goodsType}
         </if>
-        
+        <!-- 
         <if test="stockModel.goodsType == 2">
         	and a.validity_time &lt;current_timestamp
+        </if> -->
+        	and a.delete_flg = 0 GROUP BY a.goods_id 
+        <if test="stockModel.nums != null">
+          HAVING SUM(a.nums) >= #{stockModel.nums}
         </if>
-        and a.delete_flg = 0 ORDER BY new_date
+		ORDER BY a.nums desc 
 	</select>
+	
+	<!-- 库存详情列表 -->
+	<select id="find_stock_detail" resultType="com.osl.model.StockModel" parameterType="com.osl.model.StockModel">
+		SELECT a.*,d.username as b_user_name,b.`name` as goods_name,b.sku,c.`name` as category_name
+		FROM 
+		t_stock a 
+		LEFT JOIN t_goods b on a.goods_id = b.goods_id
+		LEFT JOIN t_goods_category c on b.category_id = c.id
+		LEFT JOIN t_user d on d.business_id = b.business_id
+		where 1 =1 
+		<if test="goodsId != null  and goodsId !=''">
+        	and a.goods_id = #{goodsId}
+        </if>
+        <if test="warehouseId != null">
+        	and a.warehouse_id = #{warehouseId}
+        </if>
+		<if test="inputDetailId != null  and inputDetailId !=''">
+        	and a.input_detail_id = #{inputDetailId}
+        </if>
+        <if test="goodsType != -1">
+        	and a.goods_type = #{goodsType}
+        </if>
+		ORDER BY a.new_date
+	</select>
+	
+	<!-- 库存详情搜索 -->
+	<select id="find_stock_detail_condition" resultType="com.osl.model.StockModel" parameterType="com.osl.model.StockModel">
+		SELECT a.*,d.username as b_user_name,b.`name` as goods_name,b.sku,c.`name` as category_name
+		FROM 
+		t_stock a 
+		LEFT JOIN t_goods b on a.goods_id = b.goods_id
+		LEFT JOIN t_goods_category c on b.category_id = c.id
+		LEFT JOIN t_user d on d.business_id = b.business_id
+		where 1 =1 
+		<if test="goodsId != null  and goodsId !=''">
+        	and a.goods_id = #{goodsId}
+        </if>
+        <if test="warehouseId != null and warehouseId !=0">
+        	and a.warehouse_id = #{warehouseId}
+        </if>
+		<if test="shelvesId != null  and shelvesId !=''">
+        	and a.shelves_id = #{shelvesId}
+        </if>
+        <if test="manageId != null  and manageId !=''">
+        	and a.manage_id = #{manageId}
+        </if>
+        <if test="nums != null">
+        	and a.nums >= #{nums}
+        </if>
+        <if test="startDate != null">
+        	and a.input_time  &gt;= #{startDate}
+        </if>
+        <if test="endDate != null">
+        	and a.input_time &lt;= #{endDate}
+        </if>
+        
+		ORDER BY a.new_date
+	</select>
+	
+	<!-- 插入库存 -->
+	<insert id="inset_stock" parameterType="com.osl.mapper.entity.StockEntity">
+		INSERT INTO t_stock (
+			manage_id,goods_id,depot_id,shelves_id,nums,goods_type,input_time,input_detail_id,volumn,produce_time,validity_time,
+			business_id,warehouse_id,new_date,delete_flg)
+			VALUES
+			(#{manageId},#{goodsId},#{depotId},#{shelvesId},#{nums},#{goodsType},
+			#{inputTime},#{inputDetailId},#{volumn},#{produceTime},#{validityTime},#{businessId},#{warehouseId},#{newDate},0)
+	</insert>
+	
+	<!-- 更新库存 -->
+	<update id="update_stock" parameterType="com.osl.mapper.entity.StockEntity">
+		update t_stock set
+			depot_id = #{depotId},
+			shelves_id = #{shelvesId},
+			nums = #{nums},
+			goods_type = #{goodsType},
+			validity_time = #{validityTime}
+			where manage_id=#{manageId}
+	</update>
+	
+	<!-- 更新库存,根据manageid以及nums -->
+	<update id="update_stock_by_id">
+			update t_stock set nums = #{nums} 
+			where manage_id=#{manageId}
+	</update>
+	
+	<!-- 逻辑删除库存信息-->
+	<update id="delete_stock_by_id" parameterType="java.lang.String">
+			UPDATE t_stock
+			SET delete_flg = 1 ,update_date = NOW()
+			WHERE  manage_id=#{manageId}
+	</update>
 </mapper>

@@ -10,4 +10,6 @@ import com.osl.mapper.entity.UserEntity;
 public interface UserMapper {
 
 	public List<UserEntity> findAll();
+	
+	public int insert(UserEntity userEntity);
 }

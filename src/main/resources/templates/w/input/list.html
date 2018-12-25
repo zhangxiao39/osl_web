@@ -16,6 +16,9 @@
 <link th:href="@{/css/plugins/datapicker/datepicker3.css}"
 	rel="stylesheet">
 
+<!-- select data -->
+<link th:href="@{/css/plugins/dataTables/datatables.min.css}"
+	rel="stylesheet">
 
 <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
 <link th:href="@{/css/style.css}" rel="stylesheet" />
@@ -121,7 +124,7 @@
 									<div class="col-sm-2">
 										<div class="form-group z-t">
 											<button type="button" class="btn btn-primary" onclick="wSearchInputList()">检索</button>
-											<button type="button" class="btn btn-primary" onclick="goIputDetailed()">新建</button>
+											<!-- <button type="button" class="btn btn-primary" onclick="goIputDetailed()">新建</button> -->
 										</div>
 									</div>
 								</div>
@@ -167,7 +170,7 @@
 														type="button" th:onclick="goIputDetailed([[${p.inputId}]])">
 														<i class="fa fa-edit"></i>修改
 													</button>
-													<button class="btn btn-danger btn-xs dropdown-toggle"
+													<button th:if="${p.status == 0}" class="btn btn-danger btn-xs dropdown-toggle"
 														type="button" th:onClick="deleteInput([[${p.inputId}]])">
 														<i class="fa fa-trash"></i>删除
 													</button>
@@ -192,6 +195,9 @@
 	<script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
 	<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
 	<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+	<!-- Data Tables -->
+	<script th:src="@{/js/plugins/dataTables/datatables.min.js}"></script>
 
 	<!-- Data picker -->
 	<script th:src="@{/js/plugins/datapicker/bootstrap-datepicker.js}"></script>

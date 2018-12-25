@@ -12,7 +12,13 @@ public interface EntryMapper {
 
 	public Integer insertEntry(EntryEntity entity);
 	
+	public EntryEntity queryEntryEntityByEntryId(String entryId);
+	
+	public Integer updateEntryByInputDetail(EntryEntity entity);
+	
 	public List<EntrydetailEntity> queryEntrydetailEntityListByStatus(int status);
 	
 	public EntrydetailEntity queryEntrydetailEntityByDetailId(String detailId);
+	
+	public Integer updateDetailEntryByInputDetail(EntrydetailEntity entity);
 }

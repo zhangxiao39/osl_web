@@ -66,10 +66,10 @@
 										<div class="form-group z_mb0">
 											<button type="button" class="btn btn-primary"
 												onclick="history.go(-1);">返回一览</button>
-											<button type="button" class="btn btn-success"
-											 data-toggle="modal" data-target="#myModal">追加入库</button>
-											<button type="button" class="btn btn-success"
-											 data-toggle="modal" data-target="#myModal" onclick="wNewInputDetail()">新建入库</button>											 
+											<!-- <button type="button" class="btn btn-success"
+											 data-toggle="modal" data-target="#myModal">追加入库</button> -->
+											<!-- <button type="button" class="btn btn-success"
+											 data-toggle="modal" data-target="#myModal" onclick="wNewInputDetail()">新建入库</button> -->											 
 										</div>
 									</div>
 								</div>
@@ -118,18 +118,18 @@
 												<td th:text="${p.nums}"></td>
 												<td th:text="${p.depotAddress}"></td>
 												<td th:text="${p.inputId}"></td>
-												<td th:text="${p.goodsType}"></td>
-												<td th:text="${p.type}"></td>
+												<td th:text="${p.goodsType == 1 ? '不良品' : p.goodsType == 2 ? '废弃品' : '良品'}"></td>
+												<td th:text="${p.type == 1 ? '返品' : '纳品'}"></td>
 												<td th:text="${#dates.format(p.validityTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
 												<td th:text="${p.status == 1 ? '入库完了' : '入库中'}"></td>
 												<td>
 													<button class="btn btn-info btn-xs dropdown-toggle"
-														type="button" data-toggle="modal" data-target="#myModal"
-														onclick="edit__sheves('1');">
+														type="button" data-toggle="modal" data-target="#myModal" 
+														th:onclick="editDetail([[${p.detailId}]]);">
 														<i class="fa fa-edit"></i>修改
 													</button>
-													<button class="btn btn-danger btn-xs dropdown-toggle"
-														type="button" onClick="check(1)">
+													<button th:if="${p.status == 0}" class="btn btn-danger btn-xs dropdown-toggle"
+														type="button" th:onClick="deleteDetail([[${p.detailId}]])">
 														<i class="fa fa-trash"></i>删除
 													</button>
 												</td>
@@ -160,19 +160,26 @@
 					<form id="myform" class="form-horizontal">
 						<input type="hidden" name="businessId" th:value="${session.u_bid}"> 
 						<input type="hidden" name="mode" value="POST" id="mode">
-						<input type="hidden" name="indexId" value="" id="indexId">
+						<input type="hidden" name="inputId" value="" id="inputId">
 						<input type="hidden" name="innerNums" value="0" id="innerNums">
 						<input type="hidden" name="innerGoodsNums" value="0" id="innerGoodsNums">
 						<input type="hidden" name="type" value="0" id="type">
-						<input type="hidden" name="status" value="0" id="status">
+						<input type="hidden" name="status" value="" id="status">
 						<input type="hidden" name="deleteFlag" value="0" id="deleteFlag">
-						<div class="form-group">
+						<input type="hidden" name="entryId" value="" id="entryId">
+						<input type="hidden" name="detailId" value="" id="detailId">
+						<input type="hidden" name="goodsId" value="" id="goodsId">
+						<input type="hidden" name="shipId" value="" id="shipId">
+						<input type="hidden" name="deleteFlg" value="" id="deleteFlg">
+						<input type="hidden" value="" id="tmpDepotId">
+						<input type="hidden" value="" id="tmpShelvesId">
+						<!-- <div class="form-group">
 							<label class="col-lg-3 control-label">纳品ID</label>
 							<div class="col-lg-9">
 								<select class="selectpicker" data-live-search="true" id="entryId" name="entryId" title="请根据纳品ID选择纳品" data-size="5" onchange="wSelectOnchangByEntryId(this)"></select>
-								<!-- <input type="text" placeholder="请输入商品SKU" class="form-control" value="NP201811060001"> -->
+								<input type="text" placeholder="请输入商品SKU" class="form-control" value="NP201811060001">
 							</div>
-						</div>
+						</div> -->
 						<div class="form-group">
 							<label class="col-lg-3 control-label">商品SKU</label>
 							<div class="col-lg-9">
@@ -227,8 +234,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary" id="before_save_submit" onclick="saveDetails(1)">保存</button>
-					<button type="button" class="btn btn-primary" id="btn_submit" onclick="saveDetails(0)">确认入库</button>
+					<button type="button" class="btn btn-primary" id="btn_submit" onclick="saveDetails()">确认入库</button>
 				</div>
 			</div>
 		</div>

@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.osl.common.web.BaseController;
+import com.osl.mapper.RelationshipMapper;
+import com.osl.mapper.UserMapper;
 import com.osl.mapper.entity.BusinessEntity;
 import com.osl.mapper.entity.BusinessGradeEntity;
+import com.osl.mapper.entity.RelationshipEntity;
+import com.osl.mapper.entity.UserEntity;
 import com.osl.model.BusinessGradeModel;
 import com.osl.model.BusinessModel;
 import com.osl.model.Users;
@@ -28,6 +32,10 @@ public class BusinessController extends BaseController<BusinessModel> {
 	private BusinessService business_service;
 	@Autowired
 	private BusinessGradeService businessGradeService;
+	@Autowired
+	private UserMapper userMapper;
+	@Autowired
+	private RelationshipMapper relationshipMapper;
 
 	@RequestMapping(value = "/a/business/list")
 	public String b_listManage(Model model, HttpSession session) {
@@ -43,14 +51,15 @@ public class BusinessController extends BaseController<BusinessModel> {
 			return "/w/business/businesslist";
 		}
 	}
-	
+
 	@RequestMapping(value = "/osl/bussiness", method = RequestMethod.POST)
 	@ResponseBody
 	public String addBusiness(Model model, HttpSession session, BusinessEntity _business) {
 		if (session.getAttribute("u_login") == null) {
 			return "redirect:/admin/login";
 		} else {
-			int ok = business_service.insert(_business);
+			this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
+			int ok = business_service.insert(_business, myBusiness_id);
 			if (ok > 0) {
 				return "ok";
 			} else if (ok == -1) {
@@ -61,7 +70,7 @@ public class BusinessController extends BaseController<BusinessModel> {
 		}
 
 	}
-	
+
 	@RequestMapping(value = "/osl/bussiness/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public String deleteBusiness(@PathVariable(required = true) int id) {
@@ -84,7 +93,7 @@ public class BusinessController extends BaseController<BusinessModel> {
 	@RequestMapping(value = "/osl/bussiness", method = RequestMethod.PUT)
 	@ResponseBody
 	public String updateBusiness(BusinessEntity _info) {
-		if (_info.getId()>0) {
+		if (_info.getId() > 0) {
 			int ok = business_service.update(_info);
 			if (ok > 0) {
 				return "ok";
@@ -106,6 +115,88 @@ public class BusinessController extends BaseController<BusinessModel> {
 		this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
 		List<BusinessModel> _businessInfo = business_service.findBusinessAll(myBusiness_id);
 		return _businessInfo;
+	}
+
+	/**
+	 * 
+	 * @Title: addBusinessAdmin
+	 * @Description: 给商家添加一个管理员
+	 * @param @param model
+	 * @param @param session
+	 * @param @param _userEntity
+	 * @param @return 参数
+	 * @return String 返回类型
+	 * @@author zhangxiao
+	 */
+	@RequestMapping(value = "/osl/useradmin", method = RequestMethod.POST)
+	@ResponseBody
+	public String addBusinessAdmin(Model model, HttpSession session, UserEntity _userEntity) {
+		if (session.getAttribute("u_login") == null) {
+			return "redirect:/admin/login";
+		} else {
+			_userEntity.setIsadmin(1);
+			int ok = userMapper.insert(_userEntity);
+			if (ok > 0) {
+				return "ok";
+			} else if (ok == -1) {
+				return "exist";
+			} else {
+				return "fail";
+			}
+		}
+
+	}
+
+	/**
+	 * 
+	* @Title: relieveShip  
+	* @Description: 运营商和商家解除关联 
+	* @param @param session
+	* @param @param id  商家ID
+	* @param @return    参数  
+	* @return String    返回类型  
+	* @@author zhangxiao
+	 */
+	@RequestMapping(value = "/osl/relieveship/{id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public String relieveShip(HttpSession session, @PathVariable(required = true) int id) {
+		RelationshipEntity relationEntity = new RelationshipEntity();
+		this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
+		relationEntity.setBusinessId(id);
+		relationEntity.setWarehouseId(myBusiness_id);
+		relationEntity.setShip(2);
+		int ok = relationshipMapper.changeShip(relationEntity);
+		if (ok > 0) {
+			return "ok";
+		} else {
+			return "fail";
+		}
+	}
+	
+	/**
+	 * 
+	* @Title: recoveryShip  
+	* @Description: 运营商和商家恢复关联 
+	* @param @param session
+	* @param @param id  商家ID
+	* @param @return    参数  
+	* @return String    返回类型  
+	* @@author zhangxiao
+	 */
+	@RequestMapping(value = "/osl/recoveryShip/{id}", method = RequestMethod.PUT)
+	@ResponseBody
+	public String recoveryShip(HttpSession session, @PathVariable(required = true) int id) {
+		RelationshipEntity relationEntity = new RelationshipEntity();
+		this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
+		relationEntity.setBusinessId(id);
+		relationEntity.setWarehouseId(myBusiness_id);
+		relationEntity.setShip(1);
+		int ok = relationshipMapper.changeShip(relationEntity);
+		if (ok > 0) {
+			return "ok";
+		} else {
+			return "fail";
+		}
 	}
 
 	@Override
