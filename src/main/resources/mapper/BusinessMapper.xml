@@ -2,15 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.osl.mapper.BusinessMapper">
 	<select id="findBusinessAll"
-		resultType="com.osl.model.BusinessModel" parameterType="int">
+		resultType="com.osl.model.BusinessModel">
 		select
 		t1.*,t2.id as userId FROM(select
 		t_business.*,t_business_grade.name as
-		gradeName,t_relationship.ship as ship from
+		gradeName,t_relationship.ship as
+		ship from
 		t_business,t_relationship,t_business_grade
 		where
 		t_business.delete_flg=0 and t_business.id=t_relationship.business_id
-		and t_business.grade_id=t_business_grade.id and
+		and t_business.grade_id=t_business_grade.id
+		<if test="ship !=null and ship != -1">
+			and t_relationship.ship=#{ship}
+		</if>
+		and
 		t_relationship.warehouse_id=#{bid}) as t1
 		LEFT JOIN (select * from
 		t_user where isadmin=1) as t2 on

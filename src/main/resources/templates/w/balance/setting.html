@@ -14,6 +14,10 @@
 <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
 <link th:href="@{/css/style.css}" rel="stylesheet" />
 
+<!-- Data Tables -->
+<link th:href="@{/css/plugins/dataTables/datatables.min.css}"
+	rel="stylesheet">
+
 <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet" />
 <link th:href="@{/css/plugins/footable/footable.core.css}"
 	rel="stylesheet" />
@@ -88,7 +92,7 @@
 											<td th:text="${bsIndex.count}">1</td>
 											<td th:text="${bs.bName}">JNH</td>
 											<td th:text="${bs.grade}">1</td>
-											<td th:text="${bs.type}">入库</td>
+											<td th:text="${bs.typeText}">入库</td>
 											<td th:text="${bs.minVolume}">1</td>
 											<td th:text="${bs.maxVolume}">100</td>
 											<td th:text="${bs.minWeight}">0.01</td>
@@ -96,14 +100,14 @@
 											<td th:text="${bs.price}">2</td>
 											<td>
 												<button class="btn btn-info btn-xs dropdown-toggle"
-													type="button" data-toggle="modal" data-target="#myModal"
-													onclick="edit__sheves('1');">
-													<i class="fa fa-edit"></i>编辑
-												</button>
-												<button class="btn btn-danger btn-xs dropdown-toggle"
-													type="button" onClick="check(1)">
-													<i class="fa fa-trash"></i>删除
-												</button>
+														type="button" data-toggle="modal" data-target="#myModal"
+														th:onclick="showInfo([[${bs.id}]])">
+														<i class="fa fa-edit"></i>编辑
+													</button>
+													<button class="btn btn-danger btn-xs dropdown-toggle"
+														type="button" th:onclick="deleteInfo([[${bs.id}]])">
+														<i class="fa fa-trash"></i>删除
+													</button>
 											</td>
 										</tr>
 									</tbody>
@@ -128,26 +132,32 @@
 					<h4 class="modal-title">结算设定</h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal">
+					<form class="form-horizontal" name="myform" id="myform">
+						<input type="hidden" name="warehouseId"
+							th:value="${session.u_bid}"> <input type="hidden"
+							name="id" value="0" id="id"> <input type="hidden"
+							name="mode" value="POST" id="mode">
 						<div class="form-group">
 							<label class="col-lg-3 control-label">商家</label>
 							<div class="col-lg-9">
-								<select name="status" id="status" class="form-control">
+								<select name="businessId" id="businessId" class="form-control">
 									<option value="0" selected="">全部商家</option>
-									<option th:each="b,bIndex:${item_business}" th:text="${b.name}" th:value="${b.id}">フラッシュメモリ</option>
+									<option th:each="b,bIndex:${item_business}" th:text="${b.name}"
+										th:value="${b.id}">フラッシュメモリ</option>
 								</select>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">等级</label>
 							<div class="col-lg-9">
-								<input type="email" placeholder="请输入等级" class="form-control">
+								<input type="text" placeholder="请输入等级" class="form-control"
+									name="grade" id="grade">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">类型</label>
 							<div class="col-lg-9">
-								<select name="status" id="status" class="form-control">
+								<select name="type" id="type" class="form-control">
 									<option value="0" selected="">全部类型</option>
 									<option value="1">入库</option>
 									<option value="2">出库</option>
@@ -159,42 +169,43 @@
 						<div class="form-group">
 							<label class="col-lg-3 control-label">最小体积</label>
 							<div class="col-lg-9">
-								<input type="password" placeholder="请输入最小体积"
-									class="form-control">
+								<input type="text" placeholder="请输入最小体积" class="form-control"
+									name="minVolume" id="minVolume">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">最大体积</label>
 							<div class="col-lg-9">
-								<input type="password" placeholder="请输入最大体积"
-									class="form-control">
+								<input type="text" placeholder="请输入最大体积" class="form-control"
+									name="maxVolume" id="maxVolume">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">最小重量</label>
 							<div class="col-lg-9">
-								<input type="password" placeholder="请输入最小重量"
-									class="form-control">
+								<input type="text" placeholder="请输入最小重量" class="form-control"
+									name="minWeight" id="minWeight">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">最大重量</label>
 							<div class="col-lg-9">
-								<input type="password" placeholder="请输入最大重量"
-									class="form-control">
+								<input type="text" placeholder="请输入最大重量" class="form-control"
+									name="maxWeight" id="maxWeight">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">费用</label>
 							<div class="col-lg-9">
-								<input type="password" placeholder="请输入费用" class="form-control">
+								<input type="text" placeholder="请输入费用" class="form-control"
+									name="price" id="price">
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary">确认保存</button>
+					<button type="button" class="btn btn-primary" id="btn_submit">确认保存</button>
 				</div>
 			</div>
 		</div>
@@ -202,11 +213,15 @@
 
 	<!-- Mainly scripts -->
 	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
-	
+
 	<script th:src="@{/js/bootstrap.min.js}"></script>
 	<script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
 	<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
 	<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+	<script th:src="@{/js/jquery.validate.min.js}"></script>
+	
+	<script th:src="@{/js/plugins/dataTables/datatables.min.js}"></script>
 
 	<!-- Peity -->
 	<script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
@@ -226,6 +241,7 @@
 
 	<!-- common -->
 	<script th:src="@{/js/common.js}"></script>
+	<script th:src="@{/js/user/balancebase.js}"></script>
 
 	<script th:inline="javascript">
 		

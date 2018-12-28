@@ -43,7 +43,7 @@ public class BusinessController extends BaseController<BusinessModel> {
 			return "redirect:/admin/login";
 		} else {
 			this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
-			List<BusinessModel> _businessInfo = business_service.findBusinessAll(myBusiness_id);
+			List<BusinessModel> _businessInfo = business_service.findBusinessAll(myBusiness_id,-1);
 			model.addAttribute("item", _businessInfo);
 			List<BusinessGradeModel> _businessGrade = businessGradeService.findAll(myBusiness_id);
 			model.addAttribute("item_grade", _businessGrade);
@@ -113,7 +113,7 @@ public class BusinessController extends BaseController<BusinessModel> {
 	@ResponseBody
 	public List<BusinessModel> getRelationBusiness(HttpSession session) {
 		this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
-		List<BusinessModel> _businessInfo = business_service.findBusinessAll(myBusiness_id);
+		List<BusinessModel> _businessInfo = business_service.findBusinessAll(myBusiness_id,1);
 		return _businessInfo;
 	}
 

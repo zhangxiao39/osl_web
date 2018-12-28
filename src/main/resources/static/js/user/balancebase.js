@@ -1,57 +1,59 @@
 function validform() {
 	return $("#myform").validate({
 		rules : {
-			categoryId : {
+			businessId : {
 				required : true,
 				range : [ 1, 10000000 ]
 			},
-			sku : {
+			grade : {
 				required : true
 			},
-			name : {
+			minVolume : {
 				required : true
 			},
-			volume : {
+			maxVolume : {
 				required : true
 			},
-			length : {
+			minWeight : {
 				required : true
 			},
-			width : {
+			maxWeight : {
 				required : true
 			},
-			height : {
-				required : true
+			type : {
+				required : true,
+				range : [ 1, 10000000 ]
 			},
-			weight : {
+			price : {
 				required : true
 			}
 		},
 		messages : {
-			categoryId : {
-				required : "请选择商品分类",
-				range : "请选择商品分类"
+			businessId : {
+				required : "请选择商家",
+				range : "请选择商家"
 			},
-			sku : {
-				required : "请输入商品SKU",
+			grade : {
+				required : "请输入等级",
 			},
-			name : {
-				required : "请输入商品名称"
+			minVolume : {
+				required : "请输入最小体积"
 			},
-			volume : {
-				required : "请输入商品体积",
+			maxVolume : {
+				required : "请输入最大体积",
 			},
-			length : {
-				required : "请输入长度",
+			minWeight : {
+				required : "请输入最小重量",
 			},
-			width : {
-				required : "请输入宽度",
+			maxWeight : {
+				required : "请输入最大重量",
 			},
-			height : {
-				required : "请输入高度",
+			type : {
+				required : "请选择类型",
+				range : "请选择类型"
 			},
-			weight : {
-				required : "请输入重量",
+			price : {
+				required : "请输入价格",
 			}
 		}
 	});
@@ -70,20 +72,8 @@ function reloadTableCss() {
 				dom : '<"html5buttons"B>lTfgitp',
 				buttons : [
 						{
-							extend : 'copy'
-						},
-						{
 							extend : 'csv'
 						},
-						{
-							extend : 'excel',
-							title : 'ExampleFile'
-						},
-						{
-							extend : 'pdf',
-							title : 'ExampleFile'
-						},
-
 						{
 							extend : 'print',
 							customize : function(win) {
@@ -102,21 +92,21 @@ $(function() {
 	$('#btn_submit').click(function() {
 		if (validform().form()) {
 			$.ajax({
-				url : "/osl/goods",
+				url : "/osl/balancebase",
 				type : $("#mode").val(),
 				data : $("#myform").serialize(),
 				success : function(data) {
 					if (data == "ok") {
 						swal({
 							title : "保存成功！",
-							text : "成功保存了一条商品信息。",
+							text : "成功保存了一条信息。",
 							type : "success"
 						}, function() {
 							window.location.reload();
 						})
 					} else if (data == "exist") {
 						swal({
-							title : "商品SKU已经存在！",
+							title : "结算已经存在！",
 							text : "保存失败！",
 							type : "error"
 						})
@@ -135,20 +125,15 @@ $(function() {
 		}
 	});
 	$("#myModal").on("hidden.bs.modal", function() {
-		$("#categoryId").val("0");
-		$("#sku").val("");
-		$("#barcode").val("");
-		$("#name").val("");
-		setShapeChecked(1);
-		$("input[type='radio'][name='shape'][value='1']").click();
-		$("#length").val("");
-		$("#width").val("");
-		$("#height").val("");
-		$("#volume").val("");
-		$("#weight").val("");
-		$("#color").val("");
-		$("#remark").val("");
-		$("#goodsId").val("0");
+		$("#businessId").val("0");
+		$("#grade").val("");
+		$("#minVolume").val("");
+		$("#maxVolume").val("");
+		$("#minWeight").val("");
+		$("#maxWeight").val("");
+		$("#type").val("0");
+		$("#price").val("");
+		$("#id").val("0");
 		$("#mode").val("POST");
 		validform().resetForm();
 		$(".form-control").removeClass("error");
@@ -156,24 +141,18 @@ $(function() {
 });
 function showInfo(id) {
 	$.ajax({
-		url : "/osl/goods/" + id,
+		url : "/osl/balancebase/" + id,
 		type : "get",
 		success : function(data) {
-			$("#categoryId").val(data.categoryId);
-			$("#sku").val(data.sku);
-			$("#barcode").val(data.barcode);
-			$("#name").val(data.name);
-			setShapeChecked(data.shape);
-			$("input[type='radio'][name='shape'][value='" + data.shape + "']")
-					.click();
-			$("#length").val(data.length);
-			$("#width").val(data.width);
-			$("#height").val(data.height);
-			$("#volume").val(data.volume);
-			$("#weight").val(data.weight);
-			$("#color").val(data.color);
-			$("#remark").val(data.remark);
-			$("#goodsId").val(id);
+			$("#businessId").val(data.businessId);
+			$("#grade").val(data.grade);
+			$("#minVolume").val(data.minVolume);
+			$("#maxVolume").val(data.maxVolume);
+			$("#minWeight").val(data.minWeight);
+			$("#maxWeight").val(data.maxWeight);
+			$("#type").val(data.type);
+			$("#price").val(data.price);
+			$("#id").val(id);
 			$("#mode").val("PUT");
 		},
 		error : function(e) {
@@ -195,13 +174,13 @@ function deleteInfo(id) {
 	}, function(isConfirm) {
 		if (isConfirm) {
 			$.ajax({
-				url : "/osl/goods/" + id,
+				url : "/osl/balancebase/" + id,
 				type : "delete",
 				success : function(data) {
 					if (data == "ok") {
 						swal({
 							title : "删除成功！",
-							text : "成功删除了一条商品信息。",
+							text : "成功删除了一条信息。",
 							type : "success"
 						}, function() {
 							window.location.reload();
@@ -226,10 +205,4 @@ function deleteInfo(id) {
 			})
 		}
 	})
-}
-function setShapeChecked(v) {
-	$('input[name="shape"]').each(function(index) {
-		$('input[name="shape"]').eq(index).removeAttr('checked');
-	});
-	$("input[name='shape'][value='" + v + "']").attr('checked', 'checked');
 }

@@ -64,21 +64,6 @@ public class BalanceController extends BaseController<BalanceModel>{
 		}
 	}
 
-	@RequestMapping(value = "/a/balance/setting")
-	public String b_settingManage(Model model, HttpSession session) {
-		if (session.getAttribute("u_login") == null) {
-			return "redirect:/admin/login";
-		} else {
-			this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
-			List<BalancebaseModel> _balanceInfo = service.findBalanceAll(myBusiness_id);
-			model.addAttribute("item", _balanceInfo);
-			List<BusinessModel> _businessInfo = business_service.findBusinessAll(myBusiness_id);
-			model.addAttribute("item_business", _businessInfo);
-			model.addAttribute("nav_active4", 4);
-			return "/w/balance/setting";
-		}
-	}
-
 	@RequestMapping(value = "/b/balance/request")
 	public String b_b_requestManage(Model model, HttpSession session) {
 		if (session.getAttribute("u_login") == null) {

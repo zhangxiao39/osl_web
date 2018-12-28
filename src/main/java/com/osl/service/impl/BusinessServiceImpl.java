@@ -22,9 +22,9 @@ public class BusinessServiceImpl implements BusinessService {
 	private RelationshipMapper relationshipMapper;
 
 	@Override
-	public List<BusinessModel> findBusinessAll(int bid) {
+	public List<BusinessModel> findBusinessAll(int bid, int ship) {
 		// TODO Auto-generated method stub
-		return businessMapper.findBusinessAll(bid);
+		return businessMapper.findBusinessAll(bid, ship);
 	}
 
 	@Override
@@ -35,15 +35,15 @@ public class BusinessServiceImpl implements BusinessService {
 
 	@Override
 	@Transactional
-	public int insert(BusinessEntity _business,int warehouseId) {
+	public int insert(BusinessEntity _business, int warehouseId) {
 		// TODO Auto-generated method stub
 		int ok = 0;
 		ok = businessMapper.insert(_business);
 		RelationshipEntity relationshipEntity = new RelationshipEntity();
-		relationshipEntity.setBusinessId((int)_business.getId());
+		relationshipEntity.setBusinessId((int) _business.getId());
 		relationshipEntity.setWarehouseId(warehouseId);
 		relationshipEntity.setShip(1);
-		ok=relationshipMapper.insert(relationshipEntity);
+		ok = relationshipMapper.insert(relationshipEntity);
 		return ok;
 	}
 

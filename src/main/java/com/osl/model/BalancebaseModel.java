@@ -5,13 +5,13 @@ import java.sql.Timestamp;
 
 import com.osl.common.web.BaseModel;
 
-public class BalancebaseModel extends BaseModel{
+public class BalancebaseModel extends BaseModel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1363268128981085391L;
-	
+
 	private long id;
 	private int grade;
 	private long business_id;
@@ -24,6 +24,7 @@ public class BalancebaseModel extends BaseModel{
 	private int type;
 	private BigDecimal price;
 	private Timestamp addtime;
+	public String typeText;
 
 	public long getId() {
 		return id;
@@ -32,8 +33,6 @@ public class BalancebaseModel extends BaseModel{
 	public void setId(long id) {
 		this.id = id;
 	}
-	
-	
 
 	public String getbName() {
 		return bName;
@@ -66,8 +65,6 @@ public class BalancebaseModel extends BaseModel{
 	public void setWarehouse_id(long warehouse_id) {
 		this.warehouse_id = warehouse_id;
 	}
-
-	
 
 	public double getMinVolume() {
 		return minVolume;
@@ -106,6 +103,20 @@ public class BalancebaseModel extends BaseModel{
 	}
 
 	public void setType(int type) {
+		switch (type) {
+		case 1:
+			this.typeText = "入库";
+			break;
+		case 2:
+			this.typeText = "出库";
+			break;
+		case 3:
+			this.typeText = "保管";
+			break;
+		case 4:
+			this.typeText = "废弃";
+			break;
+		}
 		this.type = type;
 	}
 

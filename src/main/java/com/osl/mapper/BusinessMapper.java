@@ -10,7 +10,7 @@ import com.osl.model.BusinessModel;
 @Mapper
 public interface BusinessMapper {
 
-	public List<BusinessModel> findBusinessAll(int bid);
+	public List<BusinessModel> findBusinessAll(int bid,int ship);
 	
 	public BusinessModel findById(int id);
 	

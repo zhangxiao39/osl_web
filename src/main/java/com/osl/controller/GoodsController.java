@@ -57,7 +57,7 @@ public class GoodsController extends BaseController<GoodsModel> {
 			return "redirect:/admin/login";
 		} else {
 			this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
-			List<BusinessModel> _businessInfo = business_service.findBusinessAll(myBusiness_id);
+			List<BusinessModel> _businessInfo = business_service.findBusinessAll(myBusiness_id,1);
 			model.addAttribute("item_business", _businessInfo);
 			GoodsModel goodsModel = new GoodsModel();
 			if (!Util.isEmpty(qry_categoryId)) {

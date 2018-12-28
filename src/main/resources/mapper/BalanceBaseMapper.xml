@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.osl.mapper.BalanceBaseMapper">
+	<select id="findBalanceBaseAll"
+		resultType="com.osl.model.BalancebaseModel" parameterType="int">
+		select
+		t_balance_base.*,t_business.name as bName from
+		t_balance_base,t_business
+		where t_balance_base.delete_flg=0 and
+		t_business.id=t_balance_base.business_id and
+		t_balance_base.warehouse_id=#{bid}
+	</select>
+	<insert id="insert"
+		parameterType="com.osl.mapper.entity.BalancebaseEntity">
+		insert into t_balance_base
+		(grade,business_id,warehouse_id,min_volume,max_volume,min_weight,max_weight,type,price,new_date)
+		values
+		(#{grade},#{businessId},#{warehouseId},#{minVolume},#{maxVolume},#{minWeight},#{maxWeight},#{type},#{price},now())
+	</insert>
+	<update id="deleteById" parameterType="int">
+		update t_balance_base set
+		delete_flg=1 where id=#{id}
+	</update>
+	<update id="update"
+		parameterType="com.osl.mapper.entity.BalancebaseEntity">
+		update t_balance_base set
+		business_id=#{businessId},
+		warehouse_id=#{warehouseId},
+		grade=#{grade},
+		min_volume=#{minVolume},
+		max_volume=#{maxVolume},
+		min_weight=#{minWeight},
+		max_weight=#{maxWeight},
+		type=#{type},
+		price=#{price}
+		where
+		id=#{id}
+	</update>
+	<select id="findById" parameterType="int"
+		resultType="com.osl.mapper.entity.BalancebaseEntity">
+		select * from t_balance_base
+		where id=#{id}
+	</select>
+</mapper>
