@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,11 +24,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.osl.common.ExportUtil;
 import com.osl.common.Util;
 import com.osl.common.UtilConst;
 import com.osl.common.web.BaseController;
 import com.osl.common.web.RedisUtils;
+import com.osl.mapper.TakeStockMapper;
 import com.osl.mapper.entity.StockEntity;
 import com.osl.model.StockModel;
 import com.osl.service.StockService;
@@ -39,6 +42,7 @@ public class StockController extends BaseController<StockModel> {
 	
 	@Autowired
 	private StockService service;
+
 	
 	@Autowired
 	private RedisUtils redisUtils;
@@ -83,18 +87,19 @@ public class StockController extends BaseController<StockModel> {
 		} else {
 			this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
 			StockModel stockModel = new StockModel();
+			stockModel.setBusinessId(this.myBusiness_id);
 			stockModel.setSku(sku);
 			stockModel.setGoodsName(name);
 			stockModel.setNums((!nums.equals("")&&nums!=null)?Integer.parseInt(nums):0);
 			stockModel.setBarCode(barCode);
 			stockModel.setCategoryId(goodsCategoryId);
-			if((!status.equals("")&&null!=status))
+			stockModel.setGoodsType(Integer.parseInt(status));
+			List<String> lis = new ArrayList<String>();
+			if(sku!=null && !sku.equals(""))
 			{
-				stockModel.setGoodsType(Integer.parseInt(status));
-			}else {
-				stockModel.setGoodsType(1000);
+				lis =Arrays.asList(sku.split(","));	//将拼接好的sku字符串转换成list
 			}
-			List<StockModel> _stockList = service.find_stockBusiness_by_condition(this.myBusiness_id,stockModel);
+			List<StockModel> _stockList = service.find_stockBusiness_by_condition(lis,stockModel);
 			model.addAttribute("item", _stockList);
 			model.addAttribute("nav_active1", 1);
 			return "/c/stock/stock::table_refresh";
@@ -164,7 +169,11 @@ public class StockController extends BaseController<StockModel> {
 			stockModel.setBusinessId(businessId);
 			stockModel.setCategoryId(goodsCategoryId);
 			stockModel.setGoodsType(status);
-			List<String> lis = Arrays.asList(sku.split(","));	//将拼接好的sku字符串转换成list
+			List<String> lis = new ArrayList<String>();
+			if(sku!=null && !sku.equals(""))
+			{
+				lis = Arrays.asList(sku.split(","));	//将拼接好的sku字符串转换成list
+			}
 			List<StockModel> _stockList = service.find_adminStock_by_condition(lis,stockModel);
 			model.addAttribute("item", _stockList);
 			model.addAttribute("nav_active1", 1);
@@ -303,11 +312,11 @@ public class StockController extends BaseController<StockModel> {
 				newEntity.setInputDetailId(stock.getInputDetailId());
 				newEntity.setInputTime(stock.getInputTime());
 				newEntity.setNewDate(new Timestamp( new Date().getTime()) );
-				newEntity.setProduceTime(stock.getProduceTime());
+				newEntity.setProductTime(stock.getProductTime());
 				newEntity.setWarehouseId(stock.getWarehouseId());
 				newEntity.setBusinessId(stock.getBusinessId());
 				newEntity.setValidityTime(stock.getValidityTime());
-				newEntity.setVolumn(stock.getVolumn());
+				newEntity.setVolume(stock.getVolume());
 				int ok = service.inset_stock(newEntity);
 				if (ok > 0) {
 					return "ok";
@@ -361,12 +370,9 @@ public class StockController extends BaseController<StockModel> {
 	/*
 	 * @des:商家端导出
 	 */
-	/**
-	 * 导出入库信息
-	 */
 	@RequestMapping(value = "/b/export/bStock" ,method = RequestMethod.GET)
-	public void exportInput(Model model, HttpSession session, HttpServletResponse response,
-			@RequestParam String params) {
+	public void bExportStcok(Model model, HttpSession session, HttpServletResponse response,
+			@RequestParam String sku_list,@RequestParam String params) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		String firstday, lastday;
 		// 获取前月的第一天
@@ -379,23 +385,35 @@ public class StockController extends BaseController<StockModel> {
 		cale.add(Calendar.MONTH, 1);
 		cale.set(Calendar.DAY_OF_MONTH, 0);
 		lastday = format.format(cale.getTime());
+		
 		List<Map<String, Object>> dataList = null;
-		String sTitle = "商家,入库编号,入库日期,商品类型数量,商品总数量,状态";
-		String fName = "input_";
-		String mapKey = "businessName,inputId,inputTime,skuNums,goodsNums,status";
+		String sTitle = "商品名称,sku,条形码,商品商品分类,在库数量";
+		String fName = "bStock_";
+		String mapKey = "goodsName,sku,barCode,categoryName,nums";
+		StockModel stockModel = JSON.parseObject(params, StockModel.class);
+		this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
+		stockModel.setBusinessId(this.myBusiness_id);
+		stockModel.setStartNewDate(firstday);
+		stockModel.setEndNewDate(lastday);
+		List<String> lis = new ArrayList<String>();
+		if(sku_list!=null && !sku_list.equals(""))
+		{
+			lis = Arrays.asList(sku_list.split(","));	//将拼接好的sku字符串转换成list
+		}
+			
+		List<StockModel> modelList = service.find_stockBusiness_by_condition(lis, stockModel);
 		dataList = new ArrayList();
 		Map<String, Object> map = null;
 		format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//		for (InputModel tmpInputModel : _inputList) {
-//			map = new HashMap<String, Object>();
-//			map.put("businessName", tmpInputModel.getBusinessName());
-//			map.put("inputId", tmpInputModel.getInputId());
-//			map.put("inputTime", format.format(tmpInputModel.getInputTime()));
-//			map.put("skuNums", tmpInputModel.getSkuNums());
-//			map.put("goodsNums", tmpInputModel.getGoodsNums());
-//			map.put("status", tmpInputModel.getStatus() == 1 ? "入库完了" : "入库中");
-//			dataList.add(map);
-//		}
+		for (StockModel tempStockModel : modelList) {
+			map = new HashMap<String, Object>();
+			map.put("goodsName", tempStockModel.getGoodsName());
+			map.put("sku", tempStockModel.getSku());
+			map.put("barCode", tempStockModel.getBarCode());
+			map.put("categoryName", tempStockModel.getCategoryName());
+			map.put("nums", tempStockModel.getNums());
+			dataList.add(map);
+		}
 		try (final OutputStream os = response.getOutputStream()) {
 			ExportUtil.responseSetProperties(fName, response);
 			ExportUtil.doExport(dataList, sTitle, mapKey, os);
@@ -404,18 +422,112 @@ public class StockController extends BaseController<StockModel> {
 		}
 	}
 	
-	@RequestMapping(value = "/a/stock/shelves")
-	public String s_shelvesDetail(Model model, HttpSession session) {
+	/*
+	 * @des:运营商端库存列表导出
+	 */
+	@RequestMapping(value = "/a/export/aStock" ,method = RequestMethod.GET)
+	public void aExportStcok(Model model, HttpSession session, HttpServletResponse response,
+			@RequestParam String sku_list,@RequestParam String params) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String firstday, lastday;
+		// 获取前月的第一天
+		Calendar cale = Calendar.getInstance();
+		cale.add(Calendar.MONTH, 0);
+		cale.set(Calendar.DAY_OF_MONTH, 1);
+		firstday = format.format(cale.getTime());
+		// 获取前月的最后一天
+		cale = Calendar.getInstance();
+		cale.add(Calendar.MONTH, 1);
+		cale.set(Calendar.DAY_OF_MONTH, 0);
+		lastday = format.format(cale.getTime());
+		
+		List<Map<String, Object>> dataList = null;
+		String sTitle = "商品名称,sku,条形码,商品商品分类,在库数量";
+		String fName = "aStock_";
+		String mapKey = "goodsName,sku,barCode,categoryName,nums";
+		StockModel stockModel = JSON.parseObject(params, StockModel.class);
+		this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
+		stockModel.setWarehouseId(this.myBusiness_id);
+		stockModel.setStartNewDate(firstday);
+		stockModel.setEndNewDate(lastday);
+		stockModel.setGoodsType(-1);
+		List<String> lis = new ArrayList<String>();
+		if(sku_list !=null && !sku_list.equals(""))
+		{
+			lis = Arrays.asList(sku_list.split(","));	//将拼接好的sku字符串转换成list;
+		}
+				
+		List<StockModel> modelList = service.find_adminStock_by_condition(lis, stockModel);
+		dataList = new ArrayList();
+		Map<String, Object> map = null;
+		format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		for (StockModel tempStockModel : modelList) {
+			map = new HashMap<String, Object>();
+			map.put("goodsName", tempStockModel.getGoodsName());
+			map.put("sku", tempStockModel.getSku());
+			map.put("barCode", tempStockModel.getBarCode());
+			map.put("categoryName", tempStockModel.getCategoryName());
+			map.put("nums", tempStockModel.getNums());
+			dataList.add(map);
+		}
+		try (final OutputStream os = response.getOutputStream()) {
+			ExportUtil.responseSetProperties(fName, response);
+			ExportUtil.doExport(dataList, sTitle, mapKey, os);
+		} catch (Exception e) {
+//			logger.error("生成CSV失败", e);
+		}
+	}
+	
+	
+	
+	/*
+	 * @des:运营商端，库存盘点,获取库存列表
+	 * @author：sun-hongyu
+	 * @date:2018-12-26
+	 * @param:
+	 * @return:list<StockModel>
+	 */
+	@RequestMapping(value = "/a/stock/takeStock", method = RequestMethod.GET)
+	public String wTakeStock(Model model, HttpSession session) {
 		if (session.getAttribute("u_login") == null) {
 			return "redirect:/admin/login";
 		} else {
-			model.addAttribute("uname", session.getAttribute("u_login"));
-			model.addAttribute("bname", session.getAttribute("u_bname"));
-			model.addAttribute("burl", session.getAttribute("u_burl"));
-			model.addAttribute("nav_active1", 2);
-			return "/w/stock/shelves";
+			this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
+			List<StockModel> _stockList = service.find_stock_list(this.myBusiness_id);
+			model.addAttribute("item", _stockList);
+			model.addAttribute("nav_active1", 7);
+			return "/w/takeStock/takeStock";
 		}
 	}
+	
+	/*
+	 * @des:运营商端，库存盘点，条件获取库存列表
+	 * @author：sun-hongyu
+	 * @date:2018-12-26
+	 * @param:
+	 * @return:list<StockModel>
+	 */
+	@RequestMapping(value = "/a/stock/takeStockCondition")
+	public String wTakeStockCondition(Model model, HttpSession session,@RequestParam(required = false) String skuList,
+				@RequestParam(required = false) String params) {
+		if (session.getAttribute("u_login") == null) {
+			return "redirect:/admin/login";
+		} else {
+			StockModel stockModel = JSON.parseObject(params, StockModel.class);
+			this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
+			stockModel.setWarehouseId(this.myBusiness_id);
+			List<String> lis = new ArrayList<String>();
+			if(null!=skuList&&!skuList.equals(""))
+			{
+				lis = Arrays.asList(skuList.split(","));	//将拼接好的sku字符串转换成list
+			}
+			List<StockModel> modelList = service.find_stock_list_by_condition(lis, stockModel);
+			model.addAttribute("item", modelList);
+			model.addAttribute("nav_active1", 7);
+			return "/w/takeStock/takeStock::table_refresh";
+		}
+	}
+	
 
 	@Override
 	protected String getPageId() {

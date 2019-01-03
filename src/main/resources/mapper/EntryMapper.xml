@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.osl.mapper.EntryMapper">
+
+   <!-- 【商家端】根据商家id,获取商家纳品列表 -->
+     <select id="bQueryEntryListByBusinessId" resultType="com.osl.model.EntryModel" parameterType="int">
+		SELECT
+			*
+		FROM
+			`t_entry`
+		WHERE business_id = #{bid};
+	</select>
+	
     <insert id="insertEntry" parameterType="com.osl.mapper.entity.EntryEntity" useGeneratedKeys="true" timeout="20">
     	INSERT INTO t_entry (entry_id, oper_time, complete_time, sku_nums, goods_nums, input_sku_nums, input_goods_nums, status, business_id, warehouse_id, oper, new_date)
 			VALUES(#{entryId}, #{operTime}, #{completeTime}, #{skuNums}, #{goodsNums}, #{inputSkuNums}, #{inputGoodsNums}, #{status}, #{businessId}, #{warehouseId}, #{oper}, #{newDate});
@@ -16,10 +26,30 @@
     <select id="queryEntrydetailEntityByDetailId" resultType="com.osl.mapper.entity.EntrydetailEntity" parameterType="string">
 		select entryDetail.* , goods.name as goodsName 
 		from t_entry_detail entryDetail 
-		left join t_goods goods on entryDetail.sku = goods.sku 
+		left join t_goods goods on entryDetail.goods_id = goods.goods_id 
 		where 1=1 
 		and entryDetail.delete_flg = 0 
 		and entryDetail.detail_id = #{detailId}
 	</select>
+	
+	<select id="queryEntryEntityByEntryId" resultType="com.osl.mapper.entity.EntryEntity" parameterType="string">
+		select * 
+		from t_entry  
+		where 1=1 
+		and entry_id = #{entryId}
+	</select>
+	
+	<update id="updateDetailEntryByInputDetail" parameterType="com.osl.mapper.entity.EntrydetailEntity">
+		update t_entry_detail 
+		set input_nums = #{inputNums} , input_diff = #{inputDiff} , update_date = #{updateDate} , status = #{status} 
+		where detail_id = #{detailId}
+	</update>
+	
+	<update id="updateEntryByInputDetail" parameterType="com.osl.mapper.entity.EntryEntity">
+		update t_entry
+		set input_sku_nums = #{inputSkuNums} , input_goods_nums = #{inputGoodsNums} , update_date = #{updateDate} , status = #{status} 
+		where entry_id = #{entryId}
+	</update>
+	
     
 </mapper>

@@ -14,6 +14,10 @@
 <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
 <link th:href="@{/css/style.css}" rel="stylesheet" />
 
+<!-- Data Tables -->
+<link th:href="@{/css/plugins/dataTables/datatables.min.css}"
+	rel="stylesheet">
+
 <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet" />
 <link th:href="@{/css/plugins/footable/footable.core.css}"
 	rel="stylesheet" />
@@ -68,7 +72,8 @@
 							</div>
 							<div class="ibox-content">
 
-								<table class="table table-striped table-bordered table-hover dataTables-example">
+								<table
+									class="table table-striped table-bordered table-hover dataTables-example">
 									<thead>
 										<tr>
 											<th>#</th>
@@ -87,15 +92,15 @@
 											<td th:text="${d.address}">东京********</td>
 											<td th:text="${d.postcode}">000-0000</td>
 											<td>
-												<button class="btn btn-info btn-xs dropdown-toggle"
-													type="button" data-toggle="modal" data-target="#myModal"
-													onclick="edit__sheves('1');">
-													<i class="fa fa-edit"></i>编辑
-												</button>
-												<button class="btn btn-danger btn-xs dropdown-toggle"
-													type="button" onClick="check(1)">
-													<i class="fa fa-trash"></i>删除
-												</button>
+													<button class="btn btn-info btn-xs dropdown-toggle"
+														type="button" data-toggle="modal" data-target="#myModal"
+														th:onclick="showInfo([[${d.depotId}]])">
+														<i class="fa fa-edit"></i>编辑
+													</button>
+													<button class="btn btn-danger btn-xs dropdown-toggle"
+														type="button" th:onclick="deleteInfo([[${d.depotId}]])">
+														<i class="fa fa-trash"></i>删除
+													</button>
 											</td>
 										</tr>
 									</tbody>
@@ -118,41 +123,44 @@
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
 					</button>
-					<h4 class="modal-title">添加仓库</h4>
+					<h4 class="modal-title">仓库信息</h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal">
+					<form class="form-horizontal" name="myform" id="myform">
 						<div class="form-group">
 							<label class="col-lg-3 control-label">仓库ID</label>
 							<div class="col-lg-9">
-								<input type="email" placeholder="请输入仓库ID" class="form-control">
+								<input type="text" placeholder="请输入仓库ID" class="form-control" name="depotId" id="depotId">
+								<input type="hidden" name="businessId"
+									th:value="${session.u_bid}"><input type="hidden"
+									name="mode" value="POST" id="mode">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">仓库名称</label>
 							<div class="col-lg-9">
-								<input type="email" placeholder="请输入仓库名称" class="form-control">
+								<input type="text" placeholder="请输入仓库名称" class="form-control" name="name" id="name">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">仓库地址</label>
 							<div class="col-lg-9">
-								<input type="password" placeholder="请输入仓库地址"
-									class="form-control">
+								<input type="text" placeholder="请输入仓库地址"
+									class="form-control" name="address" id="address">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">仓库邮编</label>
 							<div class="col-lg-9">
-								<input type="password" placeholder="请输入仓库邮编"
-									class="form-control">
+								<input type="text" placeholder="请输入仓库邮编"
+									class="form-control" name="postcode" id="postcode">
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary">确认添加</button>
+					<button type="button" class="btn btn-primary" id="btn_submit">确认保存</button>
 				</div>
 			</div>
 		</div>
@@ -160,11 +168,16 @@
 
 	<!-- Mainly scripts -->
 	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
-	
+
 	<script th:src="@{/js/bootstrap.min.js}"></script>
 	<script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
 	<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
 	<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+	
+		<script th:src="@{/js/jquery.validate.min.js}"></script>
+
+	<!-- Data Tables -->
+	<script th:src="@{/js/plugins/dataTables/datatables.min.js}"></script>
 
 	<!-- Peity -->
 	<script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
@@ -184,6 +197,7 @@
 
 	<!-- common -->
 	<script th:src="@{/js/common.js}"></script>
+	<script th:src="@{/js/user/depot.js}"></script>
 
 	<script th:inline="javascript">
 		

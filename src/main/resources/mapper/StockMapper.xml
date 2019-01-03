@@ -28,7 +28,7 @@
         <if test="stockModel.categoryId != null  and stockModel.categoryId !=10000">
         	and c.id = #{stockModel.categoryId}
         </if>
-         <if test="stockModel.barCode != null  and stockModel.barCode !=''">
+        <if test="stockModel.barCode != null  and stockModel.barCode !=''">
         	and a.barcode = #{stockModel.barCode}
         </if>
         <if test="stockModel.nums != null">
@@ -61,7 +61,7 @@
 		LEFT JOIN t_goods c on a.goods_id = c.goods_id
 		LEFT JOIN t_goods_category d ON d.id = c.category_id
 		WHERE a.warehouse_id = #{stockModel.warehouseId}
-		 <if test="stockModel.sku != null  and stockModel.sku !=''">
+		<if test="skuList != null and skuList.size>0">
         	and c.sku in 
         	 <foreach collection="skuList" item="item" index="index" 
 				open="(" separator="," close=")">#{item}</foreach>
@@ -69,7 +69,7 @@
         <if test="stockModel.goodsName != null  and stockModel.goodsName !=''">
         	and c.name like CONCAT('%', #{stockModel.goodsName},'%')
         </if>
-        <if test="stockModel.categoryId != null and stockModel.categoryId !=10000">
+        <if test="stockModel.categoryId != null and stockModel.categoryId !=-1">
         	and c.category_id = #{stockModel.categoryId}
         </if>
         <if test="stockModel.categoryName != null  and stockModel.categoryName !=''">
@@ -157,11 +157,11 @@
 	<!-- 插入库存 -->
 	<insert id="inset_stock" parameterType="com.osl.mapper.entity.StockEntity">
 		INSERT INTO t_stock (
-			manage_id,goods_id,depot_id,shelves_id,nums,goods_type,input_time,input_detail_id,volumn,produce_time,validity_time,
+			manage_id,goods_id,depot_id,shelves_id,nums,goods_type,input_time,input_detail_id,volume,product_time,validity_time,
 			business_id,warehouse_id,new_date,delete_flg)
 			VALUES
 			(#{manageId},#{goodsId},#{depotId},#{shelvesId},#{nums},#{goodsType},
-			#{inputTime},#{inputDetailId},#{volumn},#{produceTime},#{validityTime},#{businessId},#{warehouseId},#{newDate},0)
+			#{inputTime},#{inputDetailId},#{volume},#{productTime},#{validityTime},#{businessId},#{warehouseId},#{newDate},0)
 	</insert>
 	
 	<!-- 更新库存 -->
@@ -187,4 +187,8 @@
 			SET delete_flg = 1 ,update_date = NOW()
 			WHERE  manage_id=#{manageId}
 	</update>
+	
+	<select id="findStockModelAllByGoodsId" resultType="java.lang.Integer" parameterType="java.lang.String">
+		select count(1) from t_stock where goods_id = #{goodsId} 
+	</select>
 </mapper>

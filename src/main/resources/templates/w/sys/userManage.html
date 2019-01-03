@@ -78,19 +78,26 @@
 											<th>#</th>
 											<th>员工ID</th>
 											<th>员工名称</th>
+											<th>状态</th>
 											<th>操作</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr th:each="user,userStat:${item}">
 											<td th:text=${userStat.count}></td>
-											<td th:text="${user.user_id}"></td>
+											<td th:text="${user.userId}"></td>
 											<td th:text="${user.username}"></td>
+											<td th:text="${user.statusText}"></td>
 											<td>
-												<button class="btn btn-info btn-xs dropdown-toggle"
-													type="button" data-toggle="modal" data-target="#myModal"
-													th:onclick="|javascript:showUser(${user.id})|">
-													<i class="fa fa-edit"></i>编辑
+												<button th:if="${user.status}==0" class="btn btn-info btn-xs"
+													type="button" 
+													th:onclick="|javascript:stopUser(${user.id})|">
+													<i class="fa fa-edit"></i>停用
+												</button>
+												<button th:if="${user.status}==1" class="btn btn-info btn-xs"
+													type="button" 
+													th:onclick="|javascript:recoveryUser(${user.id})|">
+													<i class="fa fa-edit"></i>恢复
 												</button>
 												<button class="btn btn-danger btn-xs dropdown-toggle"
 													type="button" th:onclick="|javascript:deleteUser(${user.id})|">
@@ -124,8 +131,8 @@
 						<div class="form-group">
 							<label class="col-lg-3 control-label">员工ID</label>
 							<div class="col-lg-9">
-								<input type="user_id" placeholder="请输入员工ID" class="form-control" required="" name="user_id" id="user_id">
-								<input type="hidden" name="business_id" th:value="${session.u_bid}">
+								<input type="user_id" placeholder="请输入员工ID" class="form-control" required="" name="userId" id="userId">
+								<input type="hidden" name="businessId" th:value="${session.u_bid}">
 								<input type="hidden" name="id" value="0" id="id">
 								<input type="hidden" name="mode" value="POST" id="mode">
 							</div>

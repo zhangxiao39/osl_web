@@ -6,7 +6,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>出库管理</title>
+<title>出库一览</title>
 
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 <link th:href="@{/css/plugins/sweetalert/sweetalert.css}"
@@ -14,6 +14,10 @@
 
 <!-- Data Tables -->
 <link th:href="@{/css/plugins/datapicker/datepicker3.css}"
+	rel="stylesheet">
+<link th:href="@{/css/plugins/dataTables/datatables.min.css}"
+	rel="stylesheet">
+<link th:href="@{/css/bootstrap-select.css}"
 	rel="stylesheet">
 
 <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
@@ -35,11 +39,11 @@
 			<div class="row wrapper border-bottom white-bg page-heading"
 				th:fragment="headerNav">
 				<div class="col-lg-10">
-					<h2>出库管理</h2>
+					<h2>出库一览</h2>
 					<ol class="breadcrumb">
 						<li><a href="#">首页</a></li>
 						<li><a>库存管理</a></li>
-						<li class="active"><strong>出库管理</strong></li>
+						<li class="active"><strong>出库一览</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -60,8 +64,8 @@
 								<div class="row">
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="product_name1">出库ID</label>
-											<input type="text" id="product_name1" name="product_name1"
+											<label class="control-label" for="outputId">出库ID</label>
+											<input type="text" id="outputId" name="outputId"
 												value="" class="form-control">
 										</div>
 									</div>
@@ -69,60 +73,68 @@
 										<div class="form-group">
 											<label class="control-label" for="status">出库状态</label> <select
 												name="status" id="status" class="form-control">
-												<option value="0" selected="">全部状态</option>
-												<option value="1">请求中</option>
-												<option value="1">出库中</option>
+												<option value="-1" selected="selected">全部状态</option>
+												<option value="0">出库中</option>
 												<option value="1">出库完了</option>
-												<option value="1">取消</option>
+												<option value="2">请求中</option>
+												<option value="3">请求处理中</option>
+												<option value="4">请求取消</option>
 											</select>
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="product_name">商品SKU</label>
-											<input type="text" id="product_name" name="product_name"
+											<label class="control-label" for="sku">商品SKU</label>
+											<input type="text" id="sku" name="sku"
 												value="" class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="price">商品条码</label> <input
-												type="text" id="price" name="price" value=""
+											<label class="control-label" for="barcode">商品条码</label> <input
+												type="text" id="barcode" name="barcode" value=""
 												class="form-control">
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="quantity">商品名称</label> <input
-												type="text" id="quantity" name="quantity" value=""
+											<label class="control-label" for="goodsName">商品名称</label> <input
+												type="text" id="goodsName" name="goodsName" value=""
 												class="form-control">
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="customer">收货人</label> <input
+												type="text" id="customer" name="customer" value=""
+												class="form-control">
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="customer">商家</label>
+											<select class="selectpicker" data-live-search="true" id="businessId" name="businessId" title="请选择商家" data-size="5" ></select>
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="depotId">仓库</label>
+											<select class="selectpicker" data-live-search="true" id="depotId" name="depotId" title="请选择仓库" data-size="5" ></select>
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group" id="input_date">
 											<label class="control-label">出库期间</label>
 											<div class="input-daterange input-group" id="datepicker">
-												<input type="text" class="form-control" name="start"
+												<input type="text" class="form-control" id="startNewDate" name="start"
 													value=""> <span class="input-group-addon">至</span>
-												<input type="text" class="form-control" name="end" value="">
+												<input type="text" class="form-control" name="end" id="endNewDate" value="">
 											</div>
 										</div>
 									</div>
-									<div class="col-sm-2">
-										<div class="form-group">
-											<label class="control-label" for="status">商家</label> <select
-												name="status" id="status" class="form-control">
-												<option value="1" selected="">全部商家</option>
-												<option value="0">JNH</option>
-											</select>
-										</div>
-									</div>
-									<div class="col-sm-4">
+									<div class="col-sm-3">
 										<div class="form-group z-t">
-											<button type="button" class="btn btn-primary">检索</button>
-											<button type="button" class="btn btn-success">打印信封</button>
-											<button type="button" class="btn btn-success">导出列表</button>
-											<button type="button" class="btn btn-success">导入发送番号</button>
+											<button type="button" class="btn btn-primary" onclick="wSearchOutputList()">检索</button>
 										</div>
 									</div>
 								</div>
@@ -139,169 +151,41 @@
 								</div>
 							</div>
 							<div class="ibox-content">
-								<div class="form-group">
-									<div class="table-responsive">
-										<table
-											class="table table-striped table-bordered table-hover footable">
-											<thead>
-												<tr>
-													<th></th>
-													<th>#</th>
-													<th>商机</th>
-													<th>出库ID</th>
-													<th>明细ID</th>
-													<th>出库日期</th>
-													<th>SKU</th>
-													<th>分类</th>
-													<th>名称</th>
-													<th>在库数量</th>
-													<th>出库数量</th>
-													<th>仓库ID</th>
-													<th>货架ID</th>
-													<th>出库类型</th>
-													<th data-hide="all">订单番号</th>
-													<th data-hide="all">客户名称</th>
-													<th data-hide="all">邮编</th>
-													<th data-hide="all">地址1</th>
-													<th data-hide="all">地址2</th>
-													<th data-hide="all">电话</th>
-													<th data-hide="all">发送方式</th>
-													<th data-hide="all">发送番号</th>
-													<th>出库状态</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td><input type="checkbox" class="i-checks"
-														name="input[]" /></td>
-													<td>1</td>
-													<td>JNH</td>
-													<td>OUT201811090001</td>
-													<td>MX201811090001</td>
-													<td>2018-11-09</td>
-													<td>MC8012MX300</td>
-													<td>フラッシュメモリ</td>
-													<td>Crucial SSD MX300 525GB</td>
-													<td>100</td>
-													<td>1</td>
-													<td>1号仓库</td>
-													<td>s_01-111</td>
-													<td>贩卖</td>
-													<td>JNH-5698-89563</td>
-													<td>三郎君</td>
-													<td>115-6985</td>
-													<td>东京都</td>
-													<td>**************</td>
-													<td>895638974521</td>
-													<td>DM</td>
-													<td>745896523185</td>
-													<td>请求中</td>
-												</tr>
-												<tr>
-													<td><input type="checkbox" class="i-checks"
-														name="input[]" /></td>
-													<td>2</td>
-													<td>JNH</td>
-													<td>OUT201811090001</td>
-													<td>MX201811090002</td>
-													<td>2018-11-09</td>
-													<td>MC8012MX300</td>
-													<td>フラッシュメモリ</td>
-													<td>Crucial SSD MX300 525GB</td>
-													<td>100</td>
-													<td>1</td>
-													<td>1号仓库</td>
-													<td>s_01-111</td>
-													<td>贩卖</td>
-													<td>JNH-5698-89563</td>
-													<td>三郎君</td>
-													<td>115-6985</td>
-													<td>东京都</td>
-													<td>**************</td>
-													<td>895638974521</td>
-													<td>DM</td>
-													<td>745896523185</td>
-													<td>请求中</td>
-												</tr>
-												<tr>
-													<td><input type="checkbox" class="i-checks"
-														name="input[]" /></td>
-													<td>3</td>
-													<td>JNH</td>
-													<td>OUT201811090001</td>
-													<td>MX201811090003</td>
-													<td>2018-11-09</td>
-													<td>MC8012MX300</td>
-													<td>フラッシュメモリ</td>
-													<td>Crucial SSD MX300 525GB</td>
-													<td>100</td>
-													<td>1</td>
-													<td>1号仓库</td>
-													<td>s_01-111</td>
-													<td>贩卖</td>
-													<td>JNH-5698-89563</td>
-													<td>三郎君</td>
-													<td>115-6985</td>
-													<td>东京都</td>
-													<td>**************</td>
-													<td>895638974521</td>
-													<td>DM</td>
-													<td>745896523185</td>
-													<td>请求中</td>
-												</tr>
-												<tr>
-													<td><input type="checkbox" class="i-checks"
-														name="input[]" /></td>
-													<td>4</td>
-													<td>JNH</td>
-													<td>OUT201811090001</td>
-													<td>MX201811090004</td>
-													<td>2018-11-09</td>
-													<td>MC8012MX300</td>
-													<td>フラッシュメモリ</td>
-													<td>Crucial SSD MX300 525GB</td>
-													<td>100</td>
-													<td>1</td>
-													<td>1号仓库</td>
-													<td>s_01-111</td>
-													<td>贩卖</td>
-													<td>JNH-5698-89563</td>
-													<td>三郎君</td>
-													<td>115-6985</td>
-													<td>东京都</td>
-													<td>**************</td>
-													<td>895638974521</td>
-													<td>DM</td>
-													<td>745896523185</td>
-													<td>请求中</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-sm-9">
-										<div class="form-group">
-											<button type="button" class="btn btn-primary">确认出库</button>
-											<button type="button" class="btn btn-success">添加发送番号</button>
-										</div>
-									</div>
-									<div class="col-sm-2">
-										<div class="form-group">
-											<select name="status" id="status" class="form-control">
-												<option value="0" selected="">全部状态</option>
-												<option value="1">请求中</option>
-												<option value="1">出库中</option>
-												<option value="1">出库完了</option>
-												<option value="1">取消</option>
-											</select>
-										</div>
-									</div>
-									<div class="col-sm-1">
-										<div class="form-group">
-											<button type="button" class="btn btn-success">变更状态</button>
-										</div>
-									</div>
+								<div class="table-responsive">
+									<table
+										class="table table-striped table-bordered table-hover dataTables-example" id="c_table_refresh" th:fragment="table_refresh">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th><input type="checkbox" class="i-checks" id="checkAll"/></th>
+												<th>出库ID</th>
+												<th>请求日期</th>
+												<th>出库日期</th>
+												<th>商品类型数量</th>
+												<th>商品总数量</th>
+												<th>状态</th>
+												<th>操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="p,pIndex:${item}">
+												<td th:text="${pIndex.count}"></td>
+												<td><input type='checkbox' class="i-checks" name='outputlistCheck' th:data-status='${p.status}' th:value='${p.outputId}' onclick="childclick()"/></td>
+												<td th:text="${p.outputId}"></td>
+												<td th:text="${#dates.format(p.outputTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+												<td th:text="${#dates.format(p.requestDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+												<td th:text="${p.skuNums}"></td>
+												<td th:text="${p.goodsNums}"></td>
+												<td th:text="${p.status == 0 ? '出库中' : p.status == 1 ? '入库完了' : p.status == 2 ? '请求中' : p.status == 3 ? '请求处理中' : '请求取消'}"></td>
+												<td>
+													<button class="btn btn-info btn-xs dropdown-toggle"
+														type="button" th:onclick="goOutputDetailed_a([[${p.outputId}]])">
+														<i class="fa fa-edit"></i>查看明细
+													</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
@@ -312,107 +196,6 @@
 		</div>
 	</div>
 
-	<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog"
-		aria-hidden="true" style="display: none;">
-		<div class="modal-dialog">
-			<div class="modal-content animated bounceInRight">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
-					</button>
-					<h4 class="modal-title">添加商品</h4>
-				</div>
-				<div class="modal-body">
-					<form class="form-horizontal">
-						<div class="form-group">
-							<label class="col-lg-3 control-label">商品分类</label>
-							<div class="col-lg-9">
-								<select class="form-control" name="account">
-									<option>选择分类</option>
-									<option>フラッシュメモリ</option>
-									<option>PC周边</option>
-									<option>服装</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">商品SKU</label>
-							<div class="col-lg-9">
-								<input type="email" placeholder="请输入商品SKU" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">商品条码</label>
-							<div class="col-lg-9">
-								<input type="email" placeholder="请输入商品条码" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">商品名称</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="请输入商品名称"
-									class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">商品形状</label>
-							<div class="col-lg-9">
-								<label class="radio-inline"> <input type="radio"
-									value="option1" name="sex" checked>固体
-								</label> <label class="radio-inline"> <input type="radio"
-									value="option2" name="sex">液体
-								</label> <label class="radio-inline"> <input type="radio"
-									value="option3" name="sex">气体
-								</label>
-
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">长(cm)</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="请输入长" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">宽(cm)</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="请输入宽" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">高(cm)</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="请输入高" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">重量(KG)</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="请输入重量" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">颜色</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="请输入颜色" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">备注</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="" class="form-control">
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary">确认添加</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<!-- Mainly scripts -->
 	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
 
@@ -420,9 +203,13 @@
 	<script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
 	<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
 	<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
-
+	<!-- select data -->
+	<script th:src="@{/js/bootstrap-select.js}"></script>
 	<!-- Data picker -->
 	<script th:src="@{/js/plugins/datapicker/bootstrap-datepicker.js}"></script>
+
+	<!-- Data Tables -->
+	<script th:src="@{/js/plugins/dataTables/datatables.min.js}"></script>
 
 	<!-- Peity -->
 	<script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
@@ -442,24 +229,22 @@
 
 	<!-- common -->
 	<script th:src="@{/js/common.js}"></script>
+	
+	<!-- input -->
+	<script th:src="@{/js/output/list.js}"></script>
 
 	<script th:inline="javascript">
-		$(document).ready(function() {
-			$('.footable').footable();
-			$('.i-checks').iCheck({
-				checkboxClass : 'icheckbox_square-green',
-				radioClass : 'iradio_square-green',
-			});
-			$('#input_date .input-daterange').datepicker({
-				format : 'yyyy-mm-dd',
-				language : 'zh-CN',
-				todayBtn : "linked",//显示‘今日’按钮
-				clearBtn : true,//清除按钮
-				keyboardNavigation : false,
-				forceParse : false,
-				autoclose : true
-			});
-		});
+	$(document).ready(function(){
+        $('#input_date .input-daterange').datepicker({
+        	format: 'yyyy-mm-dd',
+        	language: 'zh-CN',
+        	todayBtn: "linked",//显示‘今日’按钮
+        	clearBtn:true,//清除按钮
+            keyboardNavigation: false,
+            forceParse: false,
+            autoclose: true
+        });
+	});
 	</script>
 
 </body>

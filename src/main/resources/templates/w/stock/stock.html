@@ -8,24 +8,20 @@
 
 	<title>库存一览</title>
 
-	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
-	<link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet" />
-	<!-- select data -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/plugins/sweetalert/sweetalert.css}"
+          rel="stylesheet" />
 
-	<!-- Data Tables -->
-	<link th:href="@{/css/plugins/dataTables/dataTables.bootstrap.css}"
-		  rel="stylesheet">
-	<link th:href="@{/css/plugins/dataTables/dataTables.responsive.css}"
-		  rel="stylesheet">
-	<link th:href="@{/css/plugins/dataTables/dataTables.tableTools.min.css}"
-		  rel="stylesheet">
+    <!-- Data Tables -->
+    <link th:href="@{/css/plugins/dataTables/datatables.min.css}"
+          rel="stylesheet">
 
-	<link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
-	<link th:href="@{/css/style.css}" rel="stylesheet" />
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
 
-	<link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet" />
-	<link th:href="@{/css/plugins/footable/footable.core.css}"
-		  rel="stylesheet" />
+    <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet" />
+    <link th:href="@{/css/plugins/footable/footable.core.css}"
+          rel="stylesheet" />
 	<link th:href="@{/css/bootstrap-select.css}" rel="stylesheet">
 	<!--<link th:href="@{/css/plugins/dataTables/datatables.min.css}"-->
 		  <!--rel="stylesheet">-->
@@ -116,7 +112,7 @@
 									<div class="form-group">
 										<label class="control-label" for="quantity1">库存数量</label> <input
 											type="text" id="goods_nums" name="quantity1" value=""
-											class="form-control">
+											class="form-control" onkeyup="value=value.replace(/[^\d]/g,'')">
 									</div>
 								</div>
 								<div class="col-sm-1">
@@ -190,10 +186,7 @@
 <script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
 
 <!-- Data Tables -->
-<script th:src="@{/js/plugins/dataTables/jquery.dataTables.js}"></script>
-<script th:src="@{/js/plugins/dataTables/dataTables.bootstrap.js}"></script>
-<script th:src="@{/js/plugins/dataTables/dataTables.responsive.js}"></script>
-<script th:src="@{/js/plugins/dataTables/dataTables.tableTools.min.js}"></script>
+<script th:src="@{/js/plugins/dataTables/datatables.min.js}"></script>
 
 <!-- Peity -->
 <script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
@@ -201,9 +194,6 @@
 <!-- Custom and plugin javascript -->
 <script th:src="@{/js/inspinia.js}"></script>
 <script th:src="@{/js/plugins/pace/pace.min.js}"></script>
-
-
-
 
 <!-- iCheck -->
 <script th:src="@{/js/plugins/iCheck/icheck.min.js}"></script>

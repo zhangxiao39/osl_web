@@ -6,7 +6,7 @@ public class BusinessEntity extends BaseEntity {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 474873185943994828L;
+	private static final long serialVersionUID = -3082238589678170947L;
 
 	private long id;
 	private String name;

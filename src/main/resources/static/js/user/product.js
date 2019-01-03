@@ -39,7 +39,7 @@ function validform() {
 				required : "请输入商品名称"
 			},
 			volume : {
-				required : "请输入商品体积",
+				required : "请再次输入商品体积",
 			},
 			length : {
 				required : "请输入长度",

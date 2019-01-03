@@ -20,8 +20,8 @@ public class StockModel extends BaseModel {
 	private int goodsType;
 	private Date inputTime;
 	private String inputDetailId;
-	private double volumn;
-	private Date produceTime;
+	private double volume;
+	private Date productTime;
 	private Date validityTime;
 	private int businessId;
 	private int warehouseId;
@@ -37,7 +37,10 @@ public class StockModel extends BaseModel {
 	private String barCode;
 	private Timestamp startDate;
 	private Timestamp endDate;
-	
+	//录入开始日期
+	private String startNewDate;
+	//录入结束日期
+	private String endNewDate;
 	
 	
 	public String getManageId() {
@@ -88,18 +91,19 @@ public class StockModel extends BaseModel {
 	public void setInputDetailId(String inputDetailId) {
 		this.inputDetailId = inputDetailId;
 	}
-	public double getVolumn() {
-		return volumn;
+	
+	public double getVolume() {
+		return volume;
 	}
-	public void setVolumn(double volumn) {
-		this.volumn = volumn;
+	public void setVolume(double volume) {
+		this.volume = volume;
 	}
 	
-	public Date getProduceTime() {
-		return produceTime;
+	public Date getProductTime() {
+		return productTime;
 	}
-	public void setProduceTime(Date produceTime) {
-		this.produceTime = produceTime;
+	public void setProductTime(Date productTime) {
+		this.productTime = productTime;
 	}
 	public Date getValidityTime() {
 		return validityTime;
@@ -185,6 +189,18 @@ public class StockModel extends BaseModel {
 	}
 	public void setEndDate(Timestamp endDate) {
 		this.endDate = endDate;
+	}
+	public String getStartNewDate() {
+		return startNewDate;
+	}
+	public void setStartNewDate(String startNewDate) {
+		this.startNewDate = startNewDate;
+	}
+	public String getEndNewDate() {
+		return endNewDate;
+	}
+	public void setEndNewDate(String endNewDate) {
+		this.endNewDate = endNewDate;
 	}
 	
 	

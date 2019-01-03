@@ -66,20 +66,6 @@
 								<div class="row">
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label class="control-label" for="quantity">仓库ID</label> <input
-												type="text" id="quantity" name="quantity" value=""
-												class="form-control">
-										</div>
-									</div>
-									<div class="col-sm-2">
-										<div class="form-group">
-											<label class="control-label" for="quantity">货架ID</label> <input
-												type="text" id="quantity" name="quantity" value=""
-												class="form-control">
-										</div>
-									</div>
-									<div class="col-sm-2">
-										<div class="form-group">
 											<label class="control-label" for="status">商家</label> <select
 												name="status" id="status" class="form-control">
 												<option value="0">全部商家</option>
@@ -89,7 +75,28 @@
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
+											<label class="control-label" for="quantity">商品名称</label> <input
+												type="text" id="quantity" name="quantity" value=""
+												class="form-control">
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
 											<label class="control-label" for="quantity">商品SKU</label> <input
+												type="text" id="quantity" name="quantity" value=""
+												class="form-control">
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="quantity">商品条码</label> <input
+												type="text" id="quantity" name="quantity" value=""
+												class="form-control">
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label" for="quantity">数量</label> <input
 												type="text" id="quantity" name="quantity" value=""
 												class="form-control">
 										</div>
@@ -167,106 +174,6 @@
 		</div>
 	</div>
 
-	<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog"
-		aria-hidden="true" style="display: none;">
-		<div class="modal-dialog">
-			<div class="modal-content animated bounceInRight">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
-					</button>
-					<h4 class="modal-title">添加商品</h4>
-				</div>
-				<div class="modal-body">
-					<form class="form-horizontal">
-						<div class="form-group">
-							<label class="col-lg-3 control-label">商品分类</label>
-							<div class="col-lg-9">
-								<select class="form-control" name="account">
-									<option>选择分类</option>
-									<option>フラッシュメモリ</option>
-									<option>PC周边</option>
-									<option>服装</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">商品SKU</label>
-							<div class="col-lg-9">
-								<input type="email" placeholder="请输入商品SKU" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">商品条码</label>
-							<div class="col-lg-9">
-								<input type="email" placeholder="请输入商品条码" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">商品名称</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="请输入商品名称"
-									class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">商品形状</label>
-							<div class="col-lg-9">
-								<label class="radio-inline"> <input type="radio"
-									value="option1" name="sex" checked>固体
-								</label> <label class="radio-inline"> <input type="radio"
-									value="option2" name="sex">液体
-								</label> <label class="radio-inline"> <input type="radio"
-									value="option3" name="sex">气体
-								</label>
-
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">长(cm)</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="请输入长" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">宽(cm)</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="请输入宽" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">高(cm)</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="请输入高" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">重量(KG)</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="请输入重量" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">颜色</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="请输入颜色" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">备注</label>
-							<div class="col-lg-9">
-								<input type="password" placeholder="" class="form-control">
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary">确认添加</button>
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<!-- Mainly scripts -->
 	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>

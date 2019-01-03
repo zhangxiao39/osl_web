@@ -3,13 +3,44 @@
 <mapper namespace="com.osl.mapper.UserMapper">
 	<select id="findAll"
 		resultType="com.osl.mapper.entity.UserEntity">
-		select * from t_user
+		select * from t_user where delete_flg=0
+	</select>
+	<select id="findByUserId"
+		resultType="com.osl.mapper.entity.UserEntity">
+		select * from t_user where user_id=#{userId}
+	</select>
+	<select id="login" resultType="com.osl.model.UserModel">
+		select t_user.*,t_business.type as
+		bType from t_user,t_business where t_user.delete_flg=0 and
+		t_user.business_id=t_business.id and
+		t_user.user_id=#{userId} and
+		t_user.password=#{password}
+	</select>
+	<select id="getAllUsers" resultType="com.osl.model.UserModel">
+		select
+		t_user.*,t_business.type as
+		bType from t_user,t_business where
+		t_user.delete_flg=0 and
+		t_user.isadmin=0 and
+		t_user.business_id=t_business.id and
+		t_business.id=#{bid}
 	</select>
 	<insert id="insert"
 		parameterType="com.osl.mapper.entity.UserEntity">
-		insert into t_user
-		(user_id,username,password,business_id,isadmin,new_date)
-		values
-		(#{userId},#{username},#{password},#{businessId},#{isadmin},now())
+		insert INTO t_user (user_id, password, username,
+		business_id,new_date) VALUES (#{userId}, #{password}, #{username},
+		#{businessId},now());
 	</insert>
+	<update id="stopUser" parameterType="int">
+		update t_user set status=1
+		where id=#{id}
+	</update>
+	<update id="recoveryUser" parameterType="int">
+		update t_user set
+		status=0 where id=#{id}
+	</update>
+	<update id="deleteById" parameterType="int">
+		update t_user set
+		delete_flg=1 where id=#{id}
+	</update>
 </mapper>

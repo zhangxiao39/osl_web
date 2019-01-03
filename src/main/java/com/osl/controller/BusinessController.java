@@ -24,6 +24,8 @@ import com.osl.model.BusinessModel;
 import com.osl.model.Users;
 import com.osl.service.BusinessGradeService;
 import com.osl.service.BusinessService;
+import com.osl.service.RelationshipService;
+import com.osl.service.UserService;
 
 @Controller
 public class BusinessController extends BaseController<BusinessModel> {
@@ -33,9 +35,9 @@ public class BusinessController extends BaseController<BusinessModel> {
 	@Autowired
 	private BusinessGradeService businessGradeService;
 	@Autowired
-	private UserMapper userMapper;
+	private UserService userService;
 	@Autowired
-	private RelationshipMapper relationshipMapper;
+	private RelationshipService relationshipService;
 
 	@RequestMapping(value = "/a/business/list")
 	public String b_listManage(Model model, HttpSession session) {
@@ -135,7 +137,7 @@ public class BusinessController extends BaseController<BusinessModel> {
 			return "redirect:/admin/login";
 		} else {
 			_userEntity.setIsadmin(1);
-			int ok = userMapper.insert(_userEntity);
+			int ok = userService.insert(_userEntity);
 			if (ok > 0) {
 				return "ok";
 			} else if (ok == -1) {
@@ -165,7 +167,7 @@ public class BusinessController extends BaseController<BusinessModel> {
 		relationEntity.setBusinessId(id);
 		relationEntity.setWarehouseId(myBusiness_id);
 		relationEntity.setShip(2);
-		int ok = relationshipMapper.changeShip(relationEntity);
+		int ok = relationshipService.changeShip(relationEntity);
 		if (ok > 0) {
 			return "ok";
 		} else {
@@ -191,7 +193,7 @@ public class BusinessController extends BaseController<BusinessModel> {
 		relationEntity.setBusinessId(id);
 		relationEntity.setWarehouseId(myBusiness_id);
 		relationEntity.setShip(1);
-		int ok = relationshipMapper.changeShip(relationEntity);
+		int ok = relationshipService.changeShip(relationEntity);
 		if (ok > 0) {
 			return "ok";
 		} else {

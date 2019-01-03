@@ -36,6 +36,14 @@ public class SellplatformController extends BaseController<SellplatformModel> {
 		}
 	}
 	
+	@RequestMapping(value = "/b/sys/sellplatformList" ,  method = RequestMethod.POST)
+	@ResponseBody
+	public List<SellplatformModel> b_sellplatformList(Model model, HttpSession session) {
+		this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
+		List<SellplatformModel> _sellplatformList = service.find_sellplatform_All(myBusiness_id);
+		return _sellplatformList;
+	}
+	
 	@RequestMapping(value = "/osl/sellplatform", method = RequestMethod.POST)
 	@ResponseBody
 	public String addSellplatform(Model model, HttpSession session, SellplatformEntity _sellplatform) {

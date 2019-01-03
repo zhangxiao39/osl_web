@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.osl.common.web.BaseController;
 import com.osl.mapper.entity.DepotEntity;
 import com.osl.mapper.entity.EntrydetailEntity;
+import com.osl.mapper.entity.GoodsEntity;
 import com.osl.model.BusinessModel;
 import com.osl.model.DepotModel;
 import com.osl.service.DepotService;
@@ -35,6 +36,58 @@ public class DepotController extends BaseController<DepotModel> {
 			model.addAttribute("item", _depotInfo);
 			model.addAttribute("nav_active6", 3);
 			return "/w/sys/warehouseManage";
+		}
+	}
+	
+	@RequestMapping(value = "/osl/depot", method = RequestMethod.POST)
+	@ResponseBody
+	public String addDepot(Model model, HttpSession session, DepotEntity _depot) {
+		if (session.getAttribute("u_login") == null) {
+			return "redirect:/admin/login";
+		} else {
+			int ok = service.insertDepot(_depot);
+			if (ok > 0) {
+				return "ok";
+			} else if (ok == -1) {
+				return "exist";
+			} else {
+				return "fail";
+			}
+		}
+
+	}
+
+	@RequestMapping(value = "/osl/depot/{depotId}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public String deleteDepot(@PathVariable(required = true) String depotId) {
+		int ok = service.deleteById(depotId);
+		if (ok > 0) {
+			return "ok";
+		} else {
+			return "fail";
+		}
+	}
+
+	@RequestMapping(value = "/osl/depot/{depotId}", method = RequestMethod.GET)
+	@ResponseBody
+	public DepotEntity showInfo(@PathVariable(required = true) String depotId) {
+		DepotEntity _info = new DepotEntity();
+		_info = service.findById(depotId);
+		return _info;
+	}
+
+	@RequestMapping(value = "/osl/depot", method = RequestMethod.PUT)
+	@ResponseBody
+	public String updateDepot(DepotEntity _depot) {
+		if (_depot.getDepotId()!= "0") {
+			int ok = service.updateDepot(_depot);
+			if (ok > 0) {
+				return "ok";
+			} else {
+				return "fail";
+			}
+		} else {
+			return "fail";
 		}
 	}
 

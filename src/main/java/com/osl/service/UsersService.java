@@ -27,7 +27,7 @@ public interface UsersService {
 	@Select("SELECT * FROM t_user where user_id = #{user_id} and password = #{password} and status = 0")
 	Users findByUserName(@Param("userid") String userid, @Param("password") String password);
 
-	@Select("SELECT id,user_id,username FROM t_user where business_id=#{bid} and status = 0;")
+	@Select("SELECT id,user_id,username,status FROM t_user where business_id=#{bid} and status = 0;")
 	List<Map> getAllUsers(@Param("bid") String bid);
 
 

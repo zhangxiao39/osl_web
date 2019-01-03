@@ -24,7 +24,7 @@ public class EntrydetailEntity extends BaseEntity {
 	private int inputDiff;
 	private Date produceTime;
 	private int maxNums;
-	private String status;
+	private int status;
 	
 	private String goodsName;
 	
@@ -37,11 +37,11 @@ public class EntrydetailEntity extends BaseEntity {
 		this.goodsName = goodsName;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 

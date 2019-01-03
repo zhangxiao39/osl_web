@@ -20,8 +20,8 @@ public class StockEntity extends BaseEntity {
 	private int goodsType;
 	private Date inputTime;
 	private String inputDetailId;
-	private double volumn;
-	private Date produceTime;
+	private double volume;
+	private Date productTime;
 	private Date validityTime;
 	private int businessId;
 	private int warehouseId;
@@ -76,18 +76,18 @@ public class StockEntity extends BaseEntity {
 	public void setInputDetailId(String inputDetailId) {
 		this.inputDetailId = inputDetailId;
 	}
-	public double getVolumn() {
-		return volumn;
-	}
-	public void setVolumn(double volumn) {
-		this.volumn = volumn;
-	}
 	
-	public Date getProduceTime() {
-		return produceTime;
+	public double getVolume() {
+		return volume;
 	}
-	public void setProduceTime(Date produceTime) {
-		this.produceTime = produceTime;
+	public void setVolume(double volume) {
+		this.volume = volume;
+	}
+	public Date getProductTime() {
+		return productTime;
+	}
+	public void setProductTime(Date productTime) {
+		this.productTime = productTime;
 	}
 	public Date getValidityTime() {
 		return validityTime;

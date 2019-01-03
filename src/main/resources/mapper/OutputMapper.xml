@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.osl.mapper.OutputMapper">
+	<select id="findOutputAll"
+		resultType="com.osl.model.OutputModel" parameterType="com.osl.model.OutputModel">
+		select t.* , business.name as businessName , tdetail.customer as customer , tdetail.new_date as requestDate
+		from t_output t 
+		left join t_output_detail tdetail on t.output_id = tdetail.output_id 
+		left join t_goods goods on tdetail.goods_id = goods.goods_id 
+		left join t_business business on t.business_id = business.id 
+		where 1=1 
+        <if test="businessId != -1">
+        	and t.business_id= #{businessId} 
+        </if>
+        <if test="warehouseId != -1">
+        	and t.warehouse_id= #{warehouseId} 
+        </if>
+        <if test="depotId !=null and depotId != ''">
+        	and tdetail.depot_id= #{depotId} 
+        </if>
+        <if test="sku !=null and sku != ''">
+        	and goods.sku= #{sku} 
+        </if>
+        <if test="outputId !=null and outputId != ''">
+        	and t.output_id= #{outputId} 
+        </if>
+        <if test="status != -1">
+        	and t.status= #{status} 
+        </if>
+        <if test="barcode !=null and barcode != ''">
+        	and goods.barcode= #{barcode} 
+        </if>
+        <if test="goodsName !=null and goodsName != ''">
+        	and goods.name= #{goodsName} 
+        </if>
+        <if test="customer !=null and customer != ''">
+        	and tdetail.customer= #{customer} 
+        </if>
+        <if test="startNewDate !=null and startNewDate != ''">
+        	and t.output_time <![CDATA[ >= ]]> #{startNewDate} 
+        </if>
+        <if test="endNewDate !=null and endNewDate != ''">
+        	and t.output_time <![CDATA[ <= ]]> #{endNewDate} 
+        </if>
+        and t.delete_flg = 0 
+        order by t.update_date desc
+	</select>
+	
+	<select id="findById" resultType="com.osl.model.OutputdetailModel" parameterType="String">
+		select *
+		from t_output_detail 
+		where 1=1 
+		and delete_flg = 0 
+		and detail_id=#{detailId} 
+	</select>
+	
+	<select id="findOutputById" resultType="com.osl.model.OutputModel" parameterType="String">
+		select * 
+		from t_output 
+		where 1=1 
+		and output_id = #{outputId}
+	</select>
+	
+	<select id="findDetailListById" resultType="com.osl.model.OutputdetailModel" parameterType="com.osl.model.OutputdetailModel">
+		select tdetail.* , form.name as sellplatformName , goods.sku as sku , category.name as categoryName , goods.name as goodsName , combination.name as combinationName 
+		from t_output_detail tdetail 
+		left join t_goods goods on tdetail.goods_id = goods.goods_id 
+		left join t_goods_category category on goods.category_id = category.id 
+		left join t_sellship ship on ship.sell_id = tdetail.ship_id
+		left join t_sellplatform form on ship.platform_id = form.id
+		left join t_combination combination on combination.combination_id = tdetail.combination_id
+		where 1=1 
+        <if test="sku !=null and sku != ''">
+        	and goods.sku= #{sku} 
+        </if>
+        <if test="status != -1">
+        	and tdetail.status= #{status} 
+        </if>
+        <if test="barcode !=null and barcode != ''">
+        	and goods.barcode= #{barcode} 
+        </if>
+        <if test="goodsName !=null and goodsName != ''">
+        	and goods.name= #{goodsName} 
+        </if>
+        <if test="customer !=null and customer != ''">
+        	and tdetail.customer= #{customer} 
+        </if>
+        <if test="startNewDate !=null and startNewDate != ''">
+        	and tdetail.new_date <![CDATA[ >= ]]> #{startNewDate} 
+        </if>
+        <if test="endNewDate !=null and endNewDate != ''">
+        	and tdetail.new_date <![CDATA[ <= ]]> #{endNewDate} 
+        </if>
+        <if test="sellplatformId != '-1'">
+        	and form.id = #{sellplatformId} 
+        </if>
+		and tdetail.delete_flg = 0 
+		and tdetail.output_id= #{outputId}
+		order by tdetail.update_date desc
+	</select>
+	
+	<delete id="deleteOutputById" parameterType="String">
+		delete from t_output where output_id= #{outputId}
+	</delete>
+	
+	<delete id="deleteOutputDetailByOutputId" parameterType="String">
+		delete from t_output_detail where output_id= #{outputId}
+	</delete>
+	
+	<delete id="deleteOutputDetailByDetailId" parameterType="String">
+		delete from t_output_detail where detail_id= #{detailId}
+	</delete>
+	
+	<delete id="cancelOutputById" parameterType="String">
+		update t_output set status = 4 where status = 3 and output_id= #{outputId}
+	</delete>
+	
+	<delete id="cancelOutputDetailByOutputId" parameterType="String">
+		update t_output_detail set status = 4 where status = 3 and output_id= #{outputId}
+	</delete>
+	
+	<delete id="cancelOutputDetailByDetailId" parameterType="String">
+		update t_output_detail set status = 4 where status = 3 and detail_id= #{detailId}
+	</delete>
+	
+	<insert id="saveNewOutputDetail"
+		parameterType="com.osl.model.OutputdetailModel">
+		insert into t_Output_detail
+		(detail_id, goods_id, nums, depot_id, shelves_id, inner_nums, inner_goods_nums, type, status, ship_id, goods_type, Output_id, validity_time, new_date, update_date, delete_flg)
+		values
+		(#{detailId},#{goodsId},#{nums},#{depotId},#{shelvesId},#{innerNums},#{innerGoodsNums},#{type},#{status},#{shipId},#{goodsType},#{OutputId},#{validityTime},#{newDate},#{updateDate},#{deleteFlag})
+	</insert>
+	
+	<update id="updateOutputDetail" parameterType="com.osl.model.OutputdetailModel">
+		update t_output_detail 
+		set nums = #{nums} , update_date = #{updateDate} 
+		where detail_id = #{detailId}
+	</update>
+	
+	<update id="updateOutputDetailStatus" parameterType="com.osl.model.OutputdetailModel">
+		update t_output_detail 
+		set status = #{status} , update_date = #{updateDate} 
+		where detail_id = #{detailId}
+	</update>
+	
+	<update id="updateOutput" parameterType="com.osl.model.OutputModel">
+		update t_output 
+		set goods_nums = #{goodsNums} , update_date = #{updateDate} , status = #{status} 
+		where output_id = #{outputId}
+	</update>
+	
+	<select id="findAllOutputNumByGoodsId" resultType="java.lang.Integer" parameterType="java.lang.String">
+		select count(1) from t_output_detail where goods_id = #{goodsId} and status in (0,2,3)
+	</select>
+</mapper>

@@ -14,7 +14,7 @@ public class ShelvesModel extends BaseModel {
 	private long id;
 	private String shelvesId;
 	private String name;
-	private long depotId;
+	private String depotId;
 	private String depotName;
 	private String position;
 	private int layer;
@@ -26,7 +26,21 @@ public class ShelvesModel extends BaseModel {
 	private long goods_category_id;
 	private int isdele;
 	private Timestamp addtime;
-
+	
+	
+	//添加字段
+	private int warehouseId;
+	private int totalNum;
+	private String goodsId;
+	private String goodsName;
+	private String sku;
+	private String barcode;
+	private String businessId;
+	private String businessName;
+	private int nums;
+	private int isEmpty;
+	
+	
 	public long getId() {
 		return id;
 	}
@@ -52,15 +66,17 @@ public class ShelvesModel extends BaseModel {
 		this.shelvesId = shelvesId;
 	}
 
-	public long getDepotId() {
+	
+	
+	
+
+	public String getDepotId() {
 		return depotId;
 	}
 
-	public void setDepotId(long depotId) {
+	public void setDepotId(String depotId) {
 		this.depotId = depotId;
 	}
-	
-	
 
 	public String getDepotName() {
 		return depotName;
@@ -150,4 +166,85 @@ public class ShelvesModel extends BaseModel {
 		this.addtime = addtime;
 	}
 
+	public int getTotalNum() {
+		return totalNum;
+	}
+
+	public void setTotalNum(int totalNum) {
+		this.totalNum = totalNum;
+	}
+
+	public String getGoodsId() {
+		return goodsId;
+	}
+
+	public void setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
+	}
+
+	public int getWarehouseId() {
+		return warehouseId;
+	}
+
+	public void setWarehouseId(int warehouseId) {
+		this.warehouseId = warehouseId;
+	}
+
+	public String getGoodsName() {
+		return goodsName;
+	}
+
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
+	}
+
+	public String getSku() {
+		return sku;
+	}
+
+	public void setSku(String sku) {
+		this.sku = sku;
+	}
+
+	public String getBarcode() {
+		return barcode;
+	}
+
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
+	}
+
+	public String getBusinessName() {
+		return businessName;
+	}
+
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
+	}
+
+	public int getNums() {
+		return nums;
+	}
+
+	public void setNums(int nums) {
+		this.nums = nums;
+	}
+
+	public String getBusinessId() {
+		return businessId;
+	}
+
+	public void setBusinessId(String businessId) {
+		this.businessId = businessId;
+	}
+
+	public int getIsEmpty() {
+		return isEmpty;
+	}
+
+	public void setIsEmpty(int isEmpty) {
+		this.isEmpty = isEmpty;
+	}
+	
+	
 }

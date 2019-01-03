@@ -38,7 +38,7 @@ import com.osl.model.InputModel;
 import com.osl.service.InputService;
 
 @Controller
-public class InputController extends BaseController<InputdetailModel> {
+public class InputController extends BaseController<InputModel> {
 	private static final Logger logger = LoggerFactory.getLogger(InputController.class);
 
 	@Autowired
@@ -307,7 +307,7 @@ public class InputController extends BaseController<InputdetailModel> {
 	@RequestMapping(value = "/b/input/list")
 	public String cInputList(Model model, HttpSession session, @RequestParam(required = false) String params) {
 		if (session.getAttribute("u_login") == null) {
-			return "redirect:/admin/login";
+			return "redirect:/business/login";
 		} else {
 			this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
 			// 参数组装

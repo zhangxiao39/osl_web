@@ -26,14 +26,8 @@ public class AdminController {
 	private UserService service;
 
 	@GetMapping("/admin/login")
-	public String dologin(Model model, String url) {
-		if (url == null || url.isEmpty()) {
-			model.addAttribute("erorrMsg", "登录路径不正确");
-			return "/w/login";
-		} else {
-			model.addAttribute("burl", url);
-			return "/w/login";
-		}
+	public String dologin() {
+		return "/login";
 	}
 
 	@PostMapping(value = "/admin/login")
@@ -46,7 +40,7 @@ public class AdminController {
 			return "/w/login";
 		} else {
 			password = DigestUtils.md5DigestAsHex(password.getBytes());
-			UserModel user1 = service.findByUserName_admin(user_id, password, burl);
+			UserModel user1 = service.login(user_id, password);
 			if (user1 == null) {
 				model.addAttribute("erorrMsg", "用户名或者密码不正确");
 				model.addAttribute("burl", burl);
@@ -72,9 +66,6 @@ public class AdminController {
 		if (session.getAttribute("u_login") == null) {
 			return "redirect:/admin/login";
 		} else {
-			model.addAttribute("uname", session.getAttribute("u_login"));
-			model.addAttribute("bname", session.getAttribute("u_bname"));
-			model.addAttribute("burl", session.getAttribute("u_burl"));
 			return "/w/index";
 		}
 	}

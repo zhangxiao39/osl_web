@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.osl.mapper.TakeStockMapper">
+	<!-- 库存盘点列表 -->
+	<select id="find_stock_list" resultType="com.osl.model.StockModel" parameterType="int">
+		SELECT a.*,d.username as b_user_name,b.`name` as goods_name,b.sku,c.`name` as category_name
+		FROM 
+		t_stock a 
+		LEFT JOIN t_goods b on a.goods_id = b.goods_id
+		LEFT JOIN t_goods_category c on b.category_id = c.id
+		LEFT JOIN t_user d on d.business_id = b.business_id
+		where 1 =1 	and a.warehouse_id = #{bid}
+		ORDER BY a.new_date
+	</select>
+	
+	<!-- 库存盘点搜索 -->
+	<select id="find_stock_list_by_condition" resultType="com.osl.model.StockModel">
+		SELECT a.*,d.username as b_user_name,b.`name` as goods_name,b.sku,c.`name` as category_name
+		FROM 
+		t_stock a 
+		LEFT JOIN t_goods b on a.goods_id = b.goods_id
+		LEFT JOIN t_goods_category c on b.category_id = c.id
+		LEFT JOIN t_user d on d.business_id = b.business_id
+		where 1 =1 	and a.warehouse_id = #{stockModel.warehouseId}
+		<if test="skuList != null and skuList.size &gt; 0">
+        	and b.sku in 
+        	 <foreach collection="skuList" item="item" index="index" 
+				open="(" separator="," close=")">#{item}</foreach>
+        </if>
+        <if test="stockModel.goodsName != null  and stockModel.goodsName !=''">
+        	and b.name like CONCAT('%', #{stockModel.goodsName},'%')
+        </if>
+         <if test="stockModel.barCode != null  and stockModel.barCode !=''">
+        	and b.barcode = #{stockModel.barCode}
+        </if>
+        
+         <if test="stockModel.businessId != null and stockModel.businessId !=-1 ">
+        	and a.business_id = #{stockModel.businessId}
+        </if>
+         <if test="stockModel.nums != null">
+          and a.nums >= #{stockModel.nums}
+        </if>
+		ORDER BY a.new_date
+	</select>
+	
+	<!-- 更新库存 -->
+	<update id="update_stock" parameterType="com.osl.mapper.entity.StockEntity">
+		update t_stock set
+			depot_id = #{depotId},
+			shelves_id = #{shelvesId},
+			nums = #{nums},
+			goods_type = #{goodsType},
+			validity_time = #{validityTime}
+			where manage_id=#{manageId}
+	</update>
+	
+	<!-- 更新库存,根据manageid以及nums -->
+	<update id="update_stock_by_id">
+			update t_stock set nums = #{nums} 
+			where manage_id=#{manageId}
+	</update>
+	
+	<!-- 逻辑删除库存信息-->
+	<update id="delete_stock_by_id" parameterType="java.lang.String">
+			UPDATE t_stock
+			SET delete_flg = 1 ,update_date = NOW()
+			WHERE  manage_id=#{manageId}
+	</update>
+</mapper>

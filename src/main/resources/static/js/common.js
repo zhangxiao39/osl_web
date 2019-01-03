@@ -56,8 +56,8 @@ function pay(id) {
 		}
 	})
 }
-function goStockDetailed(bid, goodsSku) {
-	window.location.href = '/a/stock/goodsDetail/' + bid + '/' + goodsSku + '/';
+function goStockDetailed(goodsId) {
+	window.location.href = '/a/stock/stockDetail/' + goodsId + '/';
 }
 function goBalanceList(bid, id) {
 	window.location.href = '/a/balance/list/' + bid + '/' + id + '/';
@@ -91,6 +91,27 @@ function goIputDetailed(inputId) {
 		window.location.href = '/a/input/detail';
 	}
 }
-function goOutputDetailed_b(id) {
-	window.location.href = '/b/output/detail/' + id + '/';
+function goOutputDetailed_b(outputId) {
+	var data = {};
+	data.outputId = outputId;
+	data.status = -1;
+	data.sellplatformId = "-1";
+	var dataJson = JSON.stringify(data); 
+	window.location.href = '/b/output/detail?params='+encodeURIComponent(dataJson);
+}
+function goOutputDetailed_a(outputId) {
+	var data = {};
+	data.outputId = outputId;
+	data.status = -1;
+	data.sellplatformId = "-1";
+	var dataJson = JSON.stringify(data); 
+	window.location.href = '/a/output/detail?params='+encodeURIComponent(dataJson);
+}
+function getThisUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    var str = window.location.href;
+    str = str.substr(str.indexOf("?") + 1);
+    var r = str.match(reg);  //匹配目标参数
+    if (r != null) return unescape(decodeURI(r[2]));
+    return null; //返回参数值
 }

@@ -25,6 +25,7 @@ import com.opencsv.CSVReader;
 import com.osl.common.web.BaseController;
 import com.osl.mapper.entity.EntrydetailEntity;
 import com.osl.model.EntryModel;
+import com.osl.model.StockModel;
 import com.osl.service.EntryService;
 import com.osl.service.TestUserService;
 
@@ -34,6 +35,14 @@ public class EntryController extends BaseController<EntryModel> {
 	@Autowired
 	private EntryService service;
 	
+	/*
+	 * @author:sun-hongyu
+	 * @date:2018-12-28
+	 * @des:纳品申请
+	 * @param:
+	 * @return：
+	 * 	
+	 */
 	@RequestMapping(value = "/b/entry/apply")
 	public String b_entrys_Apply(Model model, HttpSession session) {
 //		if (session.getAttribute("u_login") == null) {
@@ -78,16 +87,29 @@ public class EntryController extends BaseController<EntryModel> {
 		return "/c/entry/apply";
 	}
 
+	/*
+	 * @author:sun-hongyu
+	 * @date:2018-12-28
+	 * @des:纳品列表一览
+	 * @param:
+	 * @return：
+	 * 	
+	 */
 	@RequestMapping(value = "/b/entry/list")
 	public String b_entrys_List(Model model, HttpSession session) {
 		if (session.getAttribute("u_login") == null) {
 			return "redirect:/business/login";
 		} else {
-			model.addAttribute("uname", session.getAttribute("u_login"));
-			model.addAttribute("bname", session.getAttribute("u_bname"));
-			model.addAttribute("burl", session.getAttribute("u_burl"));
-			model.addAttribute("nav_active1", 3);
-			return "/c/entry/list";
+			if (session.getAttribute("u_login") == null) {
+				return "redirect:/admin/login";
+			} else {
+				this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
+				List<EntryModel> entryList = service.bQueryEntryListByBusinessId(this.myBusiness_id);
+				model.addAttribute("item", entryList);
+				model.addAttribute("nav_active1", 3);
+				return "/c/entry/list";
+			}
+			
 		}
 	}
 

@@ -11,239 +11,299 @@ public class OutputdetailModel extends BaseModel {
 	 */
 	private static final long serialVersionUID = -6865989049544998983L;
 	
-	private long id;
-	private String detail_id;
-	private String sku;
+	private String detailId;
+	private String goodsId;
 	private int nums;
-	private long depot_id;
-	private long shelves_id;
-	private int inner_nums;
-	private int inner_goods_nums;
+	private String depotId;
+	private String shelvesId;
+	private int innerNums;
+	private int innerGoodsNums;
 	private int type;
-	private String ship_id;
-	private int goods_type;
-	private String output_id;
+	private String shipId;
+	private int goodsType;
+	private String outputId;
+	private String orderId;
 	private String customer;
 	private String postcode;
 	private String address1;
 	private String address2;
 	private String tele;
-	private int send_type;
-	private String send_id;
-	private int transport_mode;
+	private int sendType;
+	private String sendId;
+	private int transportMode;
 	private int iscombination;
+	private int combinationId;
 	private int status;
-	private long return_id;
-	private String return_send_id;
-	private int isdele;
-	private Timestamp addtime;
-
-	public long getId() {
-		return id;
+	private String returnId;
+	private String returnSendId;
+	private int deleteFlg;
+	private Timestamp newDate;
+	private Timestamp updateDate;
+	
+	//销售平台
+	private String sellplatformName;
+	//销售平台id
+	private String sellplatformId;
+	//分类名称
+	private String categoryName;
+	//组合品名称
+	private String combinationName;
+	//sku
+	private String sku;
+	//商品名称
+	private String goodsName;
+	//条形码
+	private String barcode;
+	//录入开始日期
+	private String startNewDate;
+	//录入结束日期
+	private String endNewDate;
+	//查询flag
+	private String searchFlag;
+	//商家名称
+	private String businessName;
+	//请求日期
+	private Timestamp requestDate;
+	
+	
+	public String getSellplatformId() {
+		return sellplatformId;
 	}
-
-	public void setId(long id) {
-		this.id = id;
+	public void setSellplatformId(String sellplatformId) {
+		this.sellplatformId = sellplatformId;
 	}
-
-	public String getDetail_id() {
-		return detail_id;
+	public String getBarcode() {
+		return barcode;
 	}
-
-	public void setDetail_id(String detail_id) {
-		this.detail_id = detail_id;
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
 	}
-
+	public String getStartNewDate() {
+		return startNewDate;
+	}
+	public void setStartNewDate(String startNewDate) {
+		this.startNewDate = startNewDate;
+	}
+	public String getEndNewDate() {
+		return endNewDate;
+	}
+	public void setEndNewDate(String endNewDate) {
+		this.endNewDate = endNewDate;
+	}
+	public String getSearchFlag() {
+		return searchFlag;
+	}
+	public void setSearchFlag(String searchFlag) {
+		this.searchFlag = searchFlag;
+	}
+	public String getBusinessName() {
+		return businessName;
+	}
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
+	}
+	public Timestamp getRequestDate() {
+		return requestDate;
+	}
+	public void setRequestDate(Timestamp requestDate) {
+		this.requestDate = requestDate;
+	}
+	public String getCombinationName() {
+		return combinationName;
+	}
+	public void setCombinationName(String combinationName) {
+		this.combinationName = combinationName;
+	}
+	public String getSellplatformName() {
+		return sellplatformName;
+	}
+	public void setSellplatformName(String sellplatformName) {
+		this.sellplatformName = sellplatformName;
+	}
 	public String getSku() {
 		return sku;
 	}
-
 	public void setSku(String sku) {
 		this.sku = sku;
 	}
-
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	public String getGoodsName() {
+		return goodsName;
+	}
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
+	}
+	public String getDetailId() {
+		return detailId;
+	}
+	public void setDetailId(String detailId) {
+		this.detailId = detailId;
+	}
+	public String getGoodsId() {
+		return goodsId;
+	}
+	public void setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
+	}
 	public int getNums() {
 		return nums;
 	}
-
 	public void setNums(int nums) {
 		this.nums = nums;
 	}
-
-	public long getDepot_id() {
-		return depot_id;
+	public String getDepotId() {
+		return depotId;
 	}
-
-	public void setDepot_id(long depot_id) {
-		this.depot_id = depot_id;
+	public void setDepotId(String depotId) {
+		this.depotId = depotId;
 	}
-
-	public long getShelves_id() {
-		return shelves_id;
+	public String getShelvesId() {
+		return shelvesId;
 	}
-
-	public void setShelves_id(long shelves_id) {
-		this.shelves_id = shelves_id;
+	public void setShelvesId(String shelvesId) {
+		this.shelvesId = shelvesId;
 	}
-
-	public int getInner_nums() {
-		return inner_nums;
+	public int getInnerNums() {
+		return innerNums;
 	}
-
-	public void setInner_nums(int inner_nums) {
-		this.inner_nums = inner_nums;
+	public void setInnerNums(int innerNums) {
+		this.innerNums = innerNums;
 	}
-
-	public int getInner_goods_nums() {
-		return inner_goods_nums;
+	public int getInnerGoodsNums() {
+		return innerGoodsNums;
 	}
-
-	public void setInner_goods_nums(int inner_goods_nums) {
-		this.inner_goods_nums = inner_goods_nums;
+	public void setInnerGoodsNums(int innerGoodsNums) {
+		this.innerGoodsNums = innerGoodsNums;
 	}
-
 	public int getType() {
 		return type;
 	}
-
 	public void setType(int type) {
 		this.type = type;
 	}
-
-	public String getShip_id() {
-		return ship_id;
+	public String getShipId() {
+		return shipId;
 	}
-
-	public void setShip_id(String ship_id) {
-		this.ship_id = ship_id;
+	public void setShipId(String shipId) {
+		this.shipId = shipId;
 	}
-
-	public int getGoods_type() {
-		return goods_type;
+	public int getGoodsType() {
+		return goodsType;
 	}
-
-	public void setGoods_type(int goods_type) {
-		this.goods_type = goods_type;
+	public void setGoodsType(int goodsType) {
+		this.goodsType = goodsType;
 	}
-
-	public String getOutput_id() {
-		return output_id;
+	public String getOutputId() {
+		return outputId;
 	}
-
-	public void setOutput_id(String output_id) {
-		this.output_id = output_id;
+	public void setOutputId(String outputId) {
+		this.outputId = outputId;
 	}
-
+	public String getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
 	public String getCustomer() {
 		return customer;
 	}
-
 	public void setCustomer(String customer) {
 		this.customer = customer;
 	}
-
 	public String getPostcode() {
 		return postcode;
 	}
-
 	public void setPostcode(String postcode) {
 		this.postcode = postcode;
 	}
-
 	public String getAddress1() {
 		return address1;
 	}
-
 	public void setAddress1(String address1) {
 		this.address1 = address1;
 	}
-
 	public String getAddress2() {
 		return address2;
 	}
-
 	public void setAddress2(String address2) {
 		this.address2 = address2;
 	}
-
 	public String getTele() {
 		return tele;
 	}
-
 	public void setTele(String tele) {
 		this.tele = tele;
 	}
-
-	public int getSend_type() {
-		return send_type;
+	public int getSendType() {
+		return sendType;
 	}
-
-	public void setSend_type(int send_type) {
-		this.send_type = send_type;
+	public void setSendType(int sendType) {
+		this.sendType = sendType;
 	}
-
-	public String getSend_id() {
-		return send_id;
+	public String getSendId() {
+		return sendId;
 	}
-
-	public void setSend_id(String send_id) {
-		this.send_id = send_id;
+	public void setSendId(String sendId) {
+		this.sendId = sendId;
 	}
-
-	public int getTransport_mode() {
-		return transport_mode;
+	public int getTransportMode() {
+		return transportMode;
 	}
-
-	public void setTransport_mode(int transport_mode) {
-		this.transport_mode = transport_mode;
+	public void setTransportMode(int transportMode) {
+		this.transportMode = transportMode;
 	}
-
 	public int getIscombination() {
 		return iscombination;
 	}
-
 	public void setIscombination(int iscombination) {
 		this.iscombination = iscombination;
 	}
-
+	public int getCombinationId() {
+		return combinationId;
+	}
+	public void setCombinationId(int combinationId) {
+		this.combinationId = combinationId;
+	}
 	public int getStatus() {
 		return status;
 	}
-
 	public void setStatus(int status) {
 		this.status = status;
 	}
-
-	public long getReturn_id() {
-		return return_id;
+	public String getReturnId() {
+		return returnId;
 	}
-
-	public void setReturn_id(long return_id) {
-		this.return_id = return_id;
+	public void setReturnId(String returnId) {
+		this.returnId = returnId;
 	}
-
-	public String getReturn_send_id() {
-		return return_send_id;
+	public String getReturnSendId() {
+		return returnSendId;
 	}
-
-	public void setReturn_send_id(String return_send_id) {
-		this.return_send_id = return_send_id;
+	public void setReturnSendId(String returnSendId) {
+		this.returnSendId = returnSendId;
 	}
-
-	public int getIsdele() {
-		return isdele;
+	public int getDeleteFlg() {
+		return deleteFlg;
 	}
-
-	public void setIsdele(int isdele) {
-		this.isdele = isdele;
+	public void setDeleteFlg(int deleteFlg) {
+		this.deleteFlg = deleteFlg;
 	}
-
-	public Timestamp getAddtime() {
-		return addtime;
+	public Timestamp getNewDate() {
+		return newDate;
 	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
+	public void setNewDate(Timestamp newDate) {
+		this.newDate = newDate;
 	}
-
+	public Timestamp getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(Timestamp updateDate) {
+		this.updateDate = updateDate;
+	}
 }

@@ -23,6 +23,9 @@ public class UserModel extends BaseModel {
 	private int status;
 	private String url;
 	private String bname;
+	private int isadmin;
+	private int bType;
+	public String statusText;
 
 	public long getId() {
 		return id;
@@ -64,8 +67,6 @@ public class UserModel extends BaseModel {
 		this.right = right;
 	}
 
-	
-
 	public long getBusinessId() {
 		return businessId;
 	}
@@ -87,6 +88,14 @@ public class UserModel extends BaseModel {
 	}
 
 	public void setStatus(int status) {
+		switch (status) {
+		case 0:
+			this.statusText = "使用中";
+			break;
+		case 1:
+			this.statusText = "已停止";
+			break;
+		}
 		this.status = status;
 	}
 
@@ -104,6 +113,22 @@ public class UserModel extends BaseModel {
 
 	public void setBname(String bname) {
 		this.bname = bname;
+	}
+
+	public int getIsadmin() {
+		return isadmin;
+	}
+
+	public void setIsadmin(int isadmin) {
+		this.isadmin = isadmin;
+	}
+
+	public int getbType() {
+		return bType;
+	}
+
+	public void setbType(int bType) {
+		this.bType = bType;
 	}
 
 }

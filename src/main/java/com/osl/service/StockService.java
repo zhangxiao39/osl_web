@@ -2,6 +2,8 @@ package com.osl.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.osl.mapper.entity.StockEntity;
 import com.osl.model.StockModel;;
 
@@ -11,7 +13,7 @@ public interface StockService {
 	public List<StockModel> find_stockBusiness_All(int bid);
 	
 	//商家端，条件查询库存信息列表
-	public List<StockModel> find_stockBusiness_by_condition(int bid,StockModel stockModel);
+	public List<StockModel> find_stockBusiness_by_condition(List<String> skuList,StockModel stockModel);
 	
 	//运营商端，根据运营商id获取库存信息列表
 	public List<StockModel> find_adminStock_All(int bid);
@@ -36,4 +38,10 @@ public interface StockService {
 	
 	//逻辑删除库存信息
 	public int delete_stock_by_id(String manageId);
+	
+	//【库存盘点】，获取库存列表
+	public List<StockModel> find_stock_list(int bid);
+	
+	//【库存盘点】，条件获取库存列表
+	public List<StockModel> find_stock_list_by_condition(List<String> skuList,StockModel stockModel);
 }

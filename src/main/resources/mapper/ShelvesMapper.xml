@@ -5,7 +5,7 @@
 		resultType="com.osl.model.ShelvesModel" parameterType="int">
 		select
 		t_shelves.*,t_depot.name as depotName from t_depot,t_shelves where
-		t_shelves.delete_flg=0 and t_shelves.depot_id=t_depot.id and
+		t_shelves.delete_flg=0 and t_shelves.depot_id=t_depot.depot_id and
 		t_depot.business_id=#{bid}
 	</select>
 	
@@ -17,4 +17,107 @@
 		and delete_flg = 0 
 		and depot_id = #{depotId}
 	</select>
+	
+	<!-- 获取仓库中所有货架上的商品一览 -->
+	<select id="queryShelvesGoodsByBid"
+		resultType="com.osl.model.ShelvesModel" parameterType="int">
+		SELECT a.`name` as name, IFNULL(SUM(b.nums), 0) as total_num,a.shelves_id as shelves_id,a.depot_id
+			FROM t_shelves a
+			LEFT JOIN (
+				SELECT
+					SUM(c.nums) AS nums,
+					c.shelves_id as shelves_id
+				FROM
+					t_stock c
+				WHERE
+					c.delete_flg = 0
+				AND c.warehouse_id = #{bid}
+				GROUP BY
+					c.shelves_id
+				
+			) b on a.shelves_id = b.shelves_id
+			GROUP BY a.shelves_id
+	</select>
+	
+	<!-- 条件获取仓库中所有货架上的商品一览 -->
+	<select id="queryShelvesGoodsCondition"
+		resultType="com.osl.model.ShelvesModel" parameterType="com.osl.model.ShelvesModel">
+		SELECT a.`name` as name, IFNULL(SUM(b.nums), 0) as total_num,a.shelves_id as shelves_id,a.depot_id
+			FROM t_shelves a
+			LEFT JOIN (
+				SELECT
+					SUM(c.nums) AS nums,
+					c.shelves_id as shelves_id
+				FROM
+					t_stock c
+				WHERE
+					c.delete_flg = 0
+				AND c.warehouse_id = #{warehouseId}
+				GROUP BY
+					c.shelves_id
+				
+			) b on a.shelves_id = b.shelves_id
+			where 1 = 1
+			<if test="shelvesId != null  and shelvesId !=''">
+        		and a.shelves_id = #{shelvesId}
+       		</if> 
+			GROUP BY a.shelves_id
+			<!-- 
+			<if test="isEmpty == 1">
+        		having SUM(b.nums) = null
+       		</if> 
+       		<if test="isEmpty == 0">
+        		having SUM(b.nums) != null
+       		</if> -->
+	</select>
+	
+	<!-- 获取仓库中所有货架上的商品一览 -->
+	<select id="queryShelvesDetail"
+		resultType="com.osl.model.ShelvesModel" parameterType="com.osl.model.ShelvesModel">
+		SELECT 
+		a.shelves_id,c.`name` as goods_name,c.sku,c.barcode,b.username as business_name,a.nums
+		from 
+		t_stock a
+		LEFT JOIN t_user b on a.business_id = b.business_id
+		LEFT JOIN t_goods c on a.goods_id = c.goods_id
+		LEFT JOIN t_goods_category d on c.category_id = d.id
+		WHERE a.warehouse_id = #{warehouseId}
+		and a.shelves_id = #{shelvesId}
+		and a.delete_flg = 0
+		ORDER BY a.new_date
+	</select>
+	
+	<!-- 条件获取仓库中所有货架详情 -->
+	<select id="queryShelvesDetailByCondition"
+		resultType="com.osl.model.ShelvesModel" parameterType="com.osl.model.ShelvesModel">
+		SELECT 
+		a.shelves_id,c.`name` as goods_name,c.sku,c.barcode,b.username as business_name,a.nums
+		from 
+		t_stock a
+		LEFT JOIN t_user b on a.business_id = b.business_id
+		LEFT JOIN t_goods c on a.goods_id = c.goods_id
+		LEFT JOIN t_goods_category d on c.category_id = d.id
+		WHERE a.warehouse_id = #{warehouseId}
+		and a.shelves_id = #{shelvesId}
+		<if test="businessId != -1">
+        	and a.business_id = #{businessId}
+        </if>
+        <if test="goodsName != null  and goodsName !=''">
+        	and  c.name like CONCAT('%', #{goodsName},'%')
+        </if>
+        <if test="sku != null  and sku !=''">
+        	and c.sku = #{sku}
+        </if>
+        <if test="barcode != null  and barcode !=''">
+        	and c.barcode = #{barcode}
+        </if>
+        <if test="nums != null ">
+        	and a.nums >= #{nums}
+        </if>
+		and a.delete_flg = 0
+		ORDER BY a.new_date
+	</select>
+	
+
+	
 </mapper>

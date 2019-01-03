@@ -6,4 +6,30 @@
 		select * from t_depot where delete_flg=0 and
 		business_id=#{bid}
 	</select>
+	<insert id="insertDepot"
+		parameterType="com.osl.mapper.entity.DepotEntity">
+		insert into t_depot
+		(depot_id,name,address,business_id,postcode,new_date)
+		values
+		(#{depotId},#{name},#{address},#{businessId},#{postcode},now())
+	</insert>
+	<update id="deleteById" parameterType="String">
+		update t_depot set
+		delete_flg=1 where depot_id=#{depotId}
+	</update>
+	<update id="updateDepot"
+		parameterType="com.osl.mapper.entity.DepotEntity">
+		update t_depot set
+		name=#{name},
+		address=#{address},
+		postcode=#{postcode},
+		business_id=#{businessId}
+		where
+		depot_id=#{depotId}
+	</update>
+	<select id="findById" parameterType="String"
+		resultType="com.osl.mapper.entity.DepotEntity">
+		select * from t_depot
+		where depot_id=#{depotId}
+	</select>
 </mapper>

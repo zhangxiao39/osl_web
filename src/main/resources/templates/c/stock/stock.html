@@ -8,25 +8,21 @@
 
 <title>库存一览</title>
 
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
-<link th:href="@{/css/plugins/sweetalert/sweetalert.css}"
-	rel="stylesheet" />
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+	<link th:href="@{/css/plugins/sweetalert/sweetalert.css}"
+		  rel="stylesheet" />
 
-<!-- Data Tables -->
-<link th:href="@{/css/plugins/dataTables/dataTables.bootstrap.css}"
-	rel="stylesheet">
-<link th:href="@{/css/plugins/dataTables/dataTables.responsive.css}"
-	rel="stylesheet">
-<link th:href="@{/css/plugins/dataTables/dataTables.tableTools.min.css}"
-	rel="stylesheet">
+	<!-- Data Tables -->
+	<link th:href="@{/css/plugins/dataTables/datatables.min.css}"
+		  rel="stylesheet">
 
-<link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
-<link th:href="@{/css/style.css}" rel="stylesheet" />
+	<link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
+	<link th:href="@{/css/style.css}" rel="stylesheet" />
 
-<link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet" />
-<link th:href="@{/css/plugins/footable/footable.core.css}"
-	rel="stylesheet" />
-
+	<link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet" />
+	<link th:href="@{/css/plugins/footable/footable.core.css}"
+		  rel="stylesheet" />
+	<link th:href="@{/css/bootstrap-select.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -65,7 +61,8 @@
 									<div class="col-sm-2">
 										<div class="form-group">
 											<label class="control-label" for="product_name">商品SKU</label>
-											<input type="text" id="goods_sku" name="product_name" class="form-control">
+											<select id="goods_sku"  class="selectpicker bs-select show-tick form-control"
+													title='请选择sku'  data-live-search="true"    multiple></select>
 										</div>
 									</div>
 									<div class="col-sm-2">
@@ -95,9 +92,9 @@
 										<div class="form-group">
 											<label class="control-label" for="status">商品状态</label> <select
 												name="status" id="status" class="form-control">
-											<option value="" selected="">全部</option>
-											<option value="1">良品</option>
-											<option value="0">非良品</option>
+											<option value="-1" selected="">全部</option>
+											<option value="0">良品</option>
+											<option value="1">非良品</option>
 											<option value="2">废弃品</option>
 										</select>
 										</div>
@@ -106,7 +103,7 @@
 										<div class="form-group">
 											<label class="control-label" for="quantity1">库存数量</label> <input
 												type="text" id="goods_nums" name="quantity1" value=""
-												class="form-control">
+												class="form-control" onkeyup="value=value.replace(/[^\d]/g,'')">
 										</div>
 									</div>
 									<div class="col-sm-1">
@@ -264,20 +261,18 @@
 		</div>
 	</div>
 
+
+
 	<!-- Mainly scripts -->
 	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
-	
+
 	<script th:src="@{/js/bootstrap.min.js}"></script>
 	<script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
 	<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
 	<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
-	<!--cStock.js-->
-	<script th:src="@{/js/stock/cStock.js}"></script>
+
 	<!-- Data Tables -->
-	<script th:src="@{/js/plugins/dataTables/jquery.dataTables.js}"></script>
-	<script th:src="@{/js/plugins/dataTables/dataTables.bootstrap.js}"></script>
-	<script th:src="@{/js/plugins/dataTables/dataTables.responsive.js}"></script>
-	<script th:src="@{/js/plugins/dataTables/dataTables.tableTools.min.js}"></script>
+	<script th:src="@{/js/plugins/dataTables/datatables.min.js}"></script>
 
 	<!-- Peity -->
 	<script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
@@ -297,15 +292,11 @@
 
 	<!-- common -->
 	<script th:src="@{/js/common.js}"></script>
+	<!-- select data -->
+	<script th:src="@{/js/bootstrap-select.js}"></script>
 
-	<script th:inline="javascript">
-		$('.dataTables-example1').DataTable({
-			"dom" : 'lTfigt',
-			"tableTools" : {
-				"sSwfPath" : "/js/plugins/dataTables/swf/copy_csv_xls_pdf.swf"
-			}
-		});
-	</script>
+	<script th:src="@{/js/stock/cStock.js}"></script>
+
 
 </body>
 

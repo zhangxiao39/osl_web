@@ -58,36 +58,43 @@ var CONSTANT = {
 };
 var table = {};
 $(function() {
-    setTableCss();
     getBusiness();  //获取商家
     getAdminSkuList();  //获取商品sku列表
-    getCategpry();				//获取叶子节点分类列表
+    getCategpry();		//获取叶子节点分类列表
+    setTableCss();
 });
 
 //加载table样式
 function setTableCss() {
     $('.dataTables-example').DataTable(
         {
-            bFilter : false,
-            ordering : false,
-            iDisplayLength : 10,
-            bDestory:true,
-            sDom : 'itlp',
+            // bFilter : false,
+            // ordering : false,
+            // iDisplayLength : 10,
+            // bDestory:true,
+            // sDom : 'itlp',
+            // pageLength : 25,
+            // responsive : true,
+            // dom : '<"html5buttons"B>lTfgitp',
             pageLength : 25,
+            searching : false,
             responsive : true,
+            bLengthChange: true,
             dom : '<"html5buttons"B>lTfgitp',
             buttons : [
                 {
                     extend : 'csv',
                     action : function (nButton, oConfig, oFlash) {
                         var data = {};
-                        data.inputId = $("#inputId").val();
-                        data.sku = $("#sku").val();
-                        data.barcode = $("#barcode").val();
-                        data.goodsName = $("#goodsName").val();
-                        data.status = $("#status").val();
+                        var skuList = $('#goods_sku').val();
+                        data.barCode = $("#goods_barCode").val().trim();
+                        data.goodsName = $("#goods_name").val().trim();
+                        data.categoryId = $("#type").val();
+                        data.businessId = $("#businessSelect").val();
+                        data.nums = $("#goods_nums").val().trim();
                         var dataJson = JSON.stringify(data);
-                        window.location.href='/all/export/input?params=' + encodeURIComponent(dataJson);
+                        debugger;
+                        window.location.href='/a/export/aStock?params=' + encodeURIComponent(dataJson)+'&sku_list='+skuList;
                     }
                 }]
 
@@ -109,7 +116,6 @@ function searchStock()
         }
 
     }
-
     var name = $('#goods_name').val().trim(); //根据商品名称查询
     var barCode = $('#goods_barCode').val().trim(); //根据商品条形码查询
     var nums = $('#goods_nums').val().trim(); //根据商品数量查询
@@ -163,7 +169,7 @@ function getCategpry()
         success : function(data) {
             var categoryList = data;
             var categorySelect = $('#type');
-            var strOption ='<option value="10000" selected>全部</option>';
+            var strOption ='<option value="-1" selected>全部</option>';
             for(var i=0;i<categoryList.length;i++)
             {
                 strOption+='<option value='+data[i].id+'>'+data[i].name+'</option>'

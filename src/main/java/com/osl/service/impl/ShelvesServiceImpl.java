@@ -28,4 +28,24 @@ public class ShelvesServiceImpl implements ShelvesService{
 		return shelvesMapper.queryShelvesEntityListByDepotId(depotId);
 	}
 
+	@Override
+	public List<ShelvesModel> queryShelvesGoodsByBid(int bid) {
+		return shelvesMapper.queryShelvesGoodsByBid(bid);
+	}
+
+	@Override
+	public List<ShelvesModel> queryShelvesDetail(ShelvesModel shelvesModel) {
+		return shelvesMapper.queryShelvesDetail(shelvesModel);
+	}
+
+	@Override
+	public List<ShelvesModel> queryShelvesDetailByCondition(ShelvesModel shelvesModel) {
+		return shelvesMapper.queryShelvesDetailByCondition(shelvesModel);
+	}
+
+	@Override
+	public List<ShelvesModel> queryShelvesGoodsCondition(ShelvesModel shelvesModel) {
+		return shelvesMapper.queryShelvesGoodsCondition(shelvesModel);
+	}
+
 }

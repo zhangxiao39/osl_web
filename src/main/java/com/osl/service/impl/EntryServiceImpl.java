@@ -26,7 +26,6 @@ public class EntryServiceImpl implements EntryService {
 	 */
 	@Override
 	public boolean entryUpload(EntryModel userModel) {
-		// TODO Auto-generated method stub
 		MultipartFile applyFile = userModel.getApplyFile();
 		if (applyFile == null) {
 			throw new ApplException("请选择上传文件");
@@ -60,6 +59,29 @@ public class EntryServiceImpl implements EntryService {
 	public EntrydetailEntity queryEntrydetailEntityByDetailId(String detailId) {
 		// TODO Auto-generated method stub
 		return entryMapper.queryEntrydetailEntityByDetailId(detailId);
+	}
+
+	@Override
+	public Integer updateDetailEntryByInputDetail(EntrydetailEntity entity) {
+		// TODO Auto-generated method stub
+		return entryMapper.updateDetailEntryByInputDetail(entity);
+	}
+
+	@Override
+	public EntryEntity queryEntryEntityByEntryId(String entryId) {
+		// TODO Auto-generated method stub
+		return entryMapper.queryEntryEntityByEntryId(entryId);
+	}
+
+	@Override
+	public Integer updateEntryByInputDetail(EntryEntity entity) {
+		// TODO Auto-generated method stub
+		return entryMapper.updateEntryByInputDetail(entity);
+	}
+
+	@Override
+	public List<EntryModel> bQueryEntryListByBusinessId(int bid) {
+		return entryMapper.bQueryEntryListByBusinessId(bid);
 	}
 
 }

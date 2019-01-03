@@ -12,104 +12,165 @@ public class OutputModel extends BaseModel{
 	 */
 	private static final long serialVersionUID = -983500654804680236L;
 	
-	private long id;
-	private String output_id;
-	private Date output_time;
-	private int sku_nums;
-	private int goods_nums;
+	private String outputId;
+	private Date outputTime;
+	private int skuNums;
+	private int goodsNums;
 	private int status;
-	private long business_id;
-	private long warehoise_id;
-	private int isdele;
+	private long businessId;
+	private long warehouseId;
 	private String oper;
-	private Timestamp addtime;
-
-	public long getId() {
-		return id;
+	private Timestamp newDate;
+	private Timestamp updateDate;
+	private int deleteFlg;
+	
+	//sku
+	private String sku;
+	//商品名称
+	private String goodsName;
+	//条形码
+	private String barcode;
+	//录入开始日期
+	private String startNewDate;
+	//录入结束日期
+	private String endNewDate;
+	//查询flag
+	private String searchFlag;
+	//商家名称
+	private String businessName;
+	//收件人
+	private String customer;
+	//请求日期
+	private Timestamp requestDate;
+	//仓库id
+	private String depotId;
+	
+	
+	public String getDepotId() {
+		return depotId;
 	}
-
-	public void setId(long id) {
-		this.id = id;
+	public void setDepotId(String depotId) {
+		this.depotId = depotId;
 	}
-
-	public String getOutput_id() {
-		return output_id;
+	public Timestamp getRequestDate() {
+		return requestDate;
 	}
-
-	public void setOutput_id(String output_id) {
-		this.output_id = output_id;
+	public void setRequestDate(Timestamp requestDate) {
+		this.requestDate = requestDate;
 	}
-
-	public Date getOutput_time() {
-		return output_time;
+	public String getCustomer() {
+		return customer;
 	}
-
-	public void setOutput_time(Date output_time) {
-		this.output_time = output_time;
+	public void setCustomer(String customer) {
+		this.customer = customer;
 	}
-
-	public int getSku_nums() {
-		return sku_nums;
+	public String getSku() {
+		return sku;
 	}
-
-	public void setSku_nums(int sku_nums) {
-		this.sku_nums = sku_nums;
+	public void setSku(String sku) {
+		this.sku = sku;
 	}
-
-	public int getGoods_nums() {
-		return goods_nums;
+	public String getGoodsName() {
+		return goodsName;
 	}
-
-	public void setGoods_nums(int goods_nums) {
-		this.goods_nums = goods_nums;
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
 	}
-
+	public String getBarcode() {
+		return barcode;
+	}
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
+	}
+	public String getStartNewDate() {
+		return startNewDate;
+	}
+	public void setStartNewDate(String startNewDate) {
+		this.startNewDate = startNewDate;
+	}
+	public String getEndNewDate() {
+		return endNewDate;
+	}
+	public void setEndNewDate(String endNewDate) {
+		this.endNewDate = endNewDate;
+	}
+	public String getSearchFlag() {
+		return searchFlag;
+	}
+	public void setSearchFlag(String searchFlag) {
+		this.searchFlag = searchFlag;
+	}
+	public String getBusinessName() {
+		return businessName;
+	}
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
+	}
+	public String getOutputId() {
+		return outputId;
+	}
+	public void setOutputId(String outputId) {
+		this.outputId = outputId;
+	}
+	public Date getOutputTime() {
+		return outputTime;
+	}
+	public void setOutputTime(Date outputTime) {
+		this.outputTime = outputTime;
+	}
+	public int getSkuNums() {
+		return skuNums;
+	}
+	public void setSkuNums(int skuNums) {
+		this.skuNums = skuNums;
+	}
+	public int getGoodsNums() {
+		return goodsNums;
+	}
+	public void setGoodsNums(int goodsNums) {
+		this.goodsNums = goodsNums;
+	}
 	public int getStatus() {
 		return status;
 	}
-
 	public void setStatus(int status) {
 		this.status = status;
 	}
-
-	public long getBusiness_id() {
-		return business_id;
+	public long getBusinessId() {
+		return businessId;
 	}
-
-	public void setBusiness_id(long business_id) {
-		this.business_id = business_id;
+	public void setBusinessId(long businessId) {
+		this.businessId = businessId;
 	}
-
-	public long getWarehoise_id() {
-		return warehoise_id;
+	public long getWarehouseId() {
+		return warehouseId;
 	}
-
-	public void setWarehoise_id(long warehoise_id) {
-		this.warehoise_id = warehoise_id;
+	public void setWarehouseId(long warehouseId) {
+		this.warehouseId = warehouseId;
 	}
-
-	public int getIsdele() {
-		return isdele;
-	}
-
-	public void setIsdele(int isdele) {
-		this.isdele = isdele;
-	}
-
 	public String getOper() {
 		return oper;
 	}
-
 	public void setOper(String oper) {
 		this.oper = oper;
 	}
-
-	public Timestamp getAddtime() {
-		return addtime;
+	public Timestamp getNewDate() {
+		return newDate;
 	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
+	public void setNewDate(Timestamp newDate) {
+		this.newDate = newDate;
 	}
-
+	public Timestamp getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(Timestamp updateDate) {
+		this.updateDate = updateDate;
+	}
+	public int getDeleteFlg() {
+		return deleteFlg;
+	}
+	public void setDeleteFlg(int deleteFlg) {
+		this.deleteFlg = deleteFlg;
+	}
+	
 }

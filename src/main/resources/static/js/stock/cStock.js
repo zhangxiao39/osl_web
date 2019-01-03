@@ -58,9 +58,10 @@ var CONSTANT = {
 };
 var table = {};
 $(function() {
-    var $wrapper = $('#div-table-container');
+    // var $wrapper = $('#div-table-container');
     setTableCss();
     getBusiness();
+    getBusinessSkuList();
 
 });
 
@@ -68,40 +69,49 @@ $(function() {
 function setTableCss() {
     $('.dataTables-example').DataTable(
         {
-            bFilter : false,
-            ordering : false,
-            iDisplayLength : 10,
-            bDestory:true,
-            sDom : 'itlp',
+            // bFilter : false,
+            // ordering : false,
+            // iDisplayLength : 10,
+            // bDestory:true,
+            // // sDom : 'itlp',
+            // pageLength : 25,
+            // responsive : true,
+            // dom : '<"html5buttons"B>lTfgitp',
             pageLength : 25,
+            searching : false,
             responsive : true,
+            bLengthChange: true,
             dom : '<"html5buttons"B>lTfgitp',
-            buttons : [
-                {
-                    extend : 'copy'
-                },
-                {
-                    extend : 'csv'
-                },
-                {
-                    extend : 'excel',
-                    title : 'ExampleFile'
-                },
-                {
-                    extend : 'pdf',
-                    title : 'ExampleFile'
-                },
-
-                {
-                    extend : 'print',
-                    customize : function(win) {
-                        $(win.document.body).addClass('white-bg');
-                        $(win.document.body).css('font-size', '10px');
-
-                        $(win.document.body).find('table').addClass(
-                            'compact').css('font-size', 'inherit');
-                    }
-                } ]
+            // "oLanguage": {
+            //     "sLengthMenu": "每页显示 _MENU_ 条记录",
+            //     "sZeroRecords": "对不起，查询不到任何相关数据",
+            //     "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+            //     "sInfoEmtpy": "找不到相关数据",
+            //     "sInfoFiltered": "数据表中共为 _MAX_ 条记录)",
+            //     "sProcessing": "正在加载中...",
+            //     "sSearch": "搜索",
+            //     "sUrl": "", //多语言配置文件，可将oLanguage的设置放在一个txt文件中，例：Javascript/datatable/dtCH.txt
+            //     "oPaginate": {
+            //         "sFirst": "第一页",
+            //         "sPrevious": " 上一页 ",
+            //         "sNext": " 下一页 ",
+            //         "sLast": " 最后一页 "
+            //     }
+            // },
+            buttons : [{
+                extend : 'csv',
+                action : function (nButton, oConfig, oFlash) {
+                var skuList = $('#goods_sku').val();
+                var data = {};
+                data.barCode = $("#goods_barCode").val().trim();
+                data.goodsName = $("#goods_name").val().trim();
+                data.categoryId = $("#type").val();
+                data.goodsType = $("#status").val();
+                data.nums = $("#goods_nums").val().trim();
+                var dataJson = JSON.stringify(data);
+                window.location.href='/b/export/bStock?params=' + encodeURIComponent(dataJson)+'&sku_list='+skuList;
+                 }}
+            ]
 
         });
 }
@@ -110,28 +120,22 @@ function setTableCss() {
  */
 function searchStock()
 {
-    var sku = $('#goods_sku').val().trim(); //根据商品sku查询
+    var skuList = $('#goods_sku').val(); //根据商品sku查询
+    var sku = '';
+    for(var i=0;i<skuList.length;i++)
+    {
+        sku+=skuList[i];
+        if(skuList.length!=1&&i!=skuList.length-1)
+        {
+            sku+=","
+        }
+
+    }
     var name = $('#goods_name').val().trim(); //根据商品名称查询
     var barCode = $('#goods_barCode').val().trim(); //根据商品条形码查询
     var nums = $('#goods_nums').val().trim(); //根据商品数量查询
     var status = $('#status').val();    //良品和非良品
     var goodsCategoryId = $('#type').val();	//根据商品分类id查询
-    // $.ajax({
-    //     url : "/b/stock/condition",
-    //     type : "POST",
-    //     contentType:'application/json;charset=utf-8',
-    //     data:JSON.stringify(stockModel),
-    //     dataType:'text',
-    //     success : function(data) {
-    //         debugger;
-    //        table.ajax.reload();
-    //     	window.location.reload();
-    //     },
-    //     error : function(e) {
-    //         debugger;
-    //         alert("查询错误！！");
-    //     }
-    // });
     var dttable = $('.dataTables-example').dataTable();
     dttable.fnClearTable(); //清空一下table
     dttable.fnDestroy(); //还原初始化了的datatable
@@ -159,6 +163,34 @@ function getBusiness()
                 strOption+='<option value='+data[i].id+'>'+data[i].name+'</option>'
             }
             categorySelect.html(strOption);
+        },
+        error : function(e) {
+            alert("查询错误！！");
+        }
+    });
+}
+
+/*
+    加载当前商家对应的商品sku列表
+ */
+function getBusinessSkuList() {
+    $.ajax({
+        url : "/osl/goods/goodsList",
+        data:{},
+        type : "POST",
+        success : function(data) {
+            var businessList = data;
+            debugger;
+            var busiSelect = $('#goods_sku');
+            document.getElementById("goods_sku").options.selectedIndex = 0;
+            var strOption ='';
+            for(var i=0;i<data.length;i++)
+            {
+                strOption+='<option value='+data[i].sku+'>'+data[i].sku+'</option>'
+            }
+            $("#goods_sku").append(strOption);
+            $('#goods_sku').selectpicker('refresh');    //刷新数据
+            $('#goods_sku').selectpicker('render');
         },
         error : function(e) {
             alert("查询错误！！");

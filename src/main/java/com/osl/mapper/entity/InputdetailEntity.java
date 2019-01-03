@@ -1,6 +1,8 @@
 package com.osl.mapper.entity;
 
-import java.util.Date;
+
+import java.sql.Date;
+import java.sql.Timestamp;
 
 import com.osl.common.web.BaseEntity;
 
@@ -11,9 +13,8 @@ public class InputdetailEntity extends BaseEntity {
 	 */
 	private static final long serialVersionUID = -2573774686422360672L;
 	
-	private long id;
 	private String detailId;
-	private String sku;
+	private String goodsId;
 	private int nums;
 	private String depotId;
 	private String shelvesId;
@@ -25,7 +26,42 @@ public class InputdetailEntity extends BaseEntity {
 	private String inputId;
 	private Date validityTime;
 	private int status;
+	private int deleteFlag;
+	private Timestamp newDate;
+	private Timestamp updateDate;
 	
+
+	public int getDeleteFlag() {
+		return deleteFlag;
+	}
+
+	public void setDeleteFlag(int deleteFlag) {
+		this.deleteFlag = deleteFlag;
+	}
+
+	public Timestamp getNewDate() {
+		return newDate;
+	}
+
+	public void setNewDate(Timestamp newDate) {
+		this.newDate = newDate;
+	}
+
+	public Timestamp getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Timestamp updateDate) {
+		this.updateDate = updateDate;
+	}
+
+	public String getGoodsId() {
+		return goodsId;
+	}
+
+	public void setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
+	}
 
 	public int getStatus() {
 		return status;
@@ -33,14 +69,6 @@ public class InputdetailEntity extends BaseEntity {
 
 	public void setStatus(int status) {
 		this.status = status;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getDetailId() {
@@ -51,13 +79,6 @@ public class InputdetailEntity extends BaseEntity {
 		this.detailId = detailId;
 	}
 
-	public String getSku() {
-		return sku;
-	}
-
-	public void setSku(String sku) {
-		this.sku = sku;
-	}
 
 	public int getNums() {
 		return nums;
