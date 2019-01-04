@@ -21,4 +21,12 @@ public interface ShelvesService {
 	
 	//条件获取货架详情
 	public List<ShelvesModel> queryShelvesDetailByCondition(ShelvesModel shelvesModel);
+	
+	public int insertShelves(ShelvesEntity _shelves);
+	
+	public int updateShelves(ShelvesEntity _shelves);
+	
+	public int deleteById(String shelvesId);
+	
+	public ShelvesEntity findById(String shelvesId);
 }

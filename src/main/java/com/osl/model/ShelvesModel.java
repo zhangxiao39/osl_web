@@ -26,6 +26,7 @@ public class ShelvesModel extends BaseModel {
 	private long goods_category_id;
 	private int isdele;
 	private Timestamp addtime;
+	private String gcName;
 	
 	
 	//添加字段
@@ -109,6 +110,8 @@ public class ShelvesModel extends BaseModel {
 	public void setRow(int row) {
 		this.row = row;
 	}
+
+
 
 	public int getColumn() {
 		return column;
@@ -245,6 +248,16 @@ public class ShelvesModel extends BaseModel {
 	public void setIsEmpty(int isEmpty) {
 		this.isEmpty = isEmpty;
 	}
+
+	public String getGcName() {
+		return gcName;
+	}
+
+	public void setGcName(String gcName) {
+		this.gcName = gcName;
+	}
+	
+	
 	
 	
 }

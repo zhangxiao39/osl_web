@@ -13,12 +13,12 @@ function validform() {
 		},
 		messages : {
 			depotId : {
-				required : "请输入仓库D",
+				required : "请输入仓库ID",
 				minlength : "请输入5-50个字符",
 				maxlength : "请输入5-50个字符"
 			},
 			name : {
-				required : "请输入仓库姓名",
+				required : "请输入仓库名称",
 				maxlength : "不能超过200个字符"
 			}
 		}
@@ -105,7 +105,6 @@ $(function() {
 		$("#name").val("");
 		$("#address").val("");
 		$("#postcode").val("");
-		$("#id").val("0");
 		$("#mode").val("POST");
 		validform().resetForm();
 		$(".form-control").removeClass("error");
@@ -121,7 +120,6 @@ function showInfo(id) {
 			$("#name").val(data.name);
 			$("#address").val(data.address);
 			$("#postcode").val(data.postcode);
-			$("#id").val(id);
 			$("#mode").val("PUT");
 			$("#depotId").attr("readonly","readonly");
 		},

@@ -11,7 +11,8 @@
 	</select>
 	<select id="login" resultType="com.osl.model.UserModel">
 		select t_user.*,t_business.type as
-		bType from t_user,t_business where t_user.delete_flg=0 and
+		bType,t_business.name as bName from t_user,t_business where
+		t_user.delete_flg=0 and
 		t_user.business_id=t_business.id and
 		t_user.user_id=#{userId} and
 		t_user.password=#{password}

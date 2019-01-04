@@ -9,7 +9,6 @@ public class ShelvesEntity extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 2610604201828689346L;
 
-	private long id;
 	private String shelvesId;
 	private String name;
 	private String depotId;
@@ -21,15 +20,7 @@ public class ShelvesEntity extends BaseEntity {
 	private String areacode;
 	private double bearing;
 	private long goodsCategoryId;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
+	
 	public String getShelvesId() {
 		return shelvesId;
 	}
