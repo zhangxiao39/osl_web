@@ -1,6 +1,9 @@
 package com.osl.model;
 
 import java.sql.Timestamp;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.osl.common.web.BaseModel;
 
@@ -32,7 +35,7 @@ public class OutputdetailModel extends BaseModel {
 	private String sendId;
 	private int transportMode;
 	private int iscombination;
-	private int combinationId;
+	private String combinationId;
 	private int status;
 	private String returnId;
 	private String returnSendId;
@@ -64,8 +67,48 @@ public class OutputdetailModel extends BaseModel {
 	private String businessName;
 	//请求日期
 	private Timestamp requestDate;
+	//上传文件
+	private MultipartFile requestFile;
+	//请求临时在库数量
+	private String requestInputGoodsNum;
+	//请求临时出库数量
+	private String requestOutputGoodsNum;
+	//请求临时库存不足标识
+	private int insufficient;
+	//请求临时出库详情子list
+	private List<OutputdetailModel> requestOutputdetailModelList;
 	
 	
+	public List<OutputdetailModel> getRequestOutputdetailModelList() {
+		return requestOutputdetailModelList;
+	}
+	public void setRequestOutputdetailModelList(List<OutputdetailModel> requestOutputdetailModelList) {
+		this.requestOutputdetailModelList = requestOutputdetailModelList;
+	}
+	public int getInsufficient() {
+		return insufficient;
+	}
+	public void setInsufficient(int insufficient) {
+		this.insufficient = insufficient;
+	}
+	public String getRequestOutputGoodsNum() {
+		return requestOutputGoodsNum;
+	}
+	public void setRequestOutputGoodsNum(String requestOutputGoodsNum) {
+		this.requestOutputGoodsNum = requestOutputGoodsNum;
+	}
+	public String getRequestInputGoodsNum() {
+		return requestInputGoodsNum;
+	}
+	public void setRequestInputGoodsNum(String requestInputGoodsNum) {
+		this.requestInputGoodsNum = requestInputGoodsNum;
+	}
+	public MultipartFile getRequestFile() {
+		return requestFile;
+	}
+	public void setRequestFile(MultipartFile requestFile) {
+		this.requestFile = requestFile;
+	}
 	public String getSellplatformId() {
 		return sellplatformId;
 	}
@@ -264,10 +307,10 @@ public class OutputdetailModel extends BaseModel {
 	public void setIscombination(int iscombination) {
 		this.iscombination = iscombination;
 	}
-	public int getCombinationId() {
+	public String getCombinationId() {
 		return combinationId;
 	}
-	public void setCombinationId(int combinationId) {
+	public void setCombinationId(String combinationId) {
 		this.combinationId = combinationId;
 	}
 	public int getStatus() {

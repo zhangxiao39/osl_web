@@ -210,7 +210,6 @@ function validform() {
  */
 function updateStockSubmit()
 {
-    debugger;
      if (validform().form())
      {
         selectEntity .nums = parseInt(selectEntity .nums) - parseInt($('#upNum').val());

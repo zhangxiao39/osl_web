@@ -16,6 +16,8 @@
 <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet">
 <link th:href="@{/css/plugins/jasny/jasny-bootstrap.min.css}"
 	rel="stylesheet">
+<link th:href="@{/css/plugins/dataTables/datatables.min.css}"
+	rel="stylesheet">
 
 <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
 <link th:href="@{/css/style.css}" rel="stylesheet" />
@@ -48,36 +50,38 @@
 
 			<div class="wrapper wrapper-content animated fadeInRight">
 				<div class="row">
-					<div class="col-lg-12">
-						<div class="ibox float-e-margins">
-							<div class="ibox-title">
-								<h5>批量请求</h5>
-								<div class="ibox-tools">
-									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
-									</a>
-								</div>
-							</div>
-							<div class="ibox-content" style="display: block;">
-								<div class="fileinput fileinput-new input-group"
-									data-provides="fileinput">
-									<div class="form-control" data-trigger="fileinput">
-										<i class="glyphicon glyphicon-file fileinput-exists"></i> <span
-											class="fileinput-filename"></span>
+					<form id="form" th:action="@{/b/output/request/upload}" method="post" enctype="multipart/form-data">
+						<div class="col-lg-12">
+							<div class="ibox float-e-margins">
+								<div class="ibox-title">
+									<h5>批量请求</h5>
+									<div class="ibox-tools">
+										<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+										</a>
 									</div>
-									<span class="input-group-addon btn btn-default btn-file">
-										<span class="fileinput-new">Select file</span> <span
-										class="fileinput-exists">Change</span> <input type="file"
-										name="..." />
-									</span> <a href="#"
-										class="input-group-addon btn btn-warning fileinput-exists"
-										data-dismiss="fileinput">Remove</a> <a href="#"
-										class="input-group-addon btn btn-primary fileinput-exists"
-										data-dismiss="fileinput">提交请求</a>
+								</div>
+								<div class="ibox-content" style="display: block;">
+									<div class="fileinput fileinput-new input-group"
+										data-provides="fileinput">
+										<div class="form-control" data-trigger="fileinput">
+											<i class="glyphicon glyphicon-file fileinput-exists"></i> <span
+												class="fileinput-filename"></span>
+										</div>
+										<span class="input-group-addon btn btn-default btn-file">
+											<span class="fileinput-new">Select file</span> <span
+											class="fileinput-exists">Change</span> <input type="file"
+											name="requestFile" />
+										</span> <a href="#"
+											class="input-group-addon btn btn-warning fileinput-exists"
+											data-dismiss="fileinput">Remove</a> <a href="#" onclick="document.getElementById('form').submit();"
+											class="input-group-addon btn btn-primary fileinput-exists"
+											data-dismiss="fileinput">提交请求</a>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-lg-12">
+					</form>
+					<!-- <div class="col-lg-12">
 						<div class="ibox float-e-margins">
 							<div class="ibox-title">
 								<h5>搜索&amp;操作</h5>
@@ -135,6 +139,34 @@
 								</div>
 							</div>
 						</div>
+					</div> -->
+					<div class="col-lg-12" th:if="${uploadFlag==0}">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>上传结果</h5>
+								<div class="ibox-tools">
+									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+									</a>
+								</div>
+							</div>
+							<div class="ibox-content" style="display: block;">
+								<div class="row">
+									<div class="col-sm-9">
+										<div class="form-group" style="color:green">【上传成功：<span th:text="${successNum}"></span>条】</div>
+										<div class="form-group" style="color:red">
+											<div>【上传失败：<span th:text="${errorNum}"></span>条】
+												<span th:if="${errorNum > 0}">
+													【错误行号：】
+													<span th:each="p,pIndex:${errorList}">
+														<span th:text="${p}"></span>
+													</span>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 					<div class="col-lg-12">
 						<div class="ibox float-e-margins">
@@ -149,7 +181,7 @@
 								<div class="form-group">
 									<div class="table-responsive">
 										<table
-											class="table table-striped table-bordered table-hover dataTables-example">
+											class="table table-striped table-bordered table-hover dataTables-example" id="table_refresh"  th:fragment="table_refresh">
 											<thead>
 												<tr>
 													<th>#</th>
@@ -161,6 +193,7 @@
 													<th>名称</th>
 													<th>在库数量</th>
 													<th>出库数量</th>
+													<th>分项库存</th>
 													<th>客户名称</th>
 													<th>邮编</th>
 													<th>地址1</th>
@@ -172,98 +205,35 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td>1</td>
-													<td>yahoo</td>
-													<td>FM001</td>
-													<td>单品</td>
-													<td>MC8012MX300</td>
-													<td>フラッシュメモリ</td>
-													<td>Crucial SSD MX300 525GB</td>
-													<td>100</td>
-													<td>1</td>
-													<td>三郎君</td>
-													<td>115-6985</td>
-													<td>东京都</td>
-													<td>**************</td>
-													<td>895638974521</td>
-													<td>DM</td>
-													<td>JNH-5698-89563</td>
+												<tr th:each="p,pIndex:${item}">
+													<td th:text="${pIndex.count}"></td>
+													<td th:text="${p.sellplatformName}"></td>
+													<td th:text="${p.shipId}"></td>
+													<td th:text="${p.iscombination == 0 ? '单品' : '组合品'}"></td>
+													<td th:text="${p.sku}"></td>
+													<td th:text="${p.categoryName}"></td>
+													<td th:text="${p.goodsName}"></td>
+													<td th:style="'color:' + @{(${p.insufficient} == 0 ? 'red' : '')} + ''" th:text="${p.requestInputGoodsNum}"></td>
+													<td th:text="${p.requestOutputGoodsNum}"></td>
 													<td>
-														<button class="btn btn-danger btn-xs dropdown-toggle"
-															type="button" onClick="check(1)">
-															<i class="fa fa-trash"></i>删除
-														</button>
+														<div th:if="${p.iscombination == 1}">
+															<div th:each="t,tIndex:${p.requestOutputdetailModelList}">
+																<div th:style="'color:' + @{(${t.insufficient} == 0 ? 'red' : '')} + ''"><span th:style="'display:none'" th:text="${t.goodsName}"></span><span th:text="${t.goodsName}"></span>【预出库 ：<span th:text="${t.requestOutputGoodsNum}"></span>】</div>
+															</div>
+														</div>
+														<div th:else>
+														</div>
 													</td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td>yahoo</td>
-													<td>FM001</td>
-													<td>单品</td>
-													<td>MC8012MX300</td>
-													<td>フラッシュメモリ</td>
-													<td>Crucial SSD MX300 525GB</td>
-													<td>100</td>
-													<td>1</td>
-													<td>三郎君</td>
-													<td>115-6985</td>
-													<td>东京都</td>
-													<td>**************</td>
-													<td>895638974521</td>
-													<td>DM</td>
-													<td>JNH-5698-89563</td>
+													<td th:text="${p.customer}"></td>
+													<td th:text="${p.postcode}"></td>
+													<td th:text="${p.address1}"></td>
+													<td th:text="${p.address2}"></td>
+													<td th:text="${p.tele}"></td>
+													<td th:text="${p.sendType}"></td>
+													<td th:text="${p.sendId}"></td>
 													<td>
 														<button class="btn btn-danger btn-xs dropdown-toggle"
-															type="button" onClick="check(1)">
-															<i class="fa fa-trash"></i>删除
-														</button>
-													</td>
-												</tr>
-												<tr>
-													<td>3</td>
-													<td>yahoo</td>
-													<td>FM001</td>
-													<td>单品</td>
-													<td>MC8012MX300</td>
-													<td>フラッシュメモリ</td>
-													<td>Crucial SSD MX300 525GB</td>
-													<td>100</td>
-													<td>1</td>
-													<td>三郎君</td>
-													<td>115-6985</td>
-													<td>东京都</td>
-													<td>**************</td>
-													<td>895638974521</td>
-													<td>DM</td>
-													<td>JNH-5698-89563</td>
-													<td>
-														<button class="btn btn-danger btn-xs dropdown-toggle"
-															type="button" onClick="check(1)">
-															<i class="fa fa-trash"></i>删除
-														</button>
-													</td>
-												</tr>
-												<tr>
-													<td>4</td>
-													<td>yahoo</td>
-													<td>FM001</td>
-													<td>单品</td>
-													<td>MC8012MX300</td>
-													<td>フラッシュメモリ</td>
-													<td>Crucial SSD MX300 525GB</td>
-													<td>100</td>
-													<td>1</td>
-													<td>三郎君</td>
-													<td>115-6985</td>
-													<td>东京都</td>
-													<td>**************</td>
-													<td>895638974521</td>
-													<td>DM</td>
-													<td>JNH-5698-89563</td>
-													<td>
-														<button class="btn btn-danger btn-xs dropdown-toggle"
-															type="button" onClick="check(1)">
+															type="button" name="delete">
 															<i class="fa fa-trash"></i>删除
 														</button>
 													</td>
@@ -420,7 +390,7 @@
 	<!-- Data Tables -->
 	<script th:src="@{/js/plugins/iCheck/icheck.min.js}"></script>
 	<script th:src="@{/js/plugins/jasny/jasny-bootstrap.min.js}"></script>
-
+	<script th:src="@{/js/plugins/dataTables/datatables.min.js}"></script>
 	<!-- Peity -->
 	<script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
 
@@ -439,6 +409,8 @@
 
 	<!-- common -->
 	<script th:src="@{/js/common.js}"></script>
+	
+	<script th:src="@{/js/output/request.js}"></script>
 
 	<script th:inline="javascript">
 		$(document).ready(function() {

@@ -213,7 +213,20 @@ public class GoodsController extends BaseController<GoodsModel> {
 		_info = service.find_goodsBusiness_sku(myBusiness_id, sku);
 		return _info;
 	}
-
+	
+	/**
+	 * @des 获取商家的所有商品
+	 * @param session
+	 * @return List<GoodsModel>
+	 * @author sun-hongyu
+	 */
+	@RequestMapping(value = "/osl/goods/goodsList", method = RequestMethod.POST)
+	@ResponseBody
+	public List<GoodsModel> getCategoryMin(HttpSession session) {
+			this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
+			List<GoodsModel> list = service.find_goodsBusiness_All(this.myBusiness_id);
+			return list;
+	}
 	@Override
 	protected String getPageId() {
 		// TODO Auto-generated method stub

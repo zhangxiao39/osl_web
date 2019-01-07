@@ -1,7 +1,6 @@
 package com.osl.controller;
 
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,17 +23,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.alibaba.fastjson.JSON;
 import com.osl.common.ExportUtil;
 import com.osl.common.Util;
 import com.osl.common.UtilConst;
+import com.osl.common.UtilDateTime;
 import com.osl.common.web.BaseController;
 import com.osl.common.web.RedisUtils;
-import com.osl.model.InputdetailModel;
 import com.osl.model.InputModel;
+import com.osl.model.InputdetailModel;
 import com.osl.service.InputService;
 
 @Controller
@@ -255,7 +253,6 @@ public class InputController extends BaseController<InputModel> {
 	@RequestMapping(value = "/all/export/inputDetail" ,method = RequestMethod.GET)
 	public void exportInputDetail(Model model, HttpSession session, HttpServletResponse response,
 			@RequestParam String params) {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<Map<String, Object>> dataList = null;
 		InputdetailModel inputDetailModel = JSON.parseObject(params, InputdetailModel.class);
 		List<InputdetailModel> inputdetailModelList = service.findDetailListById(inputDetailModel.getInputId());
@@ -276,7 +273,7 @@ public class InputController extends BaseController<InputModel> {
 			map.put("inputId", tmpInputdetailModel.getInputId());
 			map.put("goodsType", tmpInputdetailModel.getGoodsType());
 			map.put("type", tmpInputdetailModel.getType());
-			map.put("validityTime", format.format(tmpInputdetailModel.getValidityTime()));
+			map.put("validityTime", UtilDateTime.getStrByDate(UtilDateTime.DATE_TIME_PAT_19, tmpInputdetailModel.getValidityTime()));
 			map.put("status", tmpInputdetailModel.getStatus() == 1 ? "入库完了" : "入库中");
 			dataList.add(map);
 		}

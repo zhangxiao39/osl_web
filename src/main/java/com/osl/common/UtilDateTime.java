@@ -280,6 +280,21 @@ public class UtilDateTime implements java.io.Serializable {
         dateFormat.applyPattern(pPattern);
         return dateFormat.format(new Date());
     }
+    
+    /**
+     * 时间格式化
+     * 
+     * @param pPattern 时间格式
+     * @return
+     */
+    public static String getStrByDate(String pPattern , Date date) {
+        if (Util.isEmpty(pPattern)) {
+            pPattern = DATE_PAT_10;
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat();
+        dateFormat.applyPattern(pPattern);
+        return dateFormat.format(date);
+    }
 
     /**
      * 获取两个日期的差

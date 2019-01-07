@@ -3,7 +3,7 @@
 <mapper namespace="com.osl.mapper.StockMapper">
 	<!-- 商家端，查找当前商家所有的库存列表 -->
 	<select id="find_stockBusiness_All" resultType="com.osl.model.StockModel" parameterType="int">
-		SELECT a.`name` AS goods_name,a.sku, a.barcode AS bar_code, c.id AS category_id, c.`name` AS category_name,	sum(b.nums) as nums
+		SELECT a.`name` AS goods_name,a.sku, a.barcode AS bar_code, c.id AS category_id, c.`name` AS category_name,	sum(b.nums) as nums , a.goods_id as goodsId , b.depot_id as depotId , b.shelves_id as shelvesId
 		FROM t_goods a, t_stock b, t_goods_category c
 		WHERE a.goods_id = b.goods_id
 		AND a.category_id = c.id
@@ -15,7 +15,7 @@
 		SELECT a.`name` AS goods_name,a.sku, a.barcode AS bar_code, c.id AS category_id, c.`name` AS category_name,sum(b.nums) as nums
 		FROM t_goods a, t_stock b, t_goods_category c
 		WHERE a.goods_id = b.goods_id
-		AND a.category_id = c.id and b.business_id= #{bid}
+		AND a.category_id = c.id and b.business_id= #{stockModel.businessId}
        <if test="stockModel.sku != null  and stockModel.sku !=''">
         	and a.sku = #{stockModel.sku}
         </if>

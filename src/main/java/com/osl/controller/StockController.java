@@ -48,7 +48,7 @@ public class StockController extends BaseController<StockModel> {
 	private RedisUtils redisUtils;
 	
 	/*
-	 * @des:商家端，获取库存一览
+	 * @des:【商家端】，获取库存一览
 	 * @author：sun-hongyu
 	 * @date:2018-12-10
 	 * @param:
@@ -68,7 +68,7 @@ public class StockController extends BaseController<StockModel> {
 	}
 	
 	/*
-	 * @des:商家端，条件查询库存一览
+	 * @des:【商家端】，条件查询库存一览
 	 * @author：sun-hongyu
 	 * @date:2018-12-10
 	 * @param:

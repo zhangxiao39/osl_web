@@ -1,6 +1,7 @@
 package com.osl.controller;
 
 import java.io.FileReader;
+import com.osl.common.Util;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -19,13 +20,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.opencsv.CSVReader;
 import com.osl.common.web.BaseController;
 import com.osl.mapper.entity.EntrydetailEntity;
 import com.osl.model.EntryModel;
+import com.osl.model.GoodsModel;
 import com.osl.model.StockModel;
+import com.osl.service.EntryDetailService;
 import com.osl.service.EntryService;
 import com.osl.service.TestUserService;
 
@@ -34,6 +39,8 @@ public class EntryController extends BaseController<EntryModel> {
 	
 	@Autowired
 	private EntryService service;
+	@Autowired
+	private EntryDetailService detailService;
 	
 	/*
 	 * @author:sun-hongyu
@@ -96,7 +103,7 @@ public class EntryController extends BaseController<EntryModel> {
 	 * 	
 	 */
 	@RequestMapping(value = "/b/entry/list")
-	public String b_entrys_List(Model model, HttpSession session) {
+	public String bEntrysList(Model model, HttpSession session) {
 		if (session.getAttribute("u_login") == null) {
 			return "redirect:/business/login";
 		} else {
@@ -112,7 +119,84 @@ public class EntryController extends BaseController<EntryModel> {
 			
 		}
 	}
-
+	/*
+	 * @des:【商家端】，条件查询纳品一览
+	 * @author：sun-hongyu
+	 * @date:2018-12-10
+	 * @param:
+	 * @return:list<StockModel>
+	 */
+	@RequestMapping(value = "b/entry/listCondition")
+	public String bEntryListCondition(Model model, HttpSession session,@RequestParam(required = false) String params) {
+		if (session.getAttribute("u_login") == null) {
+			return "redirect:/admin/login";
+		} else {
+			this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
+			EntryModel entry = JSON.parseObject(params,EntryModel.class);
+			entry.setBusinessId(this.myBusiness_id);
+			//拆解entryId列表
+			List<String> entryIdLis = new ArrayList<String>();
+			if(entry.getEntruIdStr()!=null && !entry.getEntruIdStr().equals(""))
+			{
+				entryIdLis =Arrays.asList(entry.getEntruIdStr().split(","));	//将拼接好的sku字符串转换成list
+			}
+			entry.setEntruIdList(entryIdLis);
+			//拆解sku列表
+			List<String> skuLis = new ArrayList<String>();
+			if(entry.getSkuStr()!=null && !entry.getSkuStr().equals(""))
+			{
+				skuLis =Arrays.asList(entry.getSkuStr().split(","));	//将拼接好的sku字符串转换成list
+			}
+			entry.setSkuList(skuLis);
+			List<EntryModel> entryList = service.bQueryEntryListByCondition(entry);
+			model.addAttribute("item", entryList);
+			model.addAttribute("nav_active1", 3);
+			return "/c/entry/list::table_refresh";
+		}
+	}
+	
+	/*
+	 * @des:【商家端】，取消纳品
+	 * @author：sun-hongyu
+	 * @date:2019-01-01
+	 * @param:
+	 * @return:int
+	 */
+	@RequestMapping(value = "/b/entry/updateEntryStatus", method = RequestMethod.POST)
+	@ResponseBody
+	public String bUpdateEntryStatus(String entryId) {
+		if (!Util.isEmpty(entryId)) {
+			int ok1 = service.bupdateEntryStatusById(entryId);
+			if (ok1 > 0) {
+				int ok2 = detailService.bupdateStatusByEntryId(entryId);
+				if(ok2>0)
+				{
+					return "ok";
+				}
+//				return "ok";
+				else {
+					return "fail";
+				}
+			} else {
+				return "fail";
+			}
+		} else {
+			return "fail";
+		}
+	}
+	
+	/**
+	 * @des 获取商家的所有商品
+	 * @param session
+	 * @return List<GoodsModel>
+	 */
+	@RequestMapping(value = "/osl/entry/entryList", method = RequestMethod.POST)
+	@ResponseBody
+	public List<EntryModel> getBusinessEntryList(HttpSession session) {
+			this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
+			List<EntryModel> list = service.bQueryEntryListByBusinessId(this.myBusiness_id);
+			return list;
+	}
 	@RequestMapping(value = "/b/entry/detail/{id}")
 	public String b_entrys_Detail(Model model, HttpSession session, @PathVariable(required = false) String id) {
 		if (session.getAttribute("u_login") == null) {

@@ -1,26 +1,15 @@
 package com.osl.service.impl;
 
-import java.lang.reflect.InvocationTargetException;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.osl.mapper.EntryMapper;
 import com.osl.mapper.OutputMapper;
 import com.osl.mapper.StockMapper;
-import com.osl.mapper.entity.EntryEntity;
-import com.osl.mapper.entity.EntrydetailEntity;
-import com.osl.mapper.entity.StockEntity;
-import com.osl.model.InputModel;
-import com.osl.model.InputdetailModel;
 import com.osl.model.OutputModel;
 import com.osl.model.OutputdetailModel;
-import com.osl.model.StockModel;
 import com.osl.service.OutputService;
 
 @Service
@@ -32,9 +21,6 @@ public class OutputServiceImpl implements OutputService {
 	@Autowired
 	private StockMapper stockMapper;
 	
-	@Autowired
-	private EntryMapper entryMapper;
-
 	@Override
 	public OutputdetailModel findById(String detailId) {
 		// TODO Auto-generated method stub

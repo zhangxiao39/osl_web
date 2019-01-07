@@ -95,13 +95,16 @@ function reloadTableCss(){
 							extend : 'csv',
 							action : function (nButton, oConfig, oFlash) {
 								var data = {};
-								data.inputId = $("#inputId").val();
+								data.outputId = $("#outputId").val();
 								data.sku = $("#sku").val();
 								data.barcode = $("#barcode").val();
 								data.goodsName = $("#goodsName").val();
 								data.status = $("#status").val();
+								data.customer = $("#customer").val();
+								data.startNewDate = $("#startNewDate").val();
+								data.endNewDate = $("#endNewDate").val();
 								var dataJson = JSON.stringify(data);
-								window.location.href='/all/export/input?params=' + encodeURIComponent(dataJson);
+								window.location.href='/all/export/output?params=' + encodeURIComponent(dataJson);
 							}
 						} ]
 			});

@@ -8,8 +8,84 @@
 			*
 		FROM
 			`t_entry`
-		WHERE business_id = #{bid};
+		WHERE business_id = #{bid}
+		and delete_flg = 0
+		ORDER BY new_date
 	</select>
+	
+	<!-- 【商家端】条件获取商家纳品列表 -->
+     <select id="bQueryEntryListByCondition" resultType="com.osl.model.EntryModel" parameterType="com.osl.model.EntryModel">
+		SELECT
+		a.entry_id,a.oper_time,a.complete_time,a.`status`,COUNT(b.entry_id) as sku_nums ,a.input_sku_nums,SUM(b.nums) as goods_nums,SUM(b.input_nums) as input_goods_nums
+		FROM
+			t_entry a,
+			t_entry_detail b,
+			t_goods c
+		WHERE
+			b.entry_id = a.entry_id
+		and b.goods_id = c.goods_id
+		and a.business_id = #{businessId} 
+		<if test="entryId != null  and entryId !=''">
+        	and a.entry_id =#{entryId} 
+        </if>
+		<if test="entruIdList != null and entruIdList.size>0">
+        	and a.entry_id in 
+        	 <foreach collection="entruIdList" item="item" index="index" 
+				open="(" separator="," close=")">#{item}</foreach>
+        </if>
+        <if test="skuList != null and skuList.size>0">
+        	and c.sku in 
+        	 <foreach collection="skuList" item="item" index="index" 
+				open="(" separator="," close=")">#{item}</foreach>
+        </if>
+        <if test="status != null  and status !=-1">
+        	and a.status =#{status} 
+        </if>
+        <if test="barcode != null  and barcode !=''">
+        	and c.barcode =#{barcode} 
+        </if>
+        <if test="goodsName != null  and goodsName !=''">
+        	and c.name like CONCAT('%', #{goodsName},'%')
+        </if>
+        and a.delete_flg = 0
+        GROUP BY a.entry_id
+		ORDER BY a.new_date
+	</select>
+	
+	<!-- 【商家端】根据纳品id，更新纳品状态为‘取消’ -->
+	<update id="bupdateEntryStatusById" parameterType="java.lang.String">
+		UPDATE t_entry 
+		SET `status` = 4 
+		WHERE
+		entry_id = #{entryId}
+	</update>
+	
+	<!-- 【商家端】根据纳品id，更新纳品数量信息 -->
+	<update id="bupdateEntryNums"  parameterType="com.osl.model.EntryModel">
+			UPDATE t_entry
+			SET
+			<if test="skuNums != null and skuNums >0">
+        		sku_nums = #{skuNums},
+       		</if>
+       		<if test="inputSkuNums != null and inputSkuNums >0">
+        		input_sku_nums = #{inputSkuNums},
+       		</if>
+       		<if test="goodsNums != null and goodsNums >0">
+        		goods_nums = #{goodsNums},
+       		</if>
+       		<if test="inputGoodsNums != null and inputGoodsNums >0">
+        		input_goods_nums = #{inputGoodsNums},
+       		</if>
+       		<!-- 
+			sku_nums = #{skuNums},
+			input_sku_nums = #{inputSkuNums},
+			goods_nums = #{goodsNums},
+			input_goods_nums = #{inputGoodsNums}, -->
+			oper = #{oper},
+			update_date = #{updateDate}
+			WHERE entry_id = #{entryId}
+	</update>
+	
 	
     <insert id="insertEntry" parameterType="com.osl.mapper.entity.EntryEntity" useGeneratedKeys="true" timeout="20">
     	INSERT INTO t_entry (entry_id, oper_time, complete_time, sku_nums, goods_nums, input_sku_nums, input_goods_nums, status, business_id, warehouse_id, oper, new_date)

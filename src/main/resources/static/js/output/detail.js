@@ -429,7 +429,7 @@ function reloadTableCss(){
 			responsive : true,
 			dom : '<"html5buttons"B>lTfgitp',
 			buttons : [
-					{
+					/*{
 						extend : 'csv',
 						action : function (nButton, oConfig, oFlash) {
 							var data = {};
@@ -437,7 +437,7 @@ function reloadTableCss(){
 							var dataJson = JSON.stringify(data);
 							window.location.href='/all/export/inputDetail?params=' + encodeURIComponent(dataJson);
 						}
-					}
+					}*/
 					 ]
 	
 		});

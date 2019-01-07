@@ -38,4 +38,26 @@ public class UtilConst {
 	public static final String TABLE_KEY_TO_BALANCE_DETAIL = "JSD";
 	// 商品表
 	public static final String TABLE_KEY_TO_GOODS = "CP";
+	
+	/**
+	 * 纳品9种状态常量定义
+	 */
+	//申请中
+	public static final int ENTRY_STATUS_APPLYING = 1;	
+	//库存不足
+	public static final int ENTRY_STATUS_INVERNTORY_SHORT = 2;
+	//商家承认完了
+	public static final int ENTRY_STATUS_OPERATOR_ADMIT = 3;
+	//取消
+	public static final int ENTRY_STATUS_CANCLE = 4;
+	//运输中
+	public static final int ENTRY_STATUS_TRANSPORTING = 5;
+	//入库完了
+	public static final int ENTRY_STATUS_INPUT_COMPLETE = 6;
+	//审核检品中
+	public static final int ENTRY_STATUS_CHECKING = 7;
+	//商家承认完了
+	public static final int ENTRY_STATUS_MERCHANT_ADMIT = 8;
+	//纳品完成
+	public static final int ENTRY_STATUS_ENTRY_COMPLETE = 9;
 }

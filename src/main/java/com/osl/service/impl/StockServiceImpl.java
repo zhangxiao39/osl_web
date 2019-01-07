@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.osl.mapper.GoodsMapper;
 import com.osl.mapper.StockMapper;
@@ -67,16 +68,19 @@ public class StockServiceImpl implements StockService {
 	}
 
 	@Override
+	@Transactional
 	public int update_stock(StockEntity stockEntity) {
 		return stockMapper.update_stock(stockEntity);
 	}
 
 	@Override
+	@Transactional
 	public int update_stock_by_id(String manageId, int nums) {
 		return stockMapper.update_stock_by_id(manageId, nums);
 	}
 
 	@Override
+	@Transactional
 	public int delete_stock_by_id(String manageId) {
 		return stockMapper.delete_stock_by_id(manageId);
 	}

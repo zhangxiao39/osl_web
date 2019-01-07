@@ -12,140 +12,149 @@ public class EntrydetailModel extends BaseModel {
 	 */
 	private static final long serialVersionUID = 5035303454422659768L;
 
-	private long id;
-	private String detail_id;
-	private String sku;
+	private String detailId;
+	private String goodsId;
 	private int nums;
-	private double package_size;
-	private int inner_nums;
-	private int inner_goods_nums;
-	private String sendid;
-	private long entry_id;
-	private int input_nums;
-	private int input_diff;
-	private Date produce_time;
-	private int max_nums;
-	private int isdele;
-	private Timestamp addtime;
-
-	public long getId() {
-		return id;
+	private double packageSize;
+	private int innerNums;
+	private int innerGoodsNums;
+	private String sendId;
+	private String entryId;
+	private int inputNums;
+	private int inputDiff;
+	private Date produceTime;
+	private int maxNums;
+	private int status;
+	private int deleteFlg;
+	private Timestamp newDate;
+	private Timestamp updateDate;
+	
+	private String sku;
+	private String categoryName;
+	private String goodsName;
+	private int inputDiffNums;	//更改数量的前后差异值，更改前数量-更改后的数量
+	public String getDetailId() {
+		return detailId;
 	}
-
-	public void setId(long id) {
-		this.id = id;
+	public void setDetailId(String detailId) {
+		this.detailId = detailId;
 	}
-
-	public String getDetail_id() {
-		return detail_id;
+	public String getGoodsId() {
+		return goodsId;
 	}
-
-	public void setDetail_id(String detail_id) {
-		this.detail_id = detail_id;
+	public void setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
 	}
-
-	public String getSku() {
-		return sku;
-	}
-
-	public void setSku(String sku) {
-		this.sku = sku;
-	}
-
 	public int getNums() {
 		return nums;
 	}
-
 	public void setNums(int nums) {
 		this.nums = nums;
 	}
-
-	public double getPackage_size() {
-		return package_size;
+	public double getPackageSize() {
+		return packageSize;
 	}
-
-	public void setPackage_size(double package_size) {
-		this.package_size = package_size;
+	public void setPackageSize(double packageSize) {
+		this.packageSize = packageSize;
 	}
-
-	public int getInner_nums() {
-		return inner_nums;
+	public int getInnerNums() {
+		return innerNums;
 	}
-
-	public void setInner_nums(int inner_nums) {
-		this.inner_nums = inner_nums;
+	public void setInnerNums(int innerNums) {
+		this.innerNums = innerNums;
 	}
-
-	public int getInner_goods_nums() {
-		return inner_goods_nums;
+	public int getInnerGoodsNums() {
+		return innerGoodsNums;
 	}
-
-	public void setInner_goods_nums(int inner_goods_nums) {
-		this.inner_goods_nums = inner_goods_nums;
+	public void setInnerGoodsNums(int innerGoodsNums) {
+		this.innerGoodsNums = innerGoodsNums;
 	}
-
-	public String getSendid() {
-		return sendid;
+	public String getSendId() {
+		return sendId;
 	}
-
-	public void setSendid(String sendid) {
-		this.sendid = sendid;
+	public void setSendId(String sendId) {
+		this.sendId = sendId;
 	}
-
-	public long getEntry_id() {
-		return entry_id;
+	
+	public String getEntryId() {
+		return entryId;
 	}
-
-	public void setEntry_id(long entry_id) {
-		this.entry_id = entry_id;
+	public void setEntryId(String entryId) {
+		this.entryId = entryId;
 	}
-
-	public int getInput_nums() {
-		return input_nums;
+	public int getInputNums() {
+		return inputNums;
 	}
-
-	public void setInput_nums(int input_nums) {
-		this.input_nums = input_nums;
+	public void setInputNums(int inputNums) {
+		this.inputNums = inputNums;
 	}
-
-	public int getInput_diff() {
-		return input_diff;
+	public int getInputDiff() {
+		return inputDiff;
 	}
-
-	public void setInput_diff(int input_diff) {
-		this.input_diff = input_diff;
+	public void setInputDiff(int inputDiff) {
+		this.inputDiff = inputDiff;
 	}
-
-	public Date getProduce_time() {
-		return produce_time;
+	public Date getProduceTime() {
+		return produceTime;
 	}
-
-	public void setProduce_time(Date produce_time) {
-		this.produce_time = produce_time;
+	public void setProduceTime(Date produceTime) {
+		this.produceTime = produceTime;
 	}
-
-	public int getMax_nums() {
-		return max_nums;
+	public int getMaxNums() {
+		return maxNums;
 	}
-
-	public void setMax_nums(int max_nums) {
-		this.max_nums = max_nums;
+	public void setMaxNums(int maxNums) {
+		this.maxNums = maxNums;
 	}
-
-	public int getIsdele() {
-		return isdele;
+	public int getStatus() {
+		return status;
 	}
-
-	public void setIsdele(int isdele) {
-		this.isdele = isdele;
+	public void setStatus(int status) {
+		this.status = status;
 	}
-
-	public Timestamp getAddtime() {
-		return addtime;
+	public int getDeleteFlg() {
+		return deleteFlg;
 	}
-
-	public void setAddtime(Timestamp addtime) {
-		this.addtime = addtime;
+	public void setDeleteFlg(int deleteFlg) {
+		this.deleteFlg = deleteFlg;
 	}
-
+	public Timestamp getNewDate() {
+		return newDate;
+	}
+	public void setNewDate(Timestamp newDate) {
+		this.newDate = newDate;
+	}
+	public Timestamp getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(Timestamp updateDate) {
+		this.updateDate = updateDate;
+	}
+	public String getSku() {
+		return sku;
+	}
+	public void setSku(String sku) {
+		this.sku = sku;
+	}
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	public String getGoodsName() {
+		return goodsName;
+	}
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
+	}
+	public int getInputDiffNums() {
+		return inputDiffNums;
+	}
+	public void setInputDiffNums(int inputDiffNums) {
+		this.inputDiffNums = inputDiffNums;
+	}
+	
+	
+	
 }

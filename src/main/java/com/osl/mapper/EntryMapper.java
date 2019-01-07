@@ -12,7 +12,13 @@ import com.osl.model.EntryModel;
 public interface EntryMapper {
 	
 	public List<EntryModel> bQueryEntryListByBusinessId(int bid);
-
+	
+	public List<EntryModel> bQueryEntryListByCondition(EntryModel entryModel);
+	
+	public int bupdateEntryNums(EntryModel entryModel);
+	
+	public int bupdateEntryStatusById(String entryId);
+	
 	public Integer insertEntry(EntryEntity entity);
 	
 	public EntryEntity queryEntryEntityByEntryId(String entryId);
@@ -24,4 +30,6 @@ public interface EntryMapper {
 	public EntrydetailEntity queryEntrydetailEntityByDetailId(String detailId);
 	
 	public Integer updateDetailEntryByInputDetail(EntrydetailEntity entity);
+	
+	
 }

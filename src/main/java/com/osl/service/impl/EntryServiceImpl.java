@@ -84,4 +84,21 @@ public class EntryServiceImpl implements EntryService {
 		return entryMapper.bQueryEntryListByBusinessId(bid);
 	}
 
+	@Override
+	public List<EntryModel> bQueryEntryListByCondition(EntryModel entryModel) {
+		return entryMapper.bQueryEntryListByCondition(entryModel);
+	}
+
+	@Override
+	public int bupdateEntryStatusById(String entryId) {
+		return entryMapper.bupdateEntryStatusById(entryId);
+	}
+
+	@Override
+	public int bupdateEntryNums(EntryModel entryModel) {
+		return entryMapper.bupdateEntryNums(entryModel);
+	}
+
+	
+
 }

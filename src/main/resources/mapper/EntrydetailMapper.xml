@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.osl.mapper.EntrydetailMapper">
+
+   <!-- 【商家端】根据纳品id,获取纳品详情列表 -->
+     <select id="bQueryEntryDetailListByEntryId" resultType="com.osl.model.EntrydetailModel" parameterType="String">
+		SELECT 
+		b.sku ,c.`name` as category_name,b.`name` as goods_name,a.*
+		from 
+		t_entry_detail a,
+		t_goods b,
+		t_goods_category c
+		WHERE 
+		a.goods_id = b.goods_id
+		and c.id = b.category_id
+		and a.entry_id = #{entryId}
+		and a.delete_flg = 0
+		ORDER BY a.detail_id
+	</select>
+	
+	
+	<!-- 【商家端】条件获取商家纳品详情列表 -->
+     <select id="bQueryEntryDetailListByCondition" resultType="com.osl.model.EntrydetailModel" parameterType="com.osl.model.EntrydetailModel">
+		SELECT 
+		b.sku ,c.`name` as category_name,b.`name` as goods_name,a.*
+		from 
+		t_entry_detail a,
+		t_goods b,
+		t_goods_category c
+		WHERE 
+		a.goods_id = b.goods_id
+		and c.id = b.category_id
+		and a.detail_id = #{detailId}
+		and a.delete_flg = 0
+		ORDER BY a.detail_id
+	</select>
+	<!-- 【商家端】根据纳品id，更新纳品详情状态为‘取消’ -->
+	<update id="bupdateStatusByEntryId" parameterType="java.lang.String">
+			update t_entry_detail set `status` = 4 WHERE entry_id = #{entryId}
+	</update>
+	
+	<!-- 【商家端】根据纳品详情id，逻辑删除纳品详情 -->
+	<update id="bDeleteEntryDetailById" parameterType="java.lang.String">
+			update t_entry_detail set delete_flg = 1 WHERE detail_id = #{entryDetailId}
+	</update>
+	
+	
+	<!-- 【商家端】根据纳品详情id，物理删除纳品详情 -->
+	<delete id="bPhysicsDeleteEntryDetailById" parameterType="java.lang.String">
+			delete from  t_entry_detail  WHERE detail_id = #{entryDetailId}
+	</delete>
+	
+	<!-- 【商家端】更新入库详情数量，货源单号-->
+	<update id="bupdateInputNumsAndNumbers" parameterType="com.osl.model.EntrydetailModel">
+			update t_entry_detail set 
+			update_date = #{updateDate},
+			<if test="inputNums != null and inputNums >0">
+        		input_nums = #{inputNums},
+       		</if>
+       		<if test="sendId != null and sendId !=''">
+        		send_id = #{sendId}
+       		</if>
+			WHERE detail_id = #{detailId}
+	</update>
+	
+    
+</mapper>
