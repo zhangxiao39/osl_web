@@ -75,7 +75,7 @@ $(function() {
  */
 function cCancelOutputDetailList(){
 	var array= "";
-	var arrChk=$("input[name='outputlistCheck']:checked");
+	var arrChk=$("input[name='outputDetailCheck']:checked");
 	if(arrChk.length<=0){
 		swal('提示','请先勾选数据,在进行批量操作！', "warning");
 		return;
@@ -188,7 +188,7 @@ function cCancelOutputDetail(detailId){
  */
 function cDeleteOutputDetailList(){
 	var array= "";
-	var arrChk=$("input[name='outputlistCheck']:checked");
+	var arrChk=$("input[name='outputDetailCheck']:checked");
 	if(arrChk.length<=0){
 		swal('提示','请先勾选数据,在进行批量操作！', "warning");
 		return;
@@ -388,7 +388,50 @@ function saveOutputDetailNums(){
 	}
 }
 
-function saveOutputDetailStatus(){
+function saveOutputDetailStatusBefore(detailId , status){
+	$("#editStatus").val(status);
+	$("#detailId").val(detailId);
+}
+
+function saveOutputDetailStatusAfter(){
+	if(wValidform().form()){
+		$.ajax({
+			url : "/a/save/outputdetail",
+			type : 'POST',
+			data : $("#editDetailStatusForm").serialize(),
+			success : function(data) {
+				if (data == "ok") {
+					swal({
+						title : "保存成功！",
+						text : "成功保存了一条出库详情信息。",
+						type : "success"
+					}, function() {
+						window.location.reload();
+					})
+				} else if (data == "exist") {
+					swal({
+						title : "出库详情ID已经存在！",
+						text : "保存失败！",
+						type : "error"
+					})
+				} else {
+					swal({
+						title : "保存失败",
+						text : "保存失败！",
+						type : "error"
+					})
+				}
+			},
+			error : function(e) {
+				alert("错误！！");
+			}
+		});
+	}
+}
+
+function saveOutputDetailStatus(detailId , status){
+	$("#editStatus").val(status);
+	$("#detailId").val(detailId);
 	$.ajax({
 		url : "/a/save/outputdetail",
 		type : 'POST',
@@ -454,6 +497,21 @@ function validform() {
 		messages : {
 			nums : {
 				required : "请输入出库数量",
+			}
+		}
+	});
+}
+
+function wValidform() {
+	return $("#editDetailStatusForm").validate({
+		rules : {
+			sendId : {
+				required : true
+			}
+		},
+		messages : {
+			sendId : {
+				required : "请输入发货番号",
 			}
 		}
 	});

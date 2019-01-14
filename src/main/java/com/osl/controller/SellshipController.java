@@ -56,6 +56,24 @@ public class SellshipController extends BaseController<SellshipModel> {
 			return "/c/goods/sellship";
 		}
 	}
+	
+	@RequestMapping(value = "/b/goods/sellshipList"  , method = RequestMethod.POST)
+	@ResponseBody
+	public List<SellshipModel> querySellshipList(Model model, HttpSession session,
+			@RequestParam(required = false) String qry_platformId,
+			@RequestParam(required = false) String qry_type) {
+		this.myBusiness_id = Integer.valueOf(session.getAttribute("u_bid").toString());
+		SellshipModel sellshipModel = new SellshipModel();
+		sellshipModel.setBusinessId(myBusiness_id);
+		if (!Util.isEmpty(qry_platformId)) {
+			sellshipModel.setPlatformId(Long.valueOf(qry_platformId));
+		}
+		if (!Util.isEmpty(qry_type)) {
+			sellshipModel.setType(Integer.valueOf(qry_type));
+		}
+		List<SellshipModel> _sellshipInfo = sellshipService.find_sellshipBusiness_All(sellshipModel);
+		return _sellshipInfo;
+	}
 
 	@RequestMapping(value = "/osl/sellship", method = RequestMethod.POST)
 	@ResponseBody

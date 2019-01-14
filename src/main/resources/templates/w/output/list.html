@@ -74,11 +74,12 @@
 											<label class="control-label" for="status">出库状态</label> <select
 												name="status" id="status" class="form-control">
 												<option value="-1" selected="selected">全部状态</option>
-												<option value="0">出库中</option>
-												<option value="1">出库完了</option>
-												<option value="2">请求中</option>
-												<option value="3">请求处理中</option>
-												<option value="4">请求取消</option>
+												<option value="0">出库请求</option>
+												<option value="1">请求取消</option>
+												<option value="2">出库中</option>
+												<option value="3">出库取消</option>
+												<option value="4">出库完成</option>
+												<option value="5">返品</option>
 											</select>
 										</div>
 									</div>
@@ -176,7 +177,7 @@
 												<td th:text="${#dates.format(p.requestDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
 												<td th:text="${p.skuNums}"></td>
 												<td th:text="${p.goodsNums}"></td>
-												<td th:text="${p.status == 0 ? '出库中' : p.status == 1 ? '入库完了' : p.status == 2 ? '请求中' : p.status == 3 ? '请求处理中' : '请求取消'}"></td>
+												<td th:text="${p.status == 0 ? '出库请求' : p.status == 1 ? '请求取消' : p.status == 2 ? '出库中' : p.status == 3 ? '出库取消' : p.status == 4 ? '出库完成' : '返品'}"></td>
 												<td>
 													<button class="btn btn-info btn-xs dropdown-toggle"
 														type="button" th:onclick="goOutputDetailed_a([[${p.outputId}]])">

@@ -12,8 +12,14 @@ public interface StockService {
 	//商家端，根据商家id获取库存列表
 	public List<StockModel> find_stockBusiness_All(int bid);
 	
+	//商家端，根据商家id获取所有的商品库存列表，无库存则为0
+	public List<StockModel> find_Business_All_Goods_Stock(int bid);
+	
 	//商家端，条件查询库存信息列表
 	public List<StockModel> find_stockBusiness_by_condition(List<String> skuList,StockModel stockModel);
+	
+	//商家端，条件查询所有的商品库存信息列表
+	public List<StockModel> find_Business_All_Goods_by_condition(List<String> skuList,StockModel stockModel);
 	
 	//运营商端，根据运营商id获取库存信息列表
 	public List<StockModel> find_adminStock_All(int bid);
@@ -44,4 +50,7 @@ public interface StockService {
 	
 	//【库存盘点】，条件获取库存列表
 	public List<StockModel> find_stock_list_by_condition(List<String> skuList,StockModel stockModel);
+	
+	//【出库查询库存】
+	public List<StockModel> find_stock_detail_by_output(StockModel stockModel);
 }

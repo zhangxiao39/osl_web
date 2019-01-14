@@ -102,17 +102,21 @@
 													th:onclick="|javascript:showInfo(${b.id})|">
 													<i class="fa fa-edit"></i>编辑
 												</button>
-												<button type="button" class="btn btn-info btn-xs"
-													th:if="${b.userId}>0">
+												<button type="button" class="btn btn-info btn-xs dropdown-toggle" data-toggle="modal" data-target="#adminModal"
+													th:if="!${b.userId}" th:onclick="|javascript:addAdmin(${b.id})|">
 													<i class="fa fa-edit"></i>添加管理员
 												</button>
 												<button type="button" class="btn btn-info btn-xs"
-													th:if="${b.ship} eq 1">
+													th:if="${b.ship} eq 1" th:onclick="|javascript:relieveShip(${b.id})|">
 													<i class="fa fa-edit"></i>解除关联
 												</button>
 												<button type="button" class="btn btn-info btn-xs"
-													th:if="${b.ship} eq 0">
+													th:if="${b.ship} eq 0" th:onclick="|javascript:relationShip(${b.id})|">
 													<i class="fa fa-edit"></i>关联
+												</button>
+												<button type="button" class="btn btn-info btn-xs"
+													th:if="${b.ship} eq 2" th:onclick="|javascript:recoveryShip(${b.id})|">
+													<i class="fa fa-edit"></i>恢复关联
 												</button>
 												<button class="btn btn-danger btn-xs dropdown-toggle"
 													type="button" onClick="check(1)">
@@ -217,6 +221,58 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
 					<button type="button" class="btn btn-primary" id="btn_submit">确认保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal inmodal" id="adminModal" tabindex="-1" role="dialog"
+		aria-hidden="true" style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content animated bounceInRight">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">添加管理员</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" name="adminform" id="adminform" method="POST">
+						<div class="form-group">
+							<label class="col-lg-3 control-label">ID</label>
+							<div class="col-lg-9">
+								<input type="text" placeholder="请输入名称" class="form-control"
+									name="userId" id="userId">
+									 <input type="hidden"
+									name="businessId" value="" id="businessId_admin">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">名称</label>
+							<div class="col-lg-9">
+								<input type="text" placeholder="请输入地址" class="form-control"
+									name="username" id="username">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">密码</label>
+							<div class="col-lg-9">
+								<input type="password" placeholder="请输入员工密码"
+									class="form-control" required="" name="password" id="password">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">确认密码</label>
+							<div class="col-lg-9">
+								<input type="password" placeholder="请输入确认密码"
+									class="form-control" required="" name="repassword" id="repassword">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="btn_submit_admin">确认保存</button>
 				</div>
 			</div>
 		</div>

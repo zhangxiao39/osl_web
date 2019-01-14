@@ -3,6 +3,8 @@
  */
 package com.osl.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,12 @@ public class RelationshipServiceImpl implements RelationshipService{
 	public int changeShip(RelationshipEntity relationshipEntity) {
 		// TODO Auto-generated method stub
 		return relationshipMapper.changeShip(relationshipEntity);
+	}
+
+	@Override
+	public List<RelationshipEntity> queryShipByBusinessId(Long businessId) {
+		// TODO Auto-generated method stub
+		return relationshipMapper.queryShipByBusinessId(businessId);
 	}
 
 }

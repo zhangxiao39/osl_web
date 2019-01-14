@@ -143,8 +143,8 @@
 											<tr th:each="p,pIndex:${item}">
 											<td th:text="${pIndex.count}"></td>
 											<td th:text="${p.entryId}"></td>
-											<td th:text="${p.operTime}"></td>
-											<td th:text="${p.completeTime}"></td>
+											<td th:text="${#dates.format(p.operTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+											<td th:text="${#dates.format(p.completeTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
 											<td th:text="${p.skuNums}"></td>
 											<td th:text="${p.goodsNums}"></td>
 											<td th:text="${p.inputSkuNums}"></td>
@@ -167,21 +167,23 @@
 														type="button" th:onClick="cancle([[${p.entryId}]])">
 													<i class="fa fa-trash"></i>取消
 												</button>
-												<button class="btn btn-warning btn-xs dropdown-toggle"
-														type="button" th:onClick="cancle([[${p.entryId}]])">
-													<i class="fa fa-trash"></i>再次申请
-												</button>
 											</td>
-											<td th:if="${p.status !=1 && p.status != 3}">
+											<td th:if="${p.status == 2}">
 												<button class="btn btn-info btn-xs dropdown-toggle"
 														type="button" th:onclick="getEnterDetail([[${p.entryId}]]);">
 													<i class="fa fa-edit"></i>查看明细
 												</button>
 												<button class="btn btn-warning btn-xs dropdown-toggle"
-														type="button" th:onClick="cancle([[${p.entryId}]])">
-													<i class="fa fa-trash"></i>再次申请
+														type="button" th:onClick="">
+													<i class="copy"></i>再次申请
 												</button>
 											</td>
+												<td th:if="${p.status !=1 && p.status != 3 && p.status != 2}">
+													<button class="btn btn-info btn-xs dropdown-toggle"
+															type="button" th:onclick="getEnterDetail([[${p.entryId}]]);">
+														<i class="fa fa-edit"></i>查看明细
+													</button>
+												</td>
 										</tr>
 										</tbody>
 									</table>

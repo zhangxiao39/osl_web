@@ -62,7 +62,7 @@ public interface OutputService {
 	 * @param entity
 	 * @return
 	 */
-	public int saveNewOutputDetail(OutputdetailModel model);
+	public int saveNewOutputDetail(List<OutputdetailModel> modelList , OutputModel fModel);
 	
 	/**
 	 * 修改保存出库详情表数据

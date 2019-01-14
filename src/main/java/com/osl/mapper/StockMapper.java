@@ -13,7 +13,11 @@ public interface StockMapper {
 	
 	public List<StockModel> find_stockBusiness_All(int bid);
 	
+	public List<StockModel> find_Business_All_Goods_Stock(int bid);
+	
 	public List<StockModel> find_stockBusiness_by_condition(@Param("skuList") List<String> skuList,StockModel stockModel);
+	
+	public List<StockModel> find_Business_All_Goods_by_condition(@Param("skuList") List<String> skuList,StockModel stockModel);
 	
 	public List<StockModel> find_adminStock_All(int bid);
 	
@@ -33,4 +37,5 @@ public interface StockMapper {
 	
 	public int findStockModelAllByGoodsId(String goodsId);
 	
+	public List<StockModel> find_stock_detail_by_output(StockModel stockModel);
 }

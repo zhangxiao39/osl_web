@@ -2,6 +2,7 @@ package com.osl.model;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 import com.osl.common.web.BaseModel;
 
@@ -42,7 +43,24 @@ public class StockModel extends BaseModel {
 	//录入结束日期
 	private String endNewDate;
 	
+	private List<String> skuList;
 	
+	private int innerNums;
+	private int innerGoodsNums;
+	
+	
+	public int getInnerNums() {
+		return innerNums;
+	}
+	public void setInnerNums(int innerNums) {
+		this.innerNums = innerNums;
+	}
+	public int getInnerGoodsNums() {
+		return innerGoodsNums;
+	}
+	public void setInnerGoodsNums(int innerGoodsNums) {
+		this.innerGoodsNums = innerGoodsNums;
+	}
 	public String getManageId() {
 		return manageId;
 	}
@@ -201,6 +219,12 @@ public class StockModel extends BaseModel {
 	}
 	public void setEndNewDate(String endNewDate) {
 		this.endNewDate = endNewDate;
+	}
+	public List<String> getSkuList() {
+		return skuList;
+	}
+	public void setSkuList(List<String> skuList) {
+		this.skuList = skuList;
 	}
 	
 	

@@ -28,11 +28,16 @@ public class EntrydetailModel extends BaseModel {
 	private int deleteFlg;
 	private Timestamp newDate;
 	private Timestamp updateDate;
+	private Date validityTime;
 	
 	private String sku;
 	private String categoryName;
 	private String goodsName;
-	private int inputDiffNums;	//更改数量的前后差异值，更改前数量-更改后的数量
+	private int inputDiffNums;
+	private int businessId;
+	private String oper;
+	private int stockNums;
+	
 	public String getDetailId() {
 		return detailId;
 	}
@@ -154,6 +159,31 @@ public class EntrydetailModel extends BaseModel {
 	public void setInputDiffNums(int inputDiffNums) {
 		this.inputDiffNums = inputDiffNums;
 	}
+	public int getBusinessId() {
+		return businessId;
+	}
+	public void setBusinessId(int businessId) {
+		this.businessId = businessId;
+	}
+	public String getOper() {
+		return oper;
+	}
+	public void setOper(String oper) {
+		this.oper = oper;
+	}
+	public int getStockNums() {
+		return stockNums;
+	}
+	public void setStockNums(int stockNums) {
+		this.stockNums = stockNums;
+	}
+	public Date getValidityTime() {
+		return validityTime;
+	}
+	public void setValidityTime(Date validityTime) {
+		this.validityTime = validityTime;
+	}
+	
 	
 	
 	

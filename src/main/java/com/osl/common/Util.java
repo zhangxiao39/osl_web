@@ -21,6 +21,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -86,7 +88,41 @@ public class Util {
 			return false;
 		}
 	}
-
+	
+    /**
+     * 正则表达式：判断是否数字
+     * @param str
+     * @return
+     */
+    public static boolean isNumer(String str){ 
+        Pattern pattern = Pattern.compile("[0-9]*"); 
+        return pattern.matcher(str).matches();    
+     }
+    
+    /**
+     * 正则表达式：判断是否为正小数
+     * @param str
+     * @return
+     */
+    public static boolean isPositiveDecimal(String orginal){  
+        return isMatch("\\+{0,1}[0]\\.[1-9]*|\\+{0,1}[1-9]\\d*\\.\\d*", orginal);  
+    }  
+    private static boolean isMatch(String regex, String orginal){  
+        if (orginal == null || orginal.trim().equals("")) {  
+            return false;  
+        }  
+        Pattern pattern = Pattern.compile(regex);  
+        Matcher isNum = pattern.matcher(orginal);  
+        return isNum.matches();  
+    }  
+    /**
+     * 正则表达式：判断是否数字和字符串
+     * @param str
+     * @return
+     */
+    public static boolean isNumeAndStr(String str){ 
+        return str.matches("[0-9a-zA-Z]*");
+     }
 	private static final String REG_RXPRE_RESV[] = { "\\.", "\\^", "\\$", "\\[", "\\]", "\\*", "\\+", "\\?", "\\|", "\\(", "\\)" };
 
 	/**

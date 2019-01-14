@@ -1,5 +1,6 @@
 package com.osl.mapper.entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import com.osl.common.web.BaseEntity;
@@ -11,7 +12,6 @@ public class EntryEntity extends BaseEntity {
 	 */
 	private static final long serialVersionUID = -2819299654968863572L;
 
-	private long id;
 	private String entryId;
 	private Date operTime;
 	private Date completeTime;
@@ -23,14 +23,10 @@ public class EntryEntity extends BaseEntity {
 	private long businessId;
 	private long warehouseId;
 	private String oper;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
+	private Timestamp newDate;
+	private Timestamp updateDate;
+	private int deleteFlg;
+	
 
 	public String getEntryId() {
 		return entryId;
@@ -119,5 +115,30 @@ public class EntryEntity extends BaseEntity {
 	public void setOper(String oper) {
 		this.oper = oper;
 	}
+
+	public Timestamp getNewDate() {
+		return newDate;
+	}
+
+	public void setNewDate(Timestamp newDate) {
+		this.newDate = newDate;
+	}
+
+	public Timestamp getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Timestamp updateDate) {
+		this.updateDate = updateDate;
+	}
+
+	public int getDeleteFlg() {
+		return deleteFlg;
+	}
+
+	public void setDeleteFlg(int deleteFlg) {
+		this.deleteFlg = deleteFlg;
+	}
+	
 
 }

@@ -16,7 +16,7 @@
 	<!-- 【商家端】条件获取商家纳品列表 -->
      <select id="bQueryEntryListByCondition" resultType="com.osl.model.EntryModel" parameterType="com.osl.model.EntryModel">
 		SELECT
-		a.entry_id,a.oper_time,a.complete_time,a.`status`,COUNT(b.entry_id) as sku_nums ,a.input_sku_nums,SUM(b.nums) as goods_nums,SUM(b.input_nums) as input_goods_nums
+		a.entry_id,a.oper_time,a.complete_time,a.`status`,a.sku_nums ,a.input_sku_nums,a.goods_nums,a.input_goods_nums
 		FROM
 			t_entry a,
 			t_entry_detail b,
@@ -38,7 +38,7 @@
         	 <foreach collection="skuList" item="item" index="index" 
 				open="(" separator="," close=")">#{item}</foreach>
         </if>
-        <if test="status != null  and status !=-1">
+        <if test="status != null  and status >0">
         	and a.status =#{status} 
         </if>
         <if test="barcode != null  and barcode !=''">
@@ -75,6 +75,9 @@
        		</if>
        		<if test="inputGoodsNums != null and inputGoodsNums >0">
         		input_goods_nums = #{inputGoodsNums},
+       		</if>
+       		<if test="status != null and status >0">
+        		status = #{status},
        		</if>
        		<!-- 
 			sku_nums = #{skuNums},

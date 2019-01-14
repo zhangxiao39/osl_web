@@ -3,6 +3,8 @@
  */
 package com.osl.service;
 
+import java.util.List;
+
 import com.osl.mapper.entity.RelationshipEntity;
 
 /**
@@ -13,4 +15,5 @@ public interface RelationshipService {
 	
 	public int changeShip(RelationshipEntity relationshipEntity);
 
+	public List<RelationshipEntity> queryShipByBusinessId(Long businessId);
 }

@@ -14,4 +14,8 @@
 		ship=#{ship}
 		where business_id=#{businessId} and warehouse_id=#{warehouseId}
 	</update>
+	<select id="queryShipByBusinessId"
+		resultType="com.osl.mapper.entity.RelationshipEntity">
+		select * from t_relationship where business_id=#{businessId}
+	</select>
 </mapper>

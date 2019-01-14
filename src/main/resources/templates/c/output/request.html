@@ -18,6 +18,9 @@
 	rel="stylesheet">
 <link th:href="@{/css/plugins/dataTables/datatables.min.css}"
 	rel="stylesheet">
+	
+<link th:href="@{/css/bootstrap-select.css}"
+	rel="stylesheet">
 
 <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
 <link th:href="@{/css/style.css}" rel="stylesheet" />
@@ -54,7 +57,8 @@
 						<div class="col-lg-12">
 							<div class="ibox float-e-margins">
 								<div class="ibox-title">
-									<h5>批量请求</h5>
+									<h5>批量请求
+									</h5>
 									<div class="ibox-tools">
 										<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
 										</a>
@@ -69,14 +73,16 @@
 										</div>
 										<span class="input-group-addon btn btn-default btn-file">
 											<span class="fileinput-new">Select file</span> <span
-											class="fileinput-exists">Change</span> <input type="file"
+											class="fileinput-exists">Change</span><input type="file"
 											name="requestFile" />
-										</span> <a href="#"
+										</span> 
+										<a href="#"
 											class="input-group-addon btn btn-warning fileinput-exists"
-											data-dismiss="fileinput">Remove</a> <a href="#" onclick="document.getElementById('form').submit();"
+											data-dismiss="fileinput">Remove</a> <a href="#" onclick="tmpDataCheck()"
 											class="input-group-addon btn btn-primary fileinput-exists"
-											data-dismiss="fileinput">提交请求</a>
+											>提交请求</a>
 									</div>
+									<button type="button" class="btn btn-primary" onclick="downloadTemplet()">模板下载</button>
 								</div>
 							</div>
 						</div>
@@ -156,10 +162,11 @@
 										<div class="form-group" style="color:red">
 											<div>【上传失败：<span th:text="${errorNum}"></span>条】
 												<span th:if="${errorNum > 0}">
-													【错误行号：】
+													【错误行号：
 													<span th:each="p,pIndex:${errorList}">
-														<span th:text="${p}"></span>
+														(<span th:text="${p}"></span>)
 													</span>
+													】
 												</span>
 											</div>
 										</div>
@@ -179,9 +186,12 @@
 							</div>
 							<div class="ibox-content">
 								<div class="form-group">
-									<div class="table-responsive">
+									<div class="table-responsive" id="table_refresh"  th:fragment="table_refresh">
+										<script th:inline="javascript">
+											var tmpRequestData = [[${item}]];
+										</script>
 										<table
-											class="table table-striped table-bordered table-hover dataTables-example" id="table_refresh"  th:fragment="table_refresh">
+											class="table table-striped table-bordered table-hover dataTables-example" >
 											<thead>
 												<tr>
 													<th>#</th>
@@ -230,10 +240,10 @@
 													<td th:text="${p.address2}"></td>
 													<td th:text="${p.tele}"></td>
 													<td th:text="${p.sendType}"></td>
-													<td th:text="${p.sendId}"></td>
+													<td th:text="${p.orderId}"></td>
 													<td>
 														<button class="btn btn-danger btn-xs dropdown-toggle"
-															type="button" name="delete">
+															type="button" name="delete" th:data-id="${p.orderId}">
 															<i class="fa fa-trash"></i>删除
 														</button>
 													</td>
@@ -245,7 +255,8 @@
 								<div class="row">
 									<div class="col-sm-12">
 										<div class="form-group">
-											<button type="button" class="btn btn-primary">确认出库请求</button>
+											<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">新建出库请求</button>
+											<button type="button" class="btn btn-primary" onclick="submitRequestData()">确认出库请求</button>
 										</div>
 									</div>
 								</div>
@@ -269,111 +280,107 @@
 					<h4 class="modal-title">添加出库请求</h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal">
+					<form id="myform" class="form-horizontal">
 						<div class="form-group">
 							<label class="col-lg-3 control-label">销售平台</label>
 							<div class="col-lg-9">
-								<select class="form-control" name="account">
-									<option>选择平台</option>
-									<option>yahoo</option>
-									<option>qoo10</option>
-								</select>
+								<select class="selectpicker" data-live-search="true" id="sellplatformId" name="sellplatformId" title="请选择销售平台" data-size="5" onchange="selectOnchangBySellplatformId(this)"></select>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">贩卖类型</label>
 							<div class="col-lg-9">
-								<select class="form-control" name="account">
-									<option>选择类型</option>
-									<option>单品</option>
-									<option>组合品</option>
+								<select class="selectpicker" id="iscombination" name="iscombination" title="请选择贩卖类型" data-size="5" onchange="selectOnchangByIscombination(this)">
+									<option value="0">单品</option>
+									<option value="1">组合品</option>
 								</select>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">贩卖ID</label>
 							<div class="col-lg-9">
-								<input type="email" placeholder="请输入贩卖ID" class="form-control">
+								<select class="selectpicker" data-live-search="true" id="shipId" name="shipId" title="请选择贩卖ID" data-size="5" onchange="selectOnchangByshipId(this)"></select>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group" id="iscombinationFlagTrue">
 							<label class="col-lg-3 control-label">商品SKU</label>
 							<div class="col-lg-9">
-								<input type="email" placeholder="请输入商品SKU" class="form-control">
+								<input type="text" id="goodsId" name="goodsId" class="form-control" style="display:none">
+								<input type="text" id="sku" name="sku" class="form-control" readonly>
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="col-lg-3 control-label">商品条码</label>
+						<div class="form-group" style="display:none" id="iscombinationFlagFalse">
+							<label class="col-lg-3 control-label">组合品CODE</label>
 							<div class="col-lg-9">
-								<input type="email" placeholder="请输入商品条码" class="form-control">
+								<input type="text" id="combinationId" name="combinationId" class="form-control" readonly>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">商品名称</label>
 							<div class="col-lg-9">
-								<input type="password" placeholder="请输入商品名称"
-									class="form-control">
+								<input type="text" id="goodsName" name="goodsName" 
+									class="form-control" readonly>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">出库数量</label>
 							<div class="col-lg-9">
-								<input type="password" placeholder="请输入数量" class="form-control">
+								<input type="text" id="nums" name="nums" placeholder="请输入数量" class="form-control">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">订单号</label>
 							<div class="col-lg-9">
-								<input type="password" placeholder="请输入订单号" class="form-control">
+								<input type="text" id="orderId" name="orderId" placeholder="请输入订单号" class="form-control">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">客户名称</label>
 							<div class="col-lg-9">
-								<input type="password" placeholder="请输入客户名称" class="form-control">
+								<input type="text" id="customer" name="customer" placeholder="请输入客户名称" class="form-control">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">邮编</label>
 							<div class="col-lg-9">
-								<input type="password" placeholder="请输入邮编" class="form-control">
+								<input type="text" id="postcode" name="postcode" placeholder="请输入邮编" class="form-control">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">地址1</label>
 							<div class="col-lg-9">
-								<input type="password" placeholder="请输入地址1" class="form-control">
+								<input type="text" id="address1" name="address1" placeholder="请输入地址1" class="form-control">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">地址2</label>
 							<div class="col-lg-9">
-								<input type="password" placeholder="请输入地址2" class="form-control">
+								<input type="text" id="address2" name="address2" placeholder="请输入地址2" class="form-control">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">电话</label>
 							<div class="col-lg-9">
-								<input type="password" placeholder="请输入电话" class="form-control">
+								<input type="text" id="tele" name="tele" placeholder="请输入电话" class="form-control">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-lg-3 control-label">发送方式</label>
 							<div class="col-lg-9">
-								<input type="password" placeholder="请输入发送方式" class="form-control">
+								<input type="text" id="sendType" name="sendType" placeholder="请输入发送方式" class="form-control">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-lg-3 control-label">备注</label>
+							<label class="col-lg-3 control-label">发货番号</label>
 							<div class="col-lg-9">
-								<input type="password" placeholder="" class="form-control">
+								<input type="text" id="sendId" name="sendId" placeholder="请输入发货番号" class="form-control">
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary">确认添加</button>
+					<button type="button" class="btn btn-primary" onclick="saveDetails()">确认添加</button>
 				</div>
 			</div>
 		</div>
@@ -394,6 +401,9 @@
 	<!-- Peity -->
 	<script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
 
+	<!-- select data -->
+	<script th:src="@{/js/bootstrap-select.js}"></script>
+
 	<!-- Custom and plugin javascript -->
 	<script th:src="@{/js/inspinia.js}"></script>
 	<script th:src="@{/js/plugins/pace/pace.min.js}"></script>
@@ -409,6 +419,7 @@
 
 	<!-- common -->
 	<script th:src="@{/js/common.js}"></script>
+	<script th:src="@{/js/jquery.validate.min.js}"></script>
 	
 	<script th:src="@{/js/output/request.js}"></script>
 
@@ -419,6 +430,7 @@
 				radioClass : 'iradio_square-green',
 			});
 		});
+		var tmpRequestData = [[${item}]];
 	</script>
 
 </body>

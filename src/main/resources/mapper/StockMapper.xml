@@ -1,23 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.osl.mapper.StockMapper">
-	<!-- 商家端，查找当前商家所有的库存列表 -->
+	<!-- 商家端，获取当前商家现有的库存列表【非全部商品】 -->
 	<select id="find_stockBusiness_All" resultType="com.osl.model.StockModel" parameterType="int">
-		SELECT a.`name` AS goods_name,a.sku, a.barcode AS bar_code, c.id AS category_id, c.`name` AS category_name,	sum(b.nums) as nums , a.goods_id as goodsId , b.depot_id as depotId , b.shelves_id as shelvesId
+		SELECT a.`name` AS goods_name,a.goods_id,a.sku, a.barcode AS bar_code, c.id AS category_id, c.`name` AS category_name,	sum(b.nums) as nums , a.goods_id as goodsId , b.depot_id as depotId , b.shelves_id as shelvesId
 		FROM t_goods a, t_stock b, t_goods_category c
 		WHERE a.goods_id = b.goods_id
 		AND a.category_id = c.id
 		AND b.business_id= #{bid} and b.delete_flg = 0 GROUP BY a.goods_id ORDER BY b.new_date
 	</select>
 	
+	<!-- 商家端，获取当前商家所有商品库存列表-->
+	<select id="find_Business_All_Goods_Stock" resultType="com.osl.model.StockModel" parameterType="int">
+		SELECT
+			a.`name` AS goods_name,
+			a.goods_id,
+			a.sku,
+			a.barcode AS bar_code,
+			c.id AS category_id,
+			c.`name` AS category_name,
+			IFNULL((b.nums),0) AS nums,
+			a.goods_id AS goodsId,
+			b.depot_id AS depotId,
+			b.shelves_id AS shelvesId
+		FROM
+			t_goods a 
+			LEFT JOIN t_stock b ON a.goods_id = b.goods_id
+			LEFT JOIN t_goods_category c on a.category_id = c.id
+		WHERE
+			a.business_id = #{bid}
+			and a.delete_flg = 0
+		GROUP BY a.goods_id 
+		ORDER BY b.new_date
+	</select>
+	
 	<!-- 商家端，条件查询库存信息列表 -->
 	<select id="find_stockBusiness_by_condition" resultType="com.osl.model.StockModel">
-		SELECT a.`name` AS goods_name,a.sku, a.barcode AS bar_code, c.id AS category_id, c.`name` AS category_name,sum(b.nums) as nums
+		SELECT a.`name` AS goods_name,a.goods_id,a.sku, a.barcode AS bar_code, c.id AS category_id, c.`name` AS category_name,sum(b.nums) as nums
 		FROM t_goods a, t_stock b, t_goods_category c
 		WHERE a.goods_id = b.goods_id
 		AND a.category_id = c.id and b.business_id= #{stockModel.businessId}
-       <if test="stockModel.sku != null  and stockModel.sku !=''">
-        	and a.sku = #{stockModel.sku}
+        <if test="stockModel.skuList != null and stockModel.skuList.size>0">
+        	and a.sku in 
+        	 <foreach collection="stockModel.skuList" item="item" index="index" 
+				open="(" separator="," close=")">#{item}</foreach>
         </if>
         <if test="stockModel.goodsName != null  and stockModel.goodsName !=''">
         	and a.name like CONCAT('%', #{stockModel.goodsName},'%')
@@ -34,13 +60,56 @@
         <if test="stockModel.nums != null">
         	and b.nums >= #{stockModel.nums}
         </if>
-        <if test="stockModel.goodsType != null and stockModel.goodsType !=2 and stockModel.goodsType !=1000"><!-- 合格品，不合格品 -->
+        <if test="stockModel.goodsType != null and stockModel.goodsType !=-1"><!-- 合格品，不合格品 -->
         	and b.goods_type = #{stockModel.goodsType}
         </if>
-        <if test="stockModel.goodsType == 2">
-        	and b.validity_time &lt;current_timestamp
-        </if>
         and b.delete_flg = 0 GROUP BY a.goods_id ORDER BY b.new_date
+	</select>
+	
+	<!-- 商家端，条件查询所有商品库存信息列表 -->
+	<select id="find_Business_All_Goods_by_condition" resultType="com.osl.model.StockModel">
+		SELECT
+			a.`name` AS goods_name,
+			a.goods_id,
+			a.sku,
+			a.barcode AS bar_code,
+			c.id AS category_id,
+			c.`name` AS category_name,
+			IFNULL((b.nums),0) AS nums,
+			a.goods_id AS goodsId,
+			b.depot_id AS depotId,
+			b.shelves_id AS shelvesId
+		FROM
+			t_goods a 
+			LEFT JOIN t_stock b ON a.goods_id = b.goods_id
+			LEFT JOIN t_goods_category c on a.category_id = c.id
+			where a.business_id= #{stockModel.businessId}
+        <if test="stockModel.skuList != null and stockModel.skuList.size>0">
+        	and a.sku in 
+        	 <foreach collection="stockModel.skuList" item="item" index="index" 
+				open="(" separator="," close=")">#{item}</foreach>
+        </if>
+        <if test="stockModel.goodsName != null  and stockModel.goodsName !=''">
+        	and a.name like CONCAT('%', #{stockModel.goodsName},'%')
+        </if>
+        <if test="stockModel.categoryName != null  and stockModel.categoryName !=''">
+        	and c.name = #{stockModel.categoryName}
+        </if>
+        <if test="stockModel.categoryId != null  and stockModel.categoryId !=10000">
+        	and c.id = #{stockModel.categoryId}
+        </if>
+        <if test="stockModel.barCode != null  and stockModel.barCode !=''">
+        	and a.barcode = #{stockModel.barCode}
+        </if>
+        <if test="stockModel.nums != null and stockModel.nums != 0">
+        	and b.nums >= #{stockModel.nums}
+        </if>
+        <if test="stockModel.goodsType != null and stockModel.goodsType !=-1"><!-- 合格品，不合格品 -->
+        	and b.goods_type = #{stockModel.goodsType}
+        </if>
+      	and a.delete_flg = 0
+		GROUP BY a.goods_id 
+		ORDER BY b.new_date
 	</select>
 	
 	<!-- 运营商端，查找当前运营商所对应的仓库存储列表 -->
@@ -177,7 +246,7 @@
 	
 	<!-- 更新库存,根据manageid以及nums -->
 	<update id="update_stock_by_id">
-			update t_stock set nums = #{nums} 
+			update t_stock set nums = #{nums} , update_date = NOW()
 			where manage_id=#{manageId}
 	</update>
 	
@@ -190,5 +259,21 @@
 	
 	<select id="findStockModelAllByGoodsId" resultType="java.lang.Integer" parameterType="java.lang.String">
 		select count(1) from t_stock where goods_id = #{goodsId} 
+	</select>
+	
+	<!-- 出库时查询库存详情 -->
+	<select id="find_stock_detail_by_output" resultType="com.osl.model.StockModel" parameterType="com.osl.model.StockModel">
+		SELECT a.* , b.inner_nums as innerNums, b.inner_goods_nums as innerGoodsNums
+		FROM 
+		t_stock a 
+		left join t_input_detail b on a.input_detail_id = b.detail_id
+		where a.nums > 0 
+		<if test="goodsId != null  and goodsId !=''">
+        	and a.goods_id = #{goodsId}
+        </if>
+        <if test="goodsType != -1">
+        	and a.goods_type = #{goodsType}
+        </if>
+        order by b.validity_time desc , a.nums desc
 	</select>
 </mapper>

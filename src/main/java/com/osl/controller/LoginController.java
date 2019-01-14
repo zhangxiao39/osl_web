@@ -1,5 +1,7 @@
 package com.osl.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +13,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.osl.common.web.BaseController;
+import com.osl.mapper.entity.RelationshipEntity;
 import com.osl.model.UserModel;
+import com.osl.service.RelationshipService;
 import com.osl.service.UserService;
 
 @Controller
 public class LoginController extends BaseController<UserModel> {
 	@Autowired
 	private UserService service;
+	
+	@Autowired
+	private RelationshipService relationshipService;
 
 	/**
 	 * 
@@ -58,10 +65,12 @@ public class LoginController extends BaseController<UserModel> {
 				model.addAttribute("erorrMsg", "用户名或者密码不正确");
 				return "/login";
 			} else {
+				List<RelationshipEntity> relationshipList = relationshipService.queryShipByBusinessId(user1.getBusinessId());
 				session.setMaxInactiveInterval(30 * 60);
 				this.setSessAttr("u_login", user1.getUsername());
 				this.setSessAttr("u_bname", user1.getBname());
 				this.setSessAttr("u_bid", user1.getBusinessId());
+				this.setSessAttr("u_relationship", relationshipList);
 				if (user1.getStatus() == 0) {
 					if (user1.getbType() == 0) {
 						return "redirect:/admin/index";

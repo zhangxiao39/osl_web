@@ -97,5 +97,24 @@ public class StockServiceImpl implements StockService {
 		return takeStockMapper.find_stock_list_by_condition(skuList, stockModel);
 	}
 
+
+	@Override
+	public List<StockModel> find_Business_All_Goods_Stock(int bid) {
+		return stockMapper.find_Business_All_Goods_Stock(bid);
+	}
+
+
+	@Override
+	public List<StockModel> find_Business_All_Goods_by_condition(List<String> skuList, StockModel stockModel) {
+		return stockMapper.find_Business_All_Goods_by_condition(skuList, stockModel);
+	}
+
+
+	@Override
+	public List<StockModel> find_stock_detail_by_output(StockModel stockModel) {
+		// TODO Auto-generated method stub
+		return stockMapper.find_stock_detail_by_output(stockModel);
+	}
+
 	
 }

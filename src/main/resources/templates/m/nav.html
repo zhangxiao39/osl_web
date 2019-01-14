@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+</head>
+<body>
+	<nav class="navbar-default navbar-static-side" role="navigation"
+		th:fragment="navigation">
+		<div class="sidebar-collapse">
+			<ul class="nav metismenu" id="side-menu">
+				<li class="nav-header">
+					<div class="dropdown profile-element">
+						<span> <img alt="image" class="img-circle"
+							th:src="@{/img/profile_small.jpg}" />
+						</span> <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <span
+							class="clear"> <span class="block m-t-xs"> <strong
+									class="font-bold" th:text="${session.u_login}"></strong>
+							</span>
+						</span>
+						</a>
+					</div>
+					<div class="logo-element">仓</div>
+				</li>
+				<li><a th:href="@{/admin/index}"><i class="fa fa-diamond"></i>
+						<span class="nav-label">首页</span></a></li>
+				<li th:class="${nav_active1}?'active'"><a><i
+						class="fa fa-desktop"></i> <span class="nav-label">库存管理</span><span
+						class="fa arrow"></span></a>
+					<ul class="nav nav-second-level collapse">
+						<li th:class="${nav_active1==1}?'active'"><a
+							href="/a/stock/adminStock">库存一览</a></li>
+						<li th:class="${nav_active1==2}?'active'"><a
+							href="/a/stock/shelves">货架一览</a></li>
+						<li th:class="${nav_active1==3}?'active'"><a href="/a/entry/list">纳品管理</a></li>
+						<li th:class="${nav_active1==4}?'active'"><a href="/a/input/list">入库管理</a></li>
+						<li th:class="${nav_active1==5}?'active'"><a href="/a/output/list">出库管理</a></li>
+						<li th:class="${nav_active1==6}?'active'"><a href="/a/return/list">返品管理</a></li>
+						<li id=""><a href="#">盘点管理</a></li>
+					</ul></li>
+				<li th:class="${nav_active2}?'active'"><a><i
+						class="fa fa-edit"></i> <span class="nav-label">商品管理</span><span
+						class="fa arrow"></span></a>
+					<ul class="nav nav-second-level collapse">
+						<li th:class="${nav_active2==1}?'active'"><a
+							href="/a/goods/category">商品分类</a></li>
+						<li th:class="${nav_active2==2}?'active'"><a
+							href="/a/goods/goodslist">商品列表</a></li>
+					</ul></li>
+				<li style="display: none;"><a th:href="@{dashboard}"><i
+						class="fa fa-gavel"></i> <span class="nav-label">会计管理</span></a></li>
+				<li id="balance" th:class="${nav_active4}?'active'"><a><i
+						class="fa fa-diamond"></i> <span class="nav-label">结算管理</span><span
+						class="fa arrow"></span></a>
+					<ul class="nav nav-second-level collapse">
+						<li th:class="${nav_active4==1}?'active'"><a
+							href="/a/balance/request">结算请求</a></li>
+						<li th:class="${nav_active4==2}?'active'"><a
+							href="/a/balance/list">结算列表</a></li>
+						<li th:class="${nav_active4==4}?'active'"><a
+							href="/a/balance/setting">结算设定</a></li>
+					</ul></li>
+				<li id="business" th:class="${nav_active5}?'active'"><a><i
+						class="fa fa-envelope"></i> <span class="nav-label">商家管理</span><span
+						class="fa arrow"></span></a>
+					<ul class="nav nav-second-level collapse">
+						<li th:class="${nav_active5==1}?'active'"><a
+							href="/a/business/grade">等级管理</a></li>
+						<li th:class="${nav_active5==2}?'active'"><a
+							href="/a/business/list">商家列表</a></li>
+						<li><a href="#">申请列表</a></li>
+					</ul></li>
+				<li id="system" th:class="${nav_active6}?'active'"><a><i
+						class="fa fa-files-o"></i> <span class="nav-label">系统设定</span><span
+						class="fa arrow"></span></a>
+					<ul class="nav nav-second-level collapse">
+						<li th:class="${nav_active6==1}?'active'"><a
+							href="/a/sys/userManage">员工管理</a></li>
+						<li th:class="${nav_active6==2}?'active'"><a
+							href="/a/sys/rightManage">权限管理</a></li>
+						<li th:class="${nav_active6==3}?'active'"><a
+							href="/a/sys/warehouseManage">仓库管理</a></li>
+						<li th:class="${nav_active6==4}?'active'"><a
+							href="/a/sys/shelvesManage">货架管理</a></li>
+					</ul></li>
+			</ul>
+		</div>
+	</nav>
+</body>
+</html>
+
+
+

@@ -226,7 +226,7 @@ function cCancelOutput(outputId){
 	}, function(isConfirm) {
 		if (isConfirm) {
 			$.ajax({
-				url : "/a/cancel/output/" + outputId,
+				url : "/b/cancel/output/" + outputId,
 				type : "delete",
 				success : function(data) {
 					if (data == "ok") {

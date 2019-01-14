@@ -38,6 +38,14 @@ public interface EntryService {
 	public int bupdateEntryNums(EntryModel entryModel);
 	
 	
+	/**
+	 * @des 【商家端】，新建纳品申请
+	 * @param String
+	 * @return int
+	 */
+	public int insertEntry(EntryEntity entry,List<EntrydetailEntity> entryDetailList);
+	
+	
 	
 	public boolean entryUpload(EntryModel userModel);
 	

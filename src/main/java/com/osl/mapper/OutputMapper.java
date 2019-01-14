@@ -3,6 +3,7 @@ package com.osl.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.osl.model.OutputModel;
 import com.osl.model.OutputdetailModel;
@@ -18,13 +19,17 @@ public interface OutputMapper {
 	
 	public List<OutputdetailModel> findDetailListById(OutputdetailModel outputdetailModel);
 	
+	public List<OutputdetailModel> countDetailStatus(OutputdetailModel outputdetailModel);
+	
 	public int deleteOutputById(String outputId);
 	
 	public int deleteOutputDetailByOutputId(String OutputId);
 	
 	public int deleteOutputDetailByDetailId(String detailId);
 	
-	public int saveNewOutputDetail(OutputdetailModel model);
+	public int saveNewOutput(OutputModel fModel);
+	
+	public int saveNewOutputDetail(List<OutputdetailModel> modelList);
 	
 	public int updateOutputDetail(OutputdetailModel model);
 	
@@ -32,11 +37,11 @@ public interface OutputMapper {
 	
 	public int updateOutput(OutputModel model);
 	
-	public int cancelOutputById(String outputId);
+	public int cancelOutputById(@Param("outputId") String outputId , @Param("status") int status);
 	
-	public int cancelOutputDetailByOutputId(String OutputId);
+	public int cancelOutputDetailByOutputId(@Param("outputId") String outputId , @Param("status") int status);
 	
-	public int cancelOutputDetailByDetailId(String detailId);
+	public int cancelOutputDetailByDetailId(@Param("detailId") String detailId , @Param("status") int status);
 	
 	public int findAllOutputNumByGoodsId(String goodsId);
 }

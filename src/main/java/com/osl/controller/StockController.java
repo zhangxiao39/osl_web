@@ -30,7 +30,6 @@ import com.osl.common.Util;
 import com.osl.common.UtilConst;
 import com.osl.common.web.BaseController;
 import com.osl.common.web.RedisUtils;
-import com.osl.mapper.TakeStockMapper;
 import com.osl.mapper.entity.StockEntity;
 import com.osl.model.StockModel;
 import com.osl.service.StockService;
@@ -99,12 +98,15 @@ public class StockController extends BaseController<StockModel> {
 			{
 				lis =Arrays.asList(sku.split(","));	//将拼接好的sku字符串转换成list
 			}
+			stockModel.setSkuList(lis);
 			List<StockModel> _stockList = service.find_stockBusiness_by_condition(lis,stockModel);
 			model.addAttribute("item", _stockList);
 			model.addAttribute("nav_active1", 1);
 			return "/c/stock/stock::table_refresh";
 		}
 	}
+	
+	
 	
 	/*
 	 * @des:商家端，获取对应的商品列表
@@ -527,6 +529,8 @@ public class StockController extends BaseController<StockModel> {
 			return "/w/takeStock/takeStock::table_refresh";
 		}
 	}
+	
+	
 	
 
 	@Override

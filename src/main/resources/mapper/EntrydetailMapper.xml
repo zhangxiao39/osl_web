@@ -4,18 +4,28 @@
 
    <!-- 【商家端】根据纳品id,获取纳品详情列表 -->
      <select id="bQueryEntryDetailListByEntryId" resultType="com.osl.model.EntrydetailModel" parameterType="String">
-		SELECT 
-		b.sku ,c.`name` as category_name,b.`name` as goods_name,a.*
-		from 
-		t_entry_detail a,
-		t_goods b,
-		t_goods_category c
-		WHERE 
-		a.goods_id = b.goods_id
-		and c.id = b.category_id
-		and a.entry_id = #{entryId}
-		and a.delete_flg = 0
-		ORDER BY a.detail_id
+		SELECT
+			b.sku,
+			IFNULL(d.nums,0) AS stock_nums,
+			c.`name` AS category_name,
+			b.`name` AS goods_name,
+			a.*
+		FROM
+			t_entry_detail a
+			LEFT JOIN t_goods b on a.goods_id = b.goods_id
+			LEFT JOIN t_goods_category c on c.id = b.category_id
+			LEFT JOIN (
+					SELECT
+						goods_id,
+						SUM(nums) as nums
+					FROM
+						t_stock
+					GROUP BY goods_id
+				) d ON a.goods_id = d.goods_id
+		WHERE
+			a.entry_id = #{entryId}
+			and a.delete_flg = 0
+			ORDER BY a.detail_id
 	</select>
 	
 	
@@ -34,9 +44,9 @@
 		and a.delete_flg = 0
 		ORDER BY a.detail_id
 	</select>
-	<!-- 【商家端】根据纳品id，更新纳品详情状态为‘取消’ -->
-	<update id="bupdateStatusByEntryId" parameterType="java.lang.String">
-			update t_entry_detail set `status` = 4 WHERE entry_id = #{entryId}
+	<!-- 【商家端】根据纳品id，更新纳品详情状态 -->
+	<update id="bupdateStatusByEntryId" parameterType="com.osl.model.EntrydetailModel">
+			update t_entry_detail set `status` = #{status} WHERE entry_id = #{entryId}
 	</update>
 	
 	<!-- 【商家端】根据纳品详情id，逻辑删除纳品详情 -->
@@ -53,15 +63,56 @@
 	<!-- 【商家端】更新入库详情数量，货源单号-->
 	<update id="bupdateInputNumsAndNumbers" parameterType="com.osl.model.EntrydetailModel">
 			update t_entry_detail set 
-			update_date = #{updateDate},
-			<if test="inputNums != null and inputNums >0">
-        		input_nums = #{inputNums},
+			
+			<if test="packageSize != null and packageSize >0">
+        		package_size = #{packageSize},
+       		</if>
+       		<if test="innerNums != null and innerNums >0">
+        		inner_nums = #{innerNums},
+       		</if>
+       		<if test="innerGoodsNums != null and innerGoodsNums >0">
+        		inner_goods_nums = #{innerGoodsNums},
+       		</if>
+			<if test="nums != null and nums >0">
+        		nums = #{nums},
        		</if>
        		<if test="sendId != null and sendId !=''">
-        		send_id = #{sendId}
+        		send_id = #{sendId},
        		</if>
+       		<if test="status != null and status !=''">
+        		status = #{status},
+       		</if>
+       		update_date = #{updateDate}
 			WHERE detail_id = #{detailId}
 	</update>
 	
+	<!-- 插入纳品详情 -->
+	<insert id="insertEntryDetail" parameterType="java.util.ArrayList" useGeneratedKeys="true" timeout="20">
+    	INSERT INTO t_entry_detail 
+    	(detail_id, goods_id, nums, package_size, inner_nums, inner_goods_nums, send_id, entry_id, 
+    	input_nums, input_diff, produce_time, validity_time,max_nums,status,new_date,update_date,delete_flg)
+		VALUES
+    	<foreach collection="list" item="item" index="index" separator=",">
+            (
+            	#{item.detailId},
+            	#{item.goodsId},
+            	#{item.nums},
+            	#{item.packageSize},
+            	#{item.innerNums},
+            	#{item.innerGoodsNums},
+            	#{item.sendId},
+            	#{item.entryId},
+            	#{item.inputNums},
+            	#{item.inputDiff},
+            	#{item.produceTime},
+            	#{item.validityTime},
+            	#{item.maxNums},
+            	#{item.status},
+            	#{item.newDate},
+            	#{item.updateDate},
+            	#{item.deleteFlg}
+            )
+        </foreach>
+    </insert>
     
 </mapper>

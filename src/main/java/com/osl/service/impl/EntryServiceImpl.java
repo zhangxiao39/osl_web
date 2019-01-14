@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.osl.common.Util;
 import com.osl.exception.ApplException;
 import com.osl.mapper.EntryMapper;
+import com.osl.mapper.EntrydetailMapper;
 import com.osl.mapper.entity.EntryEntity;
 import com.osl.mapper.entity.EntrydetailEntity;
 import com.osl.model.EntryModel;
@@ -19,6 +21,9 @@ import com.osl.service.EntryService;
 public class EntryServiceImpl implements EntryService {
 	@Autowired
 	private EntryMapper entryMapper;
+	
+	@Autowired
+	private EntrydetailMapper entryDetailMapper;
 	
 	/* 
 	 * 纳品申请文件上传
@@ -48,7 +53,8 @@ public class EntryServiceImpl implements EntryService {
 		
 		return false;
 	}
-
+	
+	
 	@Override
 	public List<EntrydetailEntity> queryEntrydetailEntityListByStatus(int status) {
 		// TODO Auto-generated method stub
@@ -97,6 +103,20 @@ public class EntryServiceImpl implements EntryService {
 	@Override
 	public int bupdateEntryNums(EntryModel entryModel) {
 		return entryMapper.bupdateEntryNums(entryModel);
+	}
+
+	@Override
+	@Transactional
+	public int insertEntry(EntryEntity entry, List<EntrydetailEntity> entryDetailList) {
+		int back = 0;
+		//新建纳品申请
+		if(entryMapper.insertEntry(entry)>0)
+		{
+			//新建纳品详情
+			back = entryDetailMapper.insertEntryDetail(entryDetailList);
+		}
+		
+		return back;
 	}
 
 	

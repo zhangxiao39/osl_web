@@ -16,15 +16,16 @@
 	<link th:href="@{/css/plugins/dataTables/datatables.min.css}"
 		  rel="stylesheet">
 
-	<link th:href="@{/css/plugins/select2/select2.min.css}"
-		  rel="stylesheet">
-
-	<link th:href="@{/css/plugins/datapicker/datepicker3.css}"
-		  rel="stylesheet">
-
 	<link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
 	<link th:href="@{/css/style.css}" rel="stylesheet" />
 
+	<link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet" />
+	<link th:href="@{/css/plugins/footable/footable.core.css}"
+		  rel="stylesheet" />
+	<link th:href="@{/css/bootstrap-select.css}" rel="stylesheet">
+	<link th:href="@{/css/style.css}" rel="stylesheet" />
+	<link th:href="@{/css/plugins/datapicker/datepicker3.css}"
+		  rel="stylesheet">
 	<link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet" />
 	<link th:href="@{/css/plugins/footable/footable.core.css}"
 		  rel="stylesheet" />
@@ -68,7 +69,7 @@
 										<div class="form-group z_mb0">
 											<button type="button" class="btn btn-primary"
 												onclick="javascript:window.location.href='/b/entry/list'">返回一览</button>
-											<button type="button" class="btn btn-success">追加商品</button>
+											<button type="button" class="btn btn-info" id="addGoodsBtn" onclick="showAddGoddsModal()">追加商品</button>
 											<button type="button" class="btn btn-success">打印SKU</button>
 											<button type="button" class="btn btn-success">打印货单</button>
 										</div>
@@ -100,6 +101,7 @@
 												<th>库存</th>
 												<th>货运单号</th>
 												<th>入库数量</th>
+												<th style="display: none"></th>
 												<th>入库差异</th>
 												<th>状态</th>
 												<th>操作</th>
@@ -108,15 +110,16 @@
 										<tbody>
 											<tr th:each="p,pIndex:${item}">
 												<td th:text="${pIndex.count}"></td>
-												<td th:text="${p.entryId}"></td>
+												<td name = "entryId" th:text="${p.entryId}"></td>
 												<td th:text="${p.sku}"></td>
 												<td th:text="${p.categoryName}"></td>
 												<td th:text="${p.goodsName}"></td>
 												<td th:text="${p.nums}"></td>
-												<td ></td>
+												<td th:text="${p.stockNums}"></td>
 												<td th:text="${p.sendId}"></td>
 												<td th:text="${p.inputNums}"></td>
 												<td th:text="${p.inputDiff}"></td>
+												<td name = "status" th:text="${p.status}" style="display: none"></td>	<!--隐藏显示纳品状态-->
 												<td th:if="${p.status == 1}">申请中</td>
 												<td th:if="${p.status == 2}">库存不足</td>
 												<td th:if="${p.status == 3}">运营商承认完了</td>
@@ -174,7 +177,7 @@
 						<div class="form-group" id="opt1" style="display: none">
 							<label class="col-lg-3 control-label">纳品数量</label>
 							<div class="col-lg-9">
-								<input type="text" id="inputNums" placeholder="请输入纳品数量" class="form-control"  onkeyup="value=value.replace(/[^\d]/g,'')">
+								<input type="text" id="nums" placeholder="请输入纳品数量" class="form-control"  onkeyup="value=value.replace(/[^\d]/g,'')">
 								<input type="hidden" id = "detailId" class="form-control">
 							</div>
 						</div>
@@ -193,6 +196,78 @@
 			</div>
 		</div>
 	</div>
+
+	<!--追加商品模态框-->
+	<div class="modal inmodal fade" id="addGoodModel" tabindex="-1" role="dialog"
+		 aria-hidden="true" style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content animated bounceInRight">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">追加商品</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" id="additionalEntry">
+						<div class="form-group">
+							<label class="col-lg-3 control-label">商品名称</label>
+							<div class="col-lg-9">
+								<select id="goodsId"  class="selectpicker bs-select show-tick form-control"
+										title='请选择商品'  name="additonalGoodsId" data-live-search="true" onchange="getEntryDetailInfoByGoodsId()"></select>
+								<input type="hidden" id = "entryId" class="form-control">
+								<input type="hidden" id = "detailIdUp" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">库存数量</label>
+							<div class="col-lg-9">
+								<input type="text" id = "stockNums"  class="form-control" disabled>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">申请数量</label>
+							<div class="col-lg-9">
+								<input type="text" id = "applyNums" name="additonalNums"  onkeyup="value=value.replace(/[^\d]/g,'')" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">包裹尺寸(cm³)</label>
+							<div class="col-lg-9">
+								<input type="text" id = "packeageSize" name="additonalSize" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'');"class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">内盒数量</label>
+							<div class="col-lg-9">
+								<input type="text" id = "innerNums" name="additonalInnerNums" onkeyup="value=value.replace(/[^\d]/g,'')" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">盒内商品数量</label>
+							<div class="col-lg-9">
+								<input type="text" id = "innerGoodsNums" name="additonalInnerGoodsNums" onkeyup="value=value.replace(/[^\d]/g,'')" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-3 control-label">有效期</label>
+							<div class="col-lg-9">
+								<input type="text" id = "validate" name="additonalValidate" class="form-control datepicker">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" onclick="submitAdditionalEntryGoods()">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
 	<!-- Mainly scripts -->
 	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
 
@@ -223,12 +298,30 @@
 	<script th:src="@{/js/plugins/datapicker/bootstrap-datepicker.js}"></script>
 	<!-- FooTable -->
 	<script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
-
+	<!-- select data -->
+	<script th:src="@{/js/bootstrap-select.js}"></script>
 	<!-- common -->
 	<script th:src="@{/js/common.js}"></script>
 	<script th:src="@{/js/entry/bEntryDetail.js}"></script>
 
-
+	<script th:inline="javascript">
+        $(document).ready(function() {
+            $('.footable').footable();
+            $('.i-checks').iCheck({
+                checkboxClass : 'icheckbox_square-green',
+                radioClass : 'iradio_square-green',
+            });
+            $('.datepicker').datepicker({
+                format : 'yyyy-mm-dd',
+                language : 'zh-CN',
+                todayBtn : "linked",//显示‘今日’按钮
+                clearBtn : true,//清除按钮
+                keyboardNavigation : false,
+                forceParse : false,
+                autoclose : true
+            });
+        });
+	</script>
 </body>
 
 </html>

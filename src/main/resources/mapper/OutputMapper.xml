@@ -111,24 +111,62 @@
 		delete from t_output_detail where detail_id= #{detailId}
 	</delete>
 	
-	<delete id="cancelOutputById" parameterType="String">
-		update t_output set status = 4 where status = 3 and output_id= #{outputId}
-	</delete>
+	<update id="cancelOutputById">
+		update t_output set status = #{status} where output_id= #{outputId}
+	</update>
 	
-	<delete id="cancelOutputDetailByOutputId" parameterType="String">
-		update t_output_detail set status = 4 where status = 3 and output_id= #{outputId}
-	</delete>
+	<update id="cancelOutputDetailByOutputId">
+		update t_output_detail set status = #{status} where output_id= #{outputId}
+	</update>
 	
-	<delete id="cancelOutputDetailByDetailId" parameterType="String">
-		update t_output_detail set status = 4 where status = 3 and detail_id= #{detailId}
-	</delete>
+	<update id="cancelOutputDetailByDetailId">
+		update t_output_detail set status = #{status} where detail_id= #{detailId}
+	</update>
+	
+	<insert id="saveNewOutput"
+		parameterType="com.osl.model.OutputModel">
+		insert into t_output (output_id, output_time, sku_nums, goods_nums, status, business_id, warehouse_id, oper, new_date,update_date, delete_flg)
+		 values  
+		(#{outputId},#{outputTime},#{skuNums},#{goodsNums},#{status},#{businessId},#{warehouseId},#{oper},#{newDate},#{updateDate},#{deleteFlg})
+	</insert>
 	
 	<insert id="saveNewOutputDetail"
-		parameterType="com.osl.model.OutputdetailModel">
-		insert into t_Output_detail
-		(detail_id, goods_id, nums, depot_id, shelves_id, inner_nums, inner_goods_nums, type, status, ship_id, goods_type, Output_id, validity_time, new_date, update_date, delete_flg)
-		values
-		(#{detailId},#{goodsId},#{nums},#{depotId},#{shelvesId},#{innerNums},#{innerGoodsNums},#{type},#{status},#{shipId},#{goodsType},#{OutputId},#{validityTime},#{newDate},#{updateDate},#{deleteFlag})
+		parameterType="java.util.List">
+		insert into t_output_detail
+		(detail_id, goods_id, nums, depot_id, shelves_id, inner_nums, inner_goods_nums, type, ship_id, goods_type, output_id, order_id,customer,postcode,address1,address2,tele,send_type,send_id,transport_mode,iscombination,combination_id,status,return_id,return_send_id, new_date, update_date, delete_flg)
+		values 
+		<foreach collection ="list" item="model" index= "index" separator =",">
+	        (
+	        #{model.detailId},
+	        #{model.goodsId},
+	        #{model.nums},
+	        #{model.depotId},
+	        #{model.shelvesId},
+	        #{model.innerNums},
+	        #{model.innerGoodsNums},
+	        #{model.type},
+	        #{model.shipId},
+	        #{model.goodsType},
+	        #{model.outputId},
+	        #{model.orderId},
+	        #{model.customer},
+	        #{model.postcode},
+	        #{model.address1},
+	        #{model.address2},
+	        #{model.tele},
+	        #{model.sendType},
+	        #{model.sendId},
+	        #{model.transportMode},
+	        #{model.iscombination},
+	        #{model.combinationId},
+	        #{model.status},
+	        #{model.returnId},
+	        #{model.returnSendId},
+	        #{model.newDate},
+	        #{model.updateDate},
+	        #{model.deleteFlg}
+	        )
+        </foreach >
 	</insert>
 	
 	<update id="updateOutputDetail" parameterType="com.osl.model.OutputdetailModel">
@@ -139,7 +177,11 @@
 	
 	<update id="updateOutputDetailStatus" parameterType="com.osl.model.OutputdetailModel">
 		update t_output_detail 
-		set status = #{status} , update_date = #{updateDate} 
+		set status = #{status} , 
+		<if test="status != 4">
+        	inner_nums = #{innerNums} , inner_goods_nums = #{innerGoodsNums} ,
+        </if>
+		update_date = #{updateDate} 
 		where detail_id = #{detailId}
 	</update>
 	
@@ -150,6 +192,10 @@
 	</update>
 	
 	<select id="findAllOutputNumByGoodsId" resultType="java.lang.Integer" parameterType="java.lang.String">
-		select count(1) from t_output_detail where goods_id = #{goodsId} and status in (0,2,3)
+		select count(1) from t_output_detail where goods_id = #{goodsId} and status in (0,2)
+	</select>
+	
+	<select id="countDetailStatus" resultType="com.osl.model.OutputdetailModel" parameterType="com.osl.model.OutputdetailModel">
+		select status from t_output_detail where output_id = #{outputId} group by status
 	</select>
 </mapper>

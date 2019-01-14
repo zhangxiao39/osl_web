@@ -1,6 +1,5 @@
 package com.osl.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,11 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.osl.common.web.BaseController;
-import com.osl.mapper.entity.DepotEntity;
 import com.osl.mapper.entity.ShelvesEntity;
 import com.osl.model.DepotModel;
 import com.osl.model.ShelvesModel;
-import com.osl.model.StockModel;
 import com.osl.service.DepotService;
 import com.osl.service.GoodscategoryService;
 import com.osl.service.ShelvesService;
