@@ -22,7 +22,7 @@ import com.osl.service.UserService;
 public class LoginController extends BaseController<UserModel> {
 	@Autowired
 	private UserService service;
-	
+
 	@Autowired
 	private RelationshipService relationshipService;
 
@@ -65,8 +65,10 @@ public class LoginController extends BaseController<UserModel> {
 				model.addAttribute("erorrMsg", "用户名或者密码不正确");
 				return "/login";
 			} else {
-				List<RelationshipEntity> relationshipList = relationshipService.queryShipByBusinessId(user1.getBusinessId());
+				List<RelationshipEntity> relationshipList = relationshipService
+						.queryShipByBusinessId(user1.getBusinessId());
 				session.setMaxInactiveInterval(30 * 60);
+				this.setSessAttr("u_userId", user1.getUserId());
 				this.setSessAttr("u_login", user1.getUsername());
 				this.setSessAttr("u_bname", user1.getBname());
 				this.setSessAttr("u_bid", user1.getBusinessId());
@@ -144,6 +146,7 @@ public class LoginController extends BaseController<UserModel> {
 			return "/c/index";
 		}
 	}
+
 
 	@GetMapping("/business/loginout")
 	public String loginout(HttpSession session, String url) {

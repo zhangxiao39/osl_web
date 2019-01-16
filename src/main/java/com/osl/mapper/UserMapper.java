@@ -16,6 +16,8 @@ public interface UserMapper {
 	
 	public UserModel login(String userId,String password);
 	
+	public UserModel Masterlogin(String userId,String password);
+	
 	public List<UserModel> getAllUsers(int bid);
 	
 	public UserEntity findByUserId(String userId);
@@ -25,4 +27,6 @@ public interface UserMapper {
 	public int recoveryUser(int id);
 	
 	public int deleteById(int id);
+	
+	public int modifypwd(String newpwd,String userId);
 }

@@ -24,17 +24,17 @@
 
 	<div id="wrapper">
 		<nav class="navbar-default navbar-static-side" role="navigation"
-			th:include="/w/nav :: navigation"></nav>
+			th:include="/m/nav :: navigation"></nav>
 		<div id="page-wrapper" class="gray-bg">
-			<div class="border-bottom" th:include="/w/header :: headerTop"></div>
+			<div class="border-bottom" th:include="/m/header :: headerTop"></div>
 			<div class="row wrapper border-bottom white-bg page-heading"
 				th:fragment="headerNav">
 				<div class="col-lg-10">
-					<h2>商家列表</h2>
+					<h2>运营商列表</h2>
 					<ol class="breadcrumb">
 						<li><a href="#">首页</a></li>
-						<li><a>商家管理</a></li>
-						<li class="active"><strong>商家列表</strong></li>
+						<li><a>运营商管理</a></li>
+						<li class="active"><strong>运营商列表</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-2"></div>
@@ -53,14 +53,14 @@
 							</div>
 							<div class="ibox-content" style="display: block;">
 								<button type="button" class="btn btn-primary"
-									data-toggle="modal" data-target="#myModal">添加商家</button>
+									data-toggle="modal" data-target="#myModal">添加运营商</button>
 							</div>
 						</div>
 					</div>
 					<div class="col-lg-12">
 						<div class="ibox float-e-margins">
 							<div class="ibox-title">
-								<h5>商家列表</h5>
+								<h5>运营商列表</h5>
 								<div class="ibox-tools">
 									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
 									</a>
@@ -72,15 +72,13 @@
 									<thead>
 										<tr>
 											<th>#</th>
-											<th>商家名称</th>
-											<th>商家等级</th>
+											<th>运营商名称</th>
 											<th>地址</th>
 											<th>邮编</th>
 											<th>电话</th>
 											<th>传真</th>
 											<th>邮箱</th>
 											<th>联系人</th>
-											<th>关系状态</th>
 											<th>操作</th>
 										</tr>
 									</thead>
@@ -88,14 +86,12 @@
 										<tr th:each="b,bIndex:${item}">
 											<td th:text="${bIndex.count}">1</td>
 											<td th:text="${b.name}">JNH</td>
-											<td th:text="${b.gradeName}">default</td>
 											<td th:text="${b.address}">东京都*****</td>
 											<td th:text="${b.postcode}">000-0000</td>
 											<td th:text="${b.tele}">8965-8974-965</td>
 											<td th:text="${b.tax}">6358-9865-548</td>
 											<td th:text="${b.email}">kanenka@yahoo.co.jp</td>
 											<td th:text="${b.contacts}">李四</td>
-											<td th:text="${b.shipText}"></td>
 											<td>
 												<button class="btn btn-info btn-xs dropdown-toggle"
 													type="button" data-toggle="modal" data-target="#myModal"
@@ -105,18 +101,6 @@
 												<button type="button" class="btn btn-info btn-xs dropdown-toggle" data-toggle="modal" data-target="#adminModal"
 													th:if="!${b.userId}" th:onclick="|javascript:addAdmin(${b.id})|">
 													<i class="fa fa-edit"></i>添加管理员
-												</button>
-												<button type="button" class="btn btn-info btn-xs"
-													th:if="${b.ship} eq 1" th:onclick="|javascript:relieveShip(${b.id})|">
-													<i class="fa fa-edit"></i>解除关联
-												</button>
-												<button type="button" class="btn btn-info btn-xs"
-													th:if="${b.ship} eq 0" th:onclick="|javascript:relationShip(${b.id})|">
-													<i class="fa fa-edit"></i>关联
-												</button>
-												<button type="button" class="btn btn-info btn-xs"
-													th:if="${b.ship} eq 2" th:onclick="|javascript:recoveryShip(${b.id})|">
-													<i class="fa fa-edit"></i>恢复关联
 												</button>
 												<button class="btn btn-danger btn-xs dropdown-toggle"
 													type="button" onClick="check(1)">
@@ -131,7 +115,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="footer" th:include="/w/footer :: copyright"></div>
+			<div class="footer" th:include="/m/footer :: copyright"></div>
 		</div>
 	</div>
 
@@ -143,7 +127,7 @@
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
 					</button>
-					<h4 class="modal-title">商家信息</h4>
+					<h4 class="modal-title">运营商信息</h4>
 				</div>
 				<div class="modal-body">
 					<form class="form-horizontal" name="myform" id="myform">
@@ -153,8 +137,9 @@
 								<input type="text" placeholder="请输入名称" class="form-control"
 									name="name" id="name"> <input type="hidden"
 									name="businessId" th:value="${session.u_bid}"> <input
-									type="hidden" name="id" value="0" id="id"><input
-									type="hidden" name="type" value="1" id="type"> <input
+									type="hidden" name="id" value="0" id="id">
+									<input
+									type="hidden" name="type" value="0" id="type"> <input
 									type="hidden" name="mode" value="POST" id="mode">
 							</div>
 						</div>
@@ -307,7 +292,7 @@
 
 	<!-- common -->
 	<script th:src="@{/js/common.js}"></script>
-	<script th:src="@{/js/user/business.js}"></script>
+	<script th:src="@{/js/user/warehouse.js}"></script>
 
 	<script th:inline="javascript">
 		

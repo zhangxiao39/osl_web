@@ -12,6 +12,8 @@ public interface BusinessMapper {
 
 	public List<BusinessModel> findBusinessAll(int bid,int ship);
 	
+	public List<BusinessModel> findWarehouseAll();
+	
 	public BusinessModel findById(int id);
 	
 	public int insert(BusinessEntity _businessGrade);

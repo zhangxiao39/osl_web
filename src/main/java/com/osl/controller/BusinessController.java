@@ -72,6 +72,24 @@ public class BusinessController extends BaseController<BusinessModel> {
 		}
 
 	}
+	
+	@RequestMapping(value = "/osl/warehouse", method = RequestMethod.POST)
+	@ResponseBody
+	public String addWarehouse(Model model, HttpSession session, BusinessEntity _business) {
+		if (session.getAttribute("u_login") == null) {
+			return "redirect:/master/login";
+		} else {
+			int ok = business_service.insert(_business);
+			if (ok > 0) {
+				return "ok";
+			} else if (ok == -1) {
+				return "exist";
+			} else {
+				return "fail";
+			}
+		}
+
+	}
 
 	@RequestMapping(value = "/osl/bussiness/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
@@ -95,6 +113,21 @@ public class BusinessController extends BaseController<BusinessModel> {
 	@RequestMapping(value = "/osl/bussiness", method = RequestMethod.PUT)
 	@ResponseBody
 	public String updateBusiness(BusinessEntity _info) {
+		if (_info.getId() > 0) {
+			int ok = business_service.update(_info);
+			if (ok > 0) {
+				return "ok";
+			} else {
+				return "fail";
+			}
+		} else {
+			return "fail";
+		}
+	}
+	
+	@RequestMapping(value = "/osl/warehouse", method = RequestMethod.PUT)
+	@ResponseBody
+	public String updateWarehouse(BusinessEntity _info) {
 		if (_info.getId() > 0) {
 			int ok = business_service.update(_info);
 			if (ok > 0) {

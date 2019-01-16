@@ -102,12 +102,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	* <p>Title: stopUser</p>  
-	* <p>Description: </p>  
-	* @param id
-	* @return  
-	* @see com.osl.service.UserService#stopUser(int)  
-	*/  
+	 * <p>
+	 * Title: stopUser
+	 * </p>
+	 * <p>
+	 * Description:
+	 * </p>
+	 * 
+	 * @param id
+	 * @return
+	 * @see com.osl.service.UserService#stopUser(int)
+	 */
 	@Override
 	public int stopUser(int id) {
 		// TODO Auto-generated method stub
@@ -115,12 +120,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	* <p>Title: recovery</p>  
-	* <p>Description: </p>  
-	* @param id
-	* @return  
-	* @see com.osl.service.UserService#recovery(int)  
-	*/  
+	 * <p>
+	 * Title: recovery
+	 * </p>
+	 * <p>
+	 * Description:
+	 * </p>
+	 * 
+	 * @param id
+	 * @return
+	 * @see com.osl.service.UserService#recovery(int)
+	 */
 	@Override
 	public int recoveryUser(int id) {
 		// TODO Auto-generated method stub
@@ -128,16 +138,66 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	* <p>Title: deleteById</p>  
-	* <p>Description: </p>  
-	* @param id
-	* @return  
-	* @see com.osl.service.UserService#deleteById(int)  
-	*/  
+	 * <p>
+	 * Title: deleteById
+	 * </p>
+	 * <p>
+	 * Description:
+	 * </p>
+	 * 
+	 * @param id
+	 * @return
+	 * @see com.osl.service.UserService#deleteById(int)
+	 */
 	@Override
 	public int deleteById(int id) {
 		// TODO Auto-generated method stub
 		return userMapper.deleteById(id);
+	}
+
+	/**
+	 * <p>
+	 * Title: Masterlogin
+	 * </p>
+	 * <p>
+	 * Description:
+	 * </p>
+	 * 
+	 * @param userId
+	 * @param password
+	 * @return
+	 * @see com.osl.service.UserService#Masterlogin(java.lang.String,
+	 *      java.lang.String)
+	 */
+	@Override
+	public UserModel Masterlogin(String userId, String password) {
+		// TODO Auto-generated method stub
+		return userMapper.Masterlogin(userId, password);
+	}
+
+	/**
+	 * <p>
+	 * Title: modifypwd
+	 * </p>
+	 * <p>
+	 * Description:
+	 * </p>
+	 * 
+	 * @param newpwd
+	 * @param userId
+	 * @return
+	 * @see com.osl.service.UserService#modifypwd(java.lang.String,
+	 *      java.lang.String)
+	 */
+	@Override
+	public int modifypwd(String oldpwd, String newpwd, String userId) {
+		// TODO Auto-generated method stub
+		UserEntity _user = userMapper.findByUserId(userId);
+		if (_user.getPassword().equalsIgnoreCase(oldpwd)) {
+			return userMapper.modifypwd(newpwd, userId);
+		} else {
+			return -1;
+		}
 	}
 
 }

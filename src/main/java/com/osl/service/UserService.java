@@ -14,18 +14,22 @@ import com.osl.mapper.entity.UserEntity;
 import com.osl.model.UserModel;
 
 public interface UserService {
-	
+
 	public List<UserEntity> findAll();
-	
+
 	public int insert(UserEntity userEntity);
-	
-	public UserModel login(String userId,String password);
-	
+
+	public UserModel login(String userId, String password);
+
+	public UserModel Masterlogin(String userId, String password);
+
 	public List<UserModel> getAllUsers(int bid);
-	
+
 	public int stopUser(int id);
-	
+
 	public int recoveryUser(int id);
-	
+
 	public int deleteById(int id);
+
+	public int modifypwd(String oldpwd, String newpwd, String userId);
 }

@@ -59,4 +59,32 @@ public class BusinessServiceImpl implements BusinessService {
 		return businessMapper.delete(id);
 	}
 
+	/**
+	* <p>Title: findWarehouseAll</p>  
+	* <p>Description: </p>  
+	* @param ship
+	* @return  
+	* @see com.osl.service.BusinessService#findWarehouseAll(int)  
+	*/  
+	@Override
+	public List<BusinessModel> findWarehouseAll() {
+		// TODO Auto-generated method stub
+		return businessMapper.findWarehouseAll();
+	}
+
+	/**
+	* <p>Title: insert</p>  
+	* <p>Description: </p>  
+	* @param _business
+	* @return  
+	* @see com.osl.service.BusinessService#insert(com.osl.mapper.entity.BusinessEntity)  
+	*/  
+	@Override
+	public int insert(BusinessEntity _business) {
+		// TODO Auto-generated method stub
+		int ok = 0;
+		ok = businessMapper.insert(_business);
+		return ok;
+	}
+
 }

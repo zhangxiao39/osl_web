@@ -6,7 +6,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>INSPINIA | Login</title>
+<title>Login | 商家登录  | 海外仓系统</title>
 
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
@@ -24,23 +24,22 @@
 	<div class="middle-box text-center loginscreen animated fadeInDown">
 		<div>
 			<div>
-				<h2 class="logo-name">物流</h2>
+				<h2 class="logo-name">后台管理</h2>
 			</div>
 			<p>Login in. To see it in action.</p>
 			<p style="color: red" th:text="${erorrMsg}" th:if="${not #strings.isEmpty(erorrMsg)}"></p>
-			<form class="m-t" role="form"  method="post" th:action="|/master/login|">
+			<form class="m-t" role="form"  method="post" action="/master/login">
 			
 				<div class="form-group">
-				<input type="hidden" name="burl" th:value="${burl}" />
-					<input type="text" class="form-control" placeholder="user_id" name="user_id" required="" />
+					<input type="text" class="form-control" placeholder="用户ID" name="userId" required="" />
 				</div>
 				<div class="form-group">
-					<input type="password" class="form-control" placeholder="password" name="password" required="" />
+					<input type="password" class="form-control" placeholder="密码" name="password" required="" />
 				</div>
 				<button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 			</form>
 			<p class="m-t">
-				<small>Design by zx &copy; 2018</small>
+				<small>Design by osl jp &copy; 2019</small>
 			</p>
 		</div>
 	</div>
