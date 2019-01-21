@@ -30,7 +30,7 @@
 		t_business,t_business_grade
 		where
 		t_business.delete_flg=0 and
-		t_business.grade_id=t_business_grade.id and t_business.type=0) as t1
+		t_business.grade_id=t_business_grade.id and t_business.type=#{type}) as t1
 		LEFT JOIN (select * from
 		t_user where isadmin=1) as t2 on
 		t2.business_id=t1.id
@@ -49,7 +49,7 @@
 		insert into t_business
 		(name,address,postcode,url,tele,tax,email,type,contacts,grade_id,new_date)
 		values
-		(#{name},#{address},#{postcode},#{url},#{tele},#{tax},#{email},#{type},#{contacts},#{gradeId},now())
+		(#{name},#{address},#{postcode},#{url},#{tele},#{tax},#{email},#{type},#{contacts},#{gradeId},now(3))
 	</insert>
 	<insert id="insertRelation">
 		insert into t_relationship

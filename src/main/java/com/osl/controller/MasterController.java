@@ -92,14 +92,24 @@ public class MasterController extends BaseController<UserModel> {
 		if (session.getAttribute("u_login") == null) {
 			return "redirect:/master/login";
 		} else {
-			List<BusinessModel> _businessInfo = business_service.findWarehouseAll();
+			List<BusinessModel> _businessInfo = business_service.findWarehouseAll(0);
 			model.addAttribute("item", _businessInfo);
 			model.addAttribute("nav_active5", 1);
 			return "/m/warehouselist";
 		}
 	}
 	
-	
+	@RequestMapping(value = "/m/business/list")
+	public String m_blistManage(Model model, HttpSession session) {
+		if (session.getAttribute("u_login") == null) {
+			return "redirect:/master/login";
+		} else {
+			List<BusinessModel> _businessInfo = business_service.findWarehouseAll(1);
+			model.addAttribute("item", _businessInfo);
+			model.addAttribute("nav_active5", 2);
+			return "/m/businesslist";
+		}
+	}
 	
 	
 	

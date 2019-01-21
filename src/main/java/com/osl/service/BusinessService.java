@@ -10,7 +10,7 @@ public interface BusinessService {
 
 	public List<BusinessModel> findBusinessAll(int bid, int ship);
 
-	public List<BusinessModel> findWarehouseAll();
+	public List<BusinessModel> findWarehouseAll(int type);
 
 	public BusinessModel findById(int id);
 

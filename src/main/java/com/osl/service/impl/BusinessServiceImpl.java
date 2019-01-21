@@ -67,9 +67,9 @@ public class BusinessServiceImpl implements BusinessService {
 	* @see com.osl.service.BusinessService#findWarehouseAll(int)  
 	*/  
 	@Override
-	public List<BusinessModel> findWarehouseAll() {
+	public List<BusinessModel> findWarehouseAll(int type) {
 		// TODO Auto-generated method stub
-		return businessMapper.findWarehouseAll();
+		return businessMapper.findWarehouseAll(type);
 	}
 
 	/**

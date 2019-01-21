@@ -8618,3 +8618,14 @@ body.md-skin {
 	right: 0;
 	z-index: 2000;
 }
+.zx-register{
+	width:400px;
+	padding:0px;
+	text-align: left;
+}
+.loginscreen.middle-box {
+  width: 400px;
+}
+.zx-logo-size{
+	font-size:100px;
+}
